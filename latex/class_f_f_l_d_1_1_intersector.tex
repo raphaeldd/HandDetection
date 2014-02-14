@@ -1,0 +1,61 @@
+\hypertarget{class_f_f_l_d_1_1_intersector}{\section{F\-F\-L\-D\-:\-:Intersector Class Reference}
+\label{class_f_f_l_d_1_1_intersector}\index{F\-F\-L\-D\-::\-Intersector@{F\-F\-L\-D\-::\-Intersector}}
+}
+
+
+{\ttfamily \#include $<$Intersector.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_f_f_l_d_1_1_intersector_aed95bdbcf7b5f24b1dd5b797bcc127fd}{Intersector} (\hyperlink{class_f_f_l_d_1_1_rectangle}{Rectangle} reference, double threshold=0.\-5, bool felzenszwalb=false)
+\item 
+bool \hyperlink{class_f_f_l_d_1_1_intersector_a2ba78e41d3bf04a2ced101d56ad47d85}{operator()} (\hyperlink{class_f_f_l_d_1_1_rectangle}{Rectangle} rect, double $\ast$score=0) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functor used to test for the intersection of two rectangles according to the Pascal criterion (area of intersection over area of union). 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_f_f_l_d_1_1_intersector_aed95bdbcf7b5f24b1dd5b797bcc127fd}{\index{F\-F\-L\-D\-::\-Intersector@{F\-F\-L\-D\-::\-Intersector}!Intersector@{Intersector}}
+\index{Intersector@{Intersector}!FFLD::Intersector@{F\-F\-L\-D\-::\-Intersector}}
+\subsubsection[{Intersector}]{\setlength{\rightskip}{0pt plus 5cm}F\-F\-L\-D\-::\-Intersector\-::\-Intersector (
+\begin{DoxyParamCaption}
+\item[{{\bf Rectangle}}]{reference, }
+\item[{double}]{threshold = {\ttfamily 0.5}, }
+\item[{bool}]{felzenszwalb = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_f_f_l_d_1_1_intersector_aed95bdbcf7b5f24b1dd5b797bcc127fd}
+Constructor. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reference} & The reference rectangle. \\
+\hline
+\mbox{\tt in}  & {\em threshold} & The threshold of the criterion. \\
+\hline
+\mbox{\tt in}  & {\em felzenszwalb} & Use Felzenszwalb's criterion instead (area of intersection over area of second rectangle). Useful to remove small detections inside bigger ones. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_f_f_l_d_1_1_intersector_a2ba78e41d3bf04a2ced101d56ad47d85}{\index{F\-F\-L\-D\-::\-Intersector@{F\-F\-L\-D\-::\-Intersector}!operator()@{operator()}}
+\index{operator()@{operator()}!FFLD::Intersector@{F\-F\-L\-D\-::\-Intersector}}
+\subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}bool F\-F\-L\-D\-::\-Intersector\-::operator() (
+\begin{DoxyParamCaption}
+\item[{{\bf Rectangle}}]{rect, }
+\item[{double $\ast$}]{score = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_f_f_l_d_1_1_intersector_a2ba78e41d3bf04a2ced101d56ad47d85}
+Tests for the intersection between a given rectangle and the reference. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em rect} & The rectangle to intersect with the reference. \\
+\hline
+\mbox{\tt out}  & {\em score} & The score of the intersection. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+Intersector.\-h\end{DoxyCompactItemize}
