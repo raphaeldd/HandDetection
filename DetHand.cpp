@@ -135,10 +135,18 @@ void DetHand::runDetection( Mat image , int frameNumber) {
     cout << "       Runtime rotation detection: " << setprecision(4) << diff << endl;
     cout << "       Found detections:           " << this->getRect().size() << endl;
 
+
+
+
     for ( unsigned int n = 0; n < this->pos.size(); n++ ) {
         // TODO: Gebruik originele input afbeelding wanneer coordinaten correct zijn aangepast
-        this->drawResult(blackImage, this->getRect()[n].first, this->getRect()[n].second, Scalar(0, 0, 255));
+        this->drawResult( blackImage, this->getRect()[n].first, this->getRect()[n].second, Scalar(0, 0, 255) );
+        this->pos[n].first = this->correction( this->pos[n].first, this->pos[n].second, correction, Point( blackImage.cols/2, blackImage.rows/2 ) );
+        this->drawResult( image, this->getRect()[n].first, this->getRect()[n].second, Scalar(0, 0, 255) );
     }
+    imshow("uncorrected results", blackImage);
+    imshow("corrected results", image);
+    waitKey(-1);
 }
 
 vector<Mat> DetHand::getCutouts() {
@@ -160,26 +168,13 @@ void DetHand::rotate(cv::Mat& src, double angle, cv::Mat& dst)
     cv::warpAffine(src, dst, r, cv::Size(src.cols, src.rows));
 }
 
-cv::warpAffine(src, dst, r, cv::Size(src.cols, src.rows));
-}
-
-void DetHand::correction(Rect box, int angle, int correction)
+Rect DetHand::correction(Rect box, int angle, int correction, Point center)
 {
     float rat = angle * PI/180;
-    Size s = img.size();
-    float cx = box.x + box.width/2;
-    float cy = box.y + box.height/2;
-    float x = cos(rat) * (cx - s.width/2) - sin(rat) * (cy - s.height/2) + s.width/2;
-    float y = sin(rat) * (cx - s.width/2) + cos(rat) * (cy - s.height/2) + s.height/2;
-    circle(img, Point2f(x, y), 2, color);
-    line(img, Point2f(x, y), Point2f(x + 10*cos(rat + PI/2), y + 10*sin(rat + PI/2)), color);
-    RotatedRect rot(Point2f(x, y), box.size(), angle);
-    Point2f corners[4];
-    rot.points(corners);
-    for (int i = 0; i < 4; i++)
-    {
-        line(img, corners[i], corners[(i+1)%4], color);
-    }
+    box.x = box.x - ( sin(rat) * (double)correction );
+    box.y = box.y + ( cos(rat) * (double)correction );
+
+    return box;
 }
 
 void DetHand::drawResult(Mat& img, Rect& box, float angle, const Scalar& color)

@@ -1,3 +1,8 @@
 .DS_Store
 build/
 *.user
+Documantation/Doxyfile
+
+Documantation/doxygen_log.txt
+
+Documantation/latex

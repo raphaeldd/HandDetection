@@ -1,5 +1,6 @@
 /*!
- * @brief Hand detection class
+ * @class DetHand
+ * Hand detection class. Detects hand on images.
  *
  * @author Den Dooven Raphael
  *
@@ -45,11 +46,35 @@ using namespace cv;
 class DetHand
 {
     public:
+        /// @brief Constructor from classe DetHand.
+        /// Preps the detector with the right hand model.
+        /// @param ModelHand Filename of model
+        /// @param threshold Threshold value of detector
         DetHand(String modelHand, double threshold);
+
+        /// @brief Apply the detector on a image
+        /// @param image The image for the detector
+        /// @param framenumber Frame number of the video (not really importend)
         void runDetection(Mat image , int frameNumber);
+
+        /// @brief Draws the found regions on a image
+        /// Draws a rotated rectangle with rescpect to the center
+        /// @param img Detination image
+        /// @param box Rectangle information
+        /// @param angle Rectangles rotation with rescpect to the center
+        /// @param color color op the rectangle
         void drawResult(Mat& img, Rect& box, float angle, const Scalar& color);
+
+        /// @brief Get all the detection cutouts of the last detection
+        /// @return All cutouts of type Mat put in a vector
         vector<Mat> getCutouts();
+
+        /// @brief Get all the detection regions of the last detection with the respected rotation
+        /// @return All regions of type Rect and rotation put in a vector
         vector<pair<Rect, int> > getRect();
+
+        /// @brief Get number of detections found
+        /// @return Number of detections found of type integer
         int getSize();
 
 
@@ -66,7 +91,7 @@ class DetHand
         double TH;
 
         void rotate(cv::Mat& src, double angle, cv::Mat& dst);
-        void correction(Rect box, int angle, int correction);
+        Rect correction(Rect box, int angle, int correction, Point center);
 };
 
 #endif // DETHAND_H
