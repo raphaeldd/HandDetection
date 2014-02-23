@@ -112,17 +112,9 @@ void DetHand::runDetection( Mat image , int frameNumber) {
 
         for ( unsigned int k = this->pos.size(); k < FinalHandDetections.size(); k++ )
         {
-            // TODO: Pas posities voor Absloute coordinaten tov origineel upper body cutout
             int rot = floor( (double)FinalHandDetections[k].detect.x / (double)blackImage.cols ) * 10 + iteration;
-            this->pos.push_back( make_pair( Rect ( FinalHandDetections[k].detect.x % blackImage.cols, FinalHandDetections[k].detect.y, FinalHandDetections[k].detect.width, FinalHandDetections[k].detect.height ), rot ) );
-
-            cout << "   k:              " << k << endl;
-            cout << "   tl:             " << this->pos[k].first.tl() << endl;
-            cout << "   width:          " << this->pos[k].first.width << endl;
-            cout << "   height:         " << this->pos[k].first.height << endl;
-            cout << "   cols Image:     " << cutImage.cols << endl;
-            cout << "   rows Image:     " << cutImage.rows << endl << endl;
-
+            Rect tmpRect( FinalHandDetections[k].detect.x % blackImage.cols, FinalHandDetections[k].detect.y, FinalHandDetections[k].detect.width, FinalHandDetections[k].detect.height );
+            this->pos.push_back( this->correction(tmpRect, rot, correction, Point( blackImage.cols/2, blackImage.rows/2 ) ) );
             this->detections.push_back(cutImage(FinalHandDetections[k].detect).clone());
         }
 
@@ -134,26 +126,20 @@ void DetHand::runDetection( Mat image , int frameNumber) {
     float diff = ( (float)T2 - (float)T1 ) / CLOCKS_PER_SEC;
     cout << "       Runtime rotation detection: " << setprecision(4) << diff << endl;
     cout << "       Found detections:           " << this->getRect().size() << endl;
+    cout << "       Found detections:           " << this->getCutouts().size() << endl;
 
-
-
-
-    for ( unsigned int n = 0; n < this->pos.size(); n++ ) {
-        // TODO: Gebruik originele input afbeelding wanneer coordinaten correct zijn aangepast
-        this->drawResult( blackImage, this->getRect()[n].first, this->getRect()[n].second, Scalar(0, 0, 255) );
-        this->pos[n].first = this->correction( this->pos[n].first, this->pos[n].second, correction, Point( blackImage.cols/2, blackImage.rows/2 ) );
-        this->drawResult( image, this->getRect()[n].first, this->getRect()[n].second, Scalar(0, 0, 255) );
-    }
-    imshow("uncorrected results", blackImage);
-    imshow("corrected results", image);
-    waitKey(-1);
+//    vector<int> label;
+//    cout << "Total classes found: " << partition(this->pos, label, similarRotRects(1, 1) ) << endl;
+//    for (unsigned int i = 0; i < this->pos.size(); i++) {
+//        cout << i << ".         " << this->pos.at(i).center.x << ", " << this->pos.at(i).center.x << "; angle: " << this->pos.at(i).angle << "; label: " << label.at(i) << endl;
+//    }
 }
 
 vector<Mat> DetHand::getCutouts() {
     return this->detections;
 }
 
-vector<pair<Rect, int> > DetHand::getRect() {
+vector<RotatedRect> DetHand::getRect() {
     return this->pos;
 }
 
@@ -168,30 +154,30 @@ void DetHand::rotate(cv::Mat& src, double angle, cv::Mat& dst)
     cv::warpAffine(src, dst, r, cv::Size(src.cols, src.rows));
 }
 
-Rect DetHand::correction(Rect box, int angle, int correction, Point center)
+void DetHand::drawResult(Mat& img, RotatedRect &box, const Scalar& color)
 {
-    float rat = angle * PI/180;
-    box.x = box.x - ( sin(rat) * (double)correction );
-    box.y = box.y + ( cos(rat) * (double)correction );
-
-    return box;
-}
-
-void DetHand::drawResult(Mat& img, Rect& box, float angle, const Scalar& color)
-{
-    float rat = angle * PI/180;
-    Size s = img.size();
-    float cx = box.x + box.width/2;
-    float cy = box.y + box.height/2;
-    float x = cos(rat) * (cx - s.width/2) - sin(rat) * (cy - s.height/2) + s.width/2;
-    float y = sin(rat) * (cx - s.width/2) + cos(rat) * (cy - s.height/2) + s.height/2;
-    circle(img, Point2f(x, y), 2, color);
-    line(img, Point2f(x, y), Point2f(x + 10*cos(rat + PI/2), y + 10*sin(rat + PI/2)), color);
-    RotatedRect rot(Point2f(x, y), box.size(), angle);
     Point2f corners[4];
-    rot.points(corners);
+    box.points(corners);
     for (int i = 0; i < 4; i++)
     {
-        line(img, corners[i], corners[(i+1)%4], color);
+        line( img, corners[i], corners[(i+1)%4], color );
     }
+    Point dirLine( sin(box.angle* CV_PI/180) * 10 + box.center.x, cos(box.angle* PI/180) * 10 + box.center.y );
+    line( img, box.center, dirLine, color );
+    circle(img, box.center, 3, color);
 }
+
+RotatedRect DetHand::correction(Rect box, int angle, int correction, Point center)
+{
+    float rat = angle * CV_PI/180;
+    float cx = box.x + box.width/2;
+    float cy = box.y + box.height/2;
+    float x = cos(rat) * (cx - center.x) - sin(rat) * (cy - center.x) + center.x;
+    float y = sin(rat) * (cx - center.y) + cos(rat) * (cy - center.y) + center.y  - correction;
+    RotatedRect rot(Point2f(x, y), box.size(), angle);
+    return rot;
+}
+
+
+
+

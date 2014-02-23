@@ -1,0 +1,147 @@
+\hypertarget{class_det_hand}{\section{Det\-Hand Class Reference}
+\label{class_det_hand}\index{Det\-Hand@{Det\-Hand}}
+}
+
+
+{\ttfamily \#include $<$Det\-Hand.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_det_hand_a55a4b93f15511748a5f645d6e02b7b19}{Det\-Hand} (String model\-Hand, double threshold)
+\begin{DoxyCompactList}\small\item\em Constructor from classe \hyperlink{class_det_hand}{Det\-Hand}. Preps the detector with the right hand model. \end{DoxyCompactList}\item 
+void \hyperlink{class_det_hand_a1cde0e2c001c37b3f74bcb38af5dddbd}{run\-Detection} (Mat image, int frame\-Number)
+\begin{DoxyCompactList}\small\item\em Apply the detector on a image. \end{DoxyCompactList}\item 
+void \hyperlink{class_det_hand_ad38224099448661c9442005db103ae8d}{draw\-Result} (Mat \&img, Rect \&box, float angle, const Scalar \&color)
+\begin{DoxyCompactList}\small\item\em Draws the found regions on a image Draws a rotated rectangle with rescpect to the center. \end{DoxyCompactList}\item 
+vector$<$ Mat $>$ \hyperlink{class_det_hand_a230b128800e15d6b5f87af363b4a72bc}{get\-Cutouts} ()
+\begin{DoxyCompactList}\small\item\em Get all the detection cutouts of the last detection. \end{DoxyCompactList}\item 
+vector$<$ pair$<$ Rect, int $>$ $>$ \hyperlink{class_det_hand_a424b986edf4a17f48619cb89cd4c2e8e}{get\-Rect} ()
+\begin{DoxyCompactList}\small\item\em Get all the detection regions of the last detection with the respected rotation. \end{DoxyCompactList}\item 
+int \hyperlink{class_det_hand_af90663feb7d98c57373a2ee7b686fdb2}{get\-Size} ()
+\begin{DoxyCompactList}\small\item\em Get number of detections found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Hand detection class. Detects hand on images.
+
+\begin{DoxyAuthor}{Author}
+Den Dooven Raphael 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_det_hand_a55a4b93f15511748a5f645d6e02b7b19}{\index{Det\-Hand@{Det\-Hand}!Det\-Hand@{Det\-Hand}}
+\index{Det\-Hand@{Det\-Hand}!DetHand@{Det\-Hand}}
+\subsubsection[{Det\-Hand}]{\setlength{\rightskip}{0pt plus 5cm}Det\-Hand\-::\-Det\-Hand (
+\begin{DoxyParamCaption}
+\item[{String}]{model\-Hand, }
+\item[{double}]{threshold}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_a55a4b93f15511748a5f645d6e02b7b19}
+
+
+Constructor from classe \hyperlink{class_det_hand}{Det\-Hand}. Preps the detector with the right hand model. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Model\-Hand} & Filename of model \\
+\hline
+{\em threshold} & Threshold value of detector \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_det_hand_ad38224099448661c9442005db103ae8d}{\index{Det\-Hand@{Det\-Hand}!draw\-Result@{draw\-Result}}
+\index{draw\-Result@{draw\-Result}!DetHand@{Det\-Hand}}
+\subsubsection[{draw\-Result}]{\setlength{\rightskip}{0pt plus 5cm}void Det\-Hand\-::draw\-Result (
+\begin{DoxyParamCaption}
+\item[{Mat \&}]{img, }
+\item[{Rect \&}]{box, }
+\item[{float}]{angle, }
+\item[{const Scalar \&}]{color}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_ad38224099448661c9442005db103ae8d}
+
+
+Draws the found regions on a image Draws a rotated rectangle with rescpect to the center. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em img} & Detination image \\
+\hline
+{\em box} & Rectangle information \\
+\hline
+{\em angle} & Rectangles rotation with rescpect to the center \\
+\hline
+{\em color} & color op the rectangle \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_det_hand_a230b128800e15d6b5f87af363b4a72bc}{\index{Det\-Hand@{Det\-Hand}!get\-Cutouts@{get\-Cutouts}}
+\index{get\-Cutouts@{get\-Cutouts}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Cutouts}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ Mat $>$ Det\-Hand\-::get\-Cutouts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_a230b128800e15d6b5f87af363b4a72bc}
+
+
+Get all the detection cutouts of the last detection. 
+
+\begin{DoxyReturn}{Returns}
+All cutouts of type Mat put in a vector 
+\end{DoxyReturn}
+\hypertarget{class_det_hand_a424b986edf4a17f48619cb89cd4c2e8e}{\index{Det\-Hand@{Det\-Hand}!get\-Rect@{get\-Rect}}
+\index{get\-Rect@{get\-Rect}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Rect}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ pair$<$ Rect, int $>$ $>$ Det\-Hand\-::get\-Rect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_a424b986edf4a17f48619cb89cd4c2e8e}
+
+
+Get all the detection regions of the last detection with the respected rotation. 
+
+\begin{DoxyReturn}{Returns}
+All regions of type Rect and rotation put in a vector 
+\end{DoxyReturn}
+\hypertarget{class_det_hand_af90663feb7d98c57373a2ee7b686fdb2}{\index{Det\-Hand@{Det\-Hand}!get\-Size@{get\-Size}}
+\index{get\-Size@{get\-Size}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Size}]{\setlength{\rightskip}{0pt plus 5cm}int Det\-Hand\-::get\-Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_af90663feb7d98c57373a2ee7b686fdb2}
+
+
+Get number of detections found. 
+
+\begin{DoxyReturn}{Returns}
+Number of detections found of type integer 
+\end{DoxyReturn}
+\hypertarget{class_det_hand_a1cde0e2c001c37b3f74bcb38af5dddbd}{\index{Det\-Hand@{Det\-Hand}!run\-Detection@{run\-Detection}}
+\index{run\-Detection@{run\-Detection}!DetHand@{Det\-Hand}}
+\subsubsection[{run\-Detection}]{\setlength{\rightskip}{0pt plus 5cm}void Det\-Hand\-::run\-Detection (
+\begin{DoxyParamCaption}
+\item[{Mat}]{image, }
+\item[{int}]{frame\-Number}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_a1cde0e2c001c37b3f74bcb38af5dddbd}
+
+
+Apply the detector on a image. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em image} & The image for the detector \\
+\hline
+{\em framenumber} & Frame number of the video (not really importend) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/Det\-Hand.\-h\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/Det\-Hand.\-cpp\end{DoxyCompactItemize}

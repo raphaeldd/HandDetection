@@ -43,7 +43,7 @@ void SaveDetections::newUpperBody (Rect box) {
 
 }
 
-void SaveDetections::newHand (Rect box, int angle) {
+void SaveDetections::newHand (RotatedRect box ) {
     // Dept = 3
     for (int i = this->debtCounter; i >= 3; i--) {
        xmlWriter->writeEndElement();
@@ -51,12 +51,12 @@ void SaveDetections::newHand (Rect box, int angle) {
     this->debtCounter = 3;
     xmlWriter->writeStartElement( "Hand" );
     xmlWriter->writeStartElement( "Rect" );
-    xmlWriter->writeTextElement( "x", QString::number( box.x ) );
-    xmlWriter->writeTextElement( "y", QString::number( box.y ) );
-    xmlWriter->writeTextElement( "Width", QString::number( box.width ) );
-    xmlWriter->writeTextElement( "Height", QString::number( box.height ) );
+    xmlWriter->writeTextElement( "x", QString::number( box.center.x ) );
+    xmlWriter->writeTextElement( "y", QString::number( box.center.y ) );
+    xmlWriter->writeTextElement( "Width", QString::number( box.size.width ) );
+    xmlWriter->writeTextElement( "Height", QString::number( box.size.height ) );
     xmlWriter->writeEndElement();
-    xmlWriter->writeTextElement( "Rotation", QString::number( angle ) );
+    xmlWriter->writeTextElement( "Rotation", QString::number( box.angle ) );
 }
 
 void SaveDetections::runtime (float time) {

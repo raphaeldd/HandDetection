@@ -40,7 +40,8 @@ SOURCES += \
         main.cpp \
     DetBody.cpp \
     DetHand.cpp \
-    SaveDetections.cpp
+    SaveDetections.cpp \
+    HighestLikelihood.cpp
 
 
 HEADERS += \
@@ -58,5 +59,6 @@ HEADERS += \
         Parameters.h \
     DetBody.h \
     DetHand.h \
-    SaveDetections.h
+    SaveDetections.h \
+    HighestLikelihood.h
 

@@ -42,6 +42,8 @@
 #define DET_TYPE 2
 
 using namespace cv;
+using namespace std;
+
 
 class DetHand
 {
@@ -63,7 +65,7 @@ class DetHand
         /// @param box Rectangle information
         /// @param angle Rectangles rotation with rescpect to the center
         /// @param color color op the rectangle
-        void drawResult(Mat& img, Rect& box, float angle, const Scalar& color);
+        void drawResult(Mat& img, RotatedRect& box, const Scalar& color);
 
         /// @brief Get all the detection cutouts of the last detection
         /// @return All cutouts of type Mat put in a vector
@@ -71,7 +73,7 @@ class DetHand
 
         /// @brief Get all the detection regions of the last detection with the respected rotation
         /// @return All regions of type Rect and rotation put in a vector
-        vector<pair<Rect, int> > getRect();
+        vector<RotatedRect> getRect();
 
         /// @brief Get number of detections found
         /// @return Number of detections found of type integer
@@ -86,12 +88,13 @@ class DetHand
         String modelHand;
 
         vector<Mat> detections;
-        vector<pair<Rect, int> > pos;
+        vector<RotatedRect> pos;
 
         double TH;
 
         void rotate(cv::Mat& src, double angle, cv::Mat& dst);
-        Rect correction(Rect box, int angle, int correction, Point center);
+        RotatedRect correction(Rect box, int angle, int correction, Point center);
+        //int similarRotRects();
 };
 
 #endif // DETHAND_H

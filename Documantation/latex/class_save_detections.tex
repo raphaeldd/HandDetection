@@ -1,0 +1,122 @@
+\hypertarget{class_save_detections}{\section{Save\-Detections Class Reference}
+\label{class_save_detections}\index{Save\-Detections@{Save\-Detections}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_save_detections_a3583bd8066410a896ca4fb2891ea08ef}{Save\-Detections} (Q\-String filename\-Avi)
+\begin{DoxyCompactList}\small\item\em Constructor of class \hyperlink{class_save_detections}{Save\-Detections} Opens the xml file Detections.\-xml in local directory. \end{DoxyCompactList}\item 
+void \hyperlink{class_save_detections_a5a0112af80a6f2c7e5e0c12c757e3da9}{new\-Frame} (int frame\-Nr)
+\begin{DoxyCompactList}\small\item\em Adds new element frame to X\-M\-L. \end{DoxyCompactList}\item 
+void \hyperlink{class_save_detections_acb1e8a18ffa4410a638a47c32314839e}{new\-Upper\-Body} (Rect box)
+\begin{DoxyCompactList}\small\item\em adds new element for a upper body detection \end{DoxyCompactList}\item 
+void \hyperlink{class_save_detections_ae1e14c331963242bb037abe2cb14bb84}{new\-Hand} (Rect box, int angle)
+\begin{DoxyCompactList}\small\item\em adds new element for a hand detection \end{DoxyCompactList}\item 
+void \hyperlink{class_save_detections_a6bc172c27da2231a4677c73efb967946}{runtime} (float time)
+\begin{DoxyCompactList}\small\item\em adds a runtime element to the X\-M\-L \end{DoxyCompactList}\item 
+\hypertarget{class_save_detections_a0dbc57c6c8ea4096bce1e4b640d697eb}{\hyperlink{class_save_detections_a0dbc57c6c8ea4096bce1e4b640d697eb}{$\sim$\-Save\-Detections} ()}\label{class_save_detections_a0dbc57c6c8ea4096bce1e4b640d697eb}
+
+\begin{DoxyCompactList}\small\item\em Destructor of the class Closes the file and write the data to the X\-M\-L file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+detections. Puts al the detections in a handy X\-M\-L file. So that when rerunning the program no unnessesary detections ar avoided
+
+\begin{DoxyAuthor}{Author}
+Den Dooven Raphael 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_save_detections_a3583bd8066410a896ca4fb2891ea08ef}{\index{Save\-Detections@{Save\-Detections}!Save\-Detections@{Save\-Detections}}
+\index{Save\-Detections@{Save\-Detections}!SaveDetections@{Save\-Detections}}
+\subsubsection[{Save\-Detections}]{\setlength{\rightskip}{0pt plus 5cm}Save\-Detections\-::\-Save\-Detections (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{filename\-Avi}
+\end{DoxyParamCaption}
+)}}\label{class_save_detections_a3583bd8066410a896ca4fb2891ea08ef}
+
+
+Constructor of class \hyperlink{class_save_detections}{Save\-Detections} Opens the xml file Detections.\-xml in local directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename\-Avi} & gives new entery for specific A\-V\-I file \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_save_detections_a5a0112af80a6f2c7e5e0c12c757e3da9}{\index{Save\-Detections@{Save\-Detections}!new\-Frame@{new\-Frame}}
+\index{new\-Frame@{new\-Frame}!SaveDetections@{Save\-Detections}}
+\subsubsection[{new\-Frame}]{\setlength{\rightskip}{0pt plus 5cm}void Save\-Detections\-::new\-Frame (
+\begin{DoxyParamCaption}
+\item[{int}]{frame\-Nr}
+\end{DoxyParamCaption}
+)}}\label{class_save_detections_a5a0112af80a6f2c7e5e0c12c757e3da9}
+
+
+Adds new element frame to X\-M\-L. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fram\-Nr} & Puts the frame number in the X\-M\-L file \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_save_detections_ae1e14c331963242bb037abe2cb14bb84}{\index{Save\-Detections@{Save\-Detections}!new\-Hand@{new\-Hand}}
+\index{new\-Hand@{new\-Hand}!SaveDetections@{Save\-Detections}}
+\subsubsection[{new\-Hand}]{\setlength{\rightskip}{0pt plus 5cm}void Save\-Detections\-::new\-Hand (
+\begin{DoxyParamCaption}
+\item[{Rect}]{box, }
+\item[{int}]{angle}
+\end{DoxyParamCaption}
+)}}\label{class_save_detections_ae1e14c331963242bb037abe2cb14bb84}
+
+
+adds new element for a hand detection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em box} & Position information of the detection \\
+\hline
+{\em angle} & rotaion of the detection \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_save_detections_acb1e8a18ffa4410a638a47c32314839e}{\index{Save\-Detections@{Save\-Detections}!new\-Upper\-Body@{new\-Upper\-Body}}
+\index{new\-Upper\-Body@{new\-Upper\-Body}!SaveDetections@{Save\-Detections}}
+\subsubsection[{new\-Upper\-Body}]{\setlength{\rightskip}{0pt plus 5cm}void Save\-Detections\-::new\-Upper\-Body (
+\begin{DoxyParamCaption}
+\item[{Rect}]{box}
+\end{DoxyParamCaption}
+)}}\label{class_save_detections_acb1e8a18ffa4410a638a47c32314839e}
+
+
+adds new element for a upper body detection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em box} & Position information of the detection \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_save_detections_a6bc172c27da2231a4677c73efb967946}{\index{Save\-Detections@{Save\-Detections}!runtime@{runtime}}
+\index{runtime@{runtime}!SaveDetections@{Save\-Detections}}
+\subsubsection[{runtime}]{\setlength{\rightskip}{0pt plus 5cm}void Save\-Detections\-::runtime (
+\begin{DoxyParamCaption}
+\item[{float}]{time}
+\end{DoxyParamCaption}
+)}}\label{class_save_detections_a6bc172c27da2231a4677c73efb967946}
+
+
+adds a runtime element to the X\-M\-L 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & Runtime \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/Save\-Detections.\-h\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/Save\-Detections.\-cpp\end{DoxyCompactItemize}

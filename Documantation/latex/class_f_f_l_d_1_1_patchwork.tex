@@ -1,0 +1,158 @@
+\hypertarget{class_f_f_l_d_1_1_patchwork}{\section{F\-F\-L\-D\-:\-:Patchwork Class Reference}
+\label{class_f_f_l_d_1_1_patchwork}\index{F\-F\-L\-D\-::\-Patchwork@{F\-F\-L\-D\-::\-Patchwork}}
+}
+
+
+The \hyperlink{class_f_f_l_d_1_1_patchwork}{Patchwork} class computes full convolutions much faster than the \hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid}{H\-O\-G\-Pyramid} class.  
+
+
+
+
+{\ttfamily \#include $<$Patchwork.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_aa1945335907399a846b7595f9215a2a3}{typedef std\-::complex\\*
+$<$ \hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid_af17c08ed86557e0a0aecb4814daf87c3}{H\-O\-G\-Pyramid\-::\-Scalar} $>$ \hyperlink{class_f_f_l_d_1_1_patchwork_aa1945335907399a846b7595f9215a2a3}{Scalar}}\label{class_f_f_l_d_1_1_patchwork_aa1945335907399a846b7595f9215a2a3}
+
+\begin{DoxyCompactList}\small\item\em Type of a scalar value. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_ad50017d26020d6cc25061f62765eedf7}{typedef Eigen\-::\-Matrix$<$ \hyperlink{class_f_f_l_d_1_1_patchwork_aa1945335907399a846b7595f9215a2a3}{Scalar}, \\*
+Eigen\-::\-Dynamic, Eigen\-::\-Dynamic, \\*
+Eigen\-::\-Row\-Major $>$ \hyperlink{class_f_f_l_d_1_1_patchwork_ad50017d26020d6cc25061f62765eedf7}{Matrix}}\label{class_f_f_l_d_1_1_patchwork_ad50017d26020d6cc25061f62765eedf7}
+
+\begin{DoxyCompactList}\small\item\em Type of a matrix. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_a2a631726c87e622e21c374c340b673cf}{typedef Eigen\-::\-Array$<$ \hyperlink{class_f_f_l_d_1_1_patchwork_aa1945335907399a846b7595f9215a2a3}{Scalar}, \\*
+\hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid_a418ebc8cf8781a3874f50b5eac482c68}{H\-O\-G\-Pyramid\-::\-Nb\-Features}, 1 $>$ \hyperlink{class_f_f_l_d_1_1_patchwork_a2a631726c87e622e21c374c340b673cf}{Cell}}\label{class_f_f_l_d_1_1_patchwork_a2a631726c87e622e21c374c340b673cf}
+
+\begin{DoxyCompactList}\small\item\em Type of a patchwork plane cell (fixed-\/size complex vector of size Nb\-Features). \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_a119551af7ed0303c3d6a0396ff4d3d39}{typedef Eigen\-::\-Matrix$<$ \hyperlink{class_f_f_l_d_1_1_patchwork_a2a631726c87e622e21c374c340b673cf}{Cell}, \\*
+Eigen\-::\-Dynamic, Eigen\-::\-Dynamic, \\*
+Eigen\-::\-Row\-Major $>$ \hyperlink{class_f_f_l_d_1_1_patchwork_a119551af7ed0303c3d6a0396ff4d3d39}{Plane}}\label{class_f_f_l_d_1_1_patchwork_a119551af7ed0303c3d6a0396ff4d3d39}
+
+\begin{DoxyCompactList}\small\item\em Type of a patchwork plane (matrix of cells). \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_aa342f3a41430505b16a53c3e2683c497}{typedef std\-::pair$<$ \hyperlink{class_f_f_l_d_1_1_patchwork_a119551af7ed0303c3d6a0396ff4d3d39}{Plane}, \\*
+std\-::pair$<$ int, int $>$ $>$ \hyperlink{class_f_f_l_d_1_1_patchwork_aa342f3a41430505b16a53c3e2683c497}{Filter}}\label{class_f_f_l_d_1_1_patchwork_aa342f3a41430505b16a53c3e2683c497}
+
+\begin{DoxyCompactList}\small\item\em Type of a patchwork filter (plane + original filter size). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_a57c40d2ceddfb9dd64efb9b2bb5d9a9e}{\hyperlink{class_f_f_l_d_1_1_patchwork_a57c40d2ceddfb9dd64efb9b2bb5d9a9e}{Patchwork} ()}\label{class_f_f_l_d_1_1_patchwork_a57c40d2ceddfb9dd64efb9b2bb5d9a9e}
+
+\begin{DoxyCompactList}\small\item\em Constructs an empty patchwork. An empty patchwork has no plane. \end{DoxyCompactList}\item 
+\hyperlink{class_f_f_l_d_1_1_patchwork_aa38d8158bbfff82f625d7ddae0b5cd58}{Patchwork} (const \hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid}{H\-O\-G\-Pyramid} \&pyramid)
+\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_ae16a7a8143f5a8b05cf9d54ae2d4b262}{int \hyperlink{class_f_f_l_d_1_1_patchwork_ae16a7a8143f5a8b05cf9d54ae2d4b262}{padx} () const }\label{class_f_f_l_d_1_1_patchwork_ae16a7a8143f5a8b05cf9d54ae2d4b262}
+
+\begin{DoxyCompactList}\small\item\em Returns the amount of horizontal zero padding (in cells). \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_ab9275f8b38a747ab59fc2c54f89d8b62}{int \hyperlink{class_f_f_l_d_1_1_patchwork_ab9275f8b38a747ab59fc2c54f89d8b62}{pady} () const }\label{class_f_f_l_d_1_1_patchwork_ab9275f8b38a747ab59fc2c54f89d8b62}
+
+\begin{DoxyCompactList}\small\item\em Returns the amount of vertical zero padding (in cells). \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_a37da8d780e23b79eeeea570a0a888da1}{int \hyperlink{class_f_f_l_d_1_1_patchwork_a37da8d780e23b79eeeea570a0a888da1}{interval} () const }\label{class_f_f_l_d_1_1_patchwork_a37da8d780e23b79eeeea570a0a888da1}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of levels per octave in the pyramid. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_a33d7a3b3e96b48a05ba23ca558d09f33}{bool \hyperlink{class_f_f_l_d_1_1_patchwork_a33d7a3b3e96b48a05ba23ca558d09f33}{empty} () const }\label{class_f_f_l_d_1_1_patchwork_a33d7a3b3e96b48a05ba23ca558d09f33}
+
+\begin{DoxyCompactList}\small\item\em Returns whether the patchwork is empty. An empty patchwork has no plane. \end{DoxyCompactList}\item 
+void \hyperlink{class_f_f_l_d_1_1_patchwork_a52eadb033fc06793960507cd9c6e15cb}{convolve} (const std\-::vector$<$ \hyperlink{class_f_f_l_d_1_1_patchwork_aa342f3a41430505b16a53c3e2683c497}{Filter} $>$ \&filters, std\-::vector$<$ std\-::vector$<$ \hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid_a2618b4bd5d17f05cdc108189ed5abe3a}{H\-O\-G\-Pyramid\-::\-Matrix} $>$ $>$ \&convolutions) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{class_f_f_l_d_1_1_patchwork_ac4aecde334ba92e8322962c7a1ae3dba}{Init} (int max\-Rows, int max\-Cols)
+\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_af8839b72f5a03b58d755b63237f7b3ab}{static int \hyperlink{class_f_f_l_d_1_1_patchwork_af8839b72f5a03b58d755b63237f7b3ab}{Max\-Rows} ()}\label{class_f_f_l_d_1_1_patchwork_af8839b72f5a03b58d755b63237f7b3ab}
+
+\begin{DoxyCompactList}\small\item\em Returns the current maximum number of rows of a pyramid level (including padding). \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_patchwork_a46e9cff798e51e0c602a8a9cc382b314}{static int \hyperlink{class_f_f_l_d_1_1_patchwork_a46e9cff798e51e0c602a8a9cc382b314}{Max\-Cols} ()}\label{class_f_f_l_d_1_1_patchwork_a46e9cff798e51e0c602a8a9cc382b314}
+
+\begin{DoxyCompactList}\small\item\em Returns the current maximum number of columns of a pyramid level (including padding). \end{DoxyCompactList}\item 
+static void \hyperlink{class_f_f_l_d_1_1_patchwork_ad920b3c00b4b2baa4fb08433ee0a08e1}{Transform\-Filter} (const \hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid_a1cd36670adf29538f44dfa434695ec34}{H\-O\-G\-Pyramid\-::\-Level} \&filter, \hyperlink{class_f_f_l_d_1_1_patchwork_aa342f3a41430505b16a53c3e2683c497}{Filter} \&result)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_f_f_l_d_1_1_patchwork}{Patchwork} class computes full convolutions much faster than the \hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid}{H\-O\-G\-Pyramid} class. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_f_f_l_d_1_1_patchwork_aa38d8158bbfff82f625d7ddae0b5cd58}{\index{F\-F\-L\-D\-::\-Patchwork@{F\-F\-L\-D\-::\-Patchwork}!Patchwork@{Patchwork}}
+\index{Patchwork@{Patchwork}!FFLD::Patchwork@{F\-F\-L\-D\-::\-Patchwork}}
+\subsubsection[{Patchwork}]{\setlength{\rightskip}{0pt plus 5cm}Patchwork\-::\-Patchwork (
+\begin{DoxyParamCaption}
+\item[{const {\bf H\-O\-G\-Pyramid} \&}]{pyramid}
+\end{DoxyParamCaption}
+)}}\label{class_f_f_l_d_1_1_patchwork_aa38d8158bbfff82f625d7ddae0b5cd58}
+Constructs a patchwork from a pyramid. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pyramid} & The pyramid of features. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+If the pyramid is larger than the last max\-Rows and max\-Cols passed to the Init method the \hyperlink{class_f_f_l_d_1_1_patchwork}{Patchwork} will be empty. 
+
+Assumes that the features of the pyramid levels are zero in the padded regions but for the last feature, which is assumed to be one. 
+\end{DoxyNote}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_f_f_l_d_1_1_patchwork_a52eadb033fc06793960507cd9c6e15cb}{\index{F\-F\-L\-D\-::\-Patchwork@{F\-F\-L\-D\-::\-Patchwork}!convolve@{convolve}}
+\index{convolve@{convolve}!FFLD::Patchwork@{F\-F\-L\-D\-::\-Patchwork}}
+\subsubsection[{convolve}]{\setlength{\rightskip}{0pt plus 5cm}void Patchwork\-::convolve (
+\begin{DoxyParamCaption}
+\item[{const std\-::vector$<$ {\bf Filter} $>$ \&}]{filters, }
+\item[{std\-::vector$<$ std\-::vector$<$ {\bf H\-O\-G\-Pyramid\-::\-Matrix} $>$ $>$ \&}]{convolutions}
+\end{DoxyParamCaption}
+) const}}\label{class_f_f_l_d_1_1_patchwork_a52eadb033fc06793960507cd9c6e15cb}
+Returns the convolutions of the patchwork with filters (useful to compute the S\-V\-M margins). 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em filters} & The filters. \\
+\hline
+\mbox{\tt out}  & {\em convolutions} & The convolutions (filters x levels). \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_f_f_l_d_1_1_patchwork_ac4aecde334ba92e8322962c7a1ae3dba}{\index{F\-F\-L\-D\-::\-Patchwork@{F\-F\-L\-D\-::\-Patchwork}!Init@{Init}}
+\index{Init@{Init}!FFLD::Patchwork@{F\-F\-L\-D\-::\-Patchwork}}
+\subsubsection[{Init}]{\setlength{\rightskip}{0pt plus 5cm}bool Patchwork\-::\-Init (
+\begin{DoxyParamCaption}
+\item[{int}]{max\-Rows, }
+\item[{int}]{max\-Cols}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_f_f_l_d_1_1_patchwork_ac4aecde334ba92e8322962c7a1ae3dba}
+Initializes the F\-F\-T\-W library. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em max\-Rows} & Maximum number of rows of a pyramid level (including padding). \\
+\hline
+\mbox{\tt in}  & {\em max\-Cols} & Maximum number of columns of a pyramid level (including padding). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether the initialization was successful. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Must be called before any other method (including constructors). 
+\end{DoxyNote}
+\hypertarget{class_f_f_l_d_1_1_patchwork_ad920b3c00b4b2baa4fb08433ee0a08e1}{\index{F\-F\-L\-D\-::\-Patchwork@{F\-F\-L\-D\-::\-Patchwork}!Transform\-Filter@{Transform\-Filter}}
+\index{Transform\-Filter@{Transform\-Filter}!FFLD::Patchwork@{F\-F\-L\-D\-::\-Patchwork}}
+\subsubsection[{Transform\-Filter}]{\setlength{\rightskip}{0pt plus 5cm}void Patchwork\-::\-Transform\-Filter (
+\begin{DoxyParamCaption}
+\item[{const {\bf H\-O\-G\-Pyramid\-::\-Level} \&}]{filter, }
+\item[{{\bf Filter} \&}]{result}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_f_f_l_d_1_1_patchwork_ad920b3c00b4b2baa4fb08433ee0a08e1}
+Returns a transformed version of a filter to be used by the {\ttfamily convolve} method. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em filter} & Filter to transform. \\
+\hline
+\mbox{\tt out}  & {\em result} & Transformed filter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+If Init was not already called or if the filter is larger than the last max\-Rows and max\-Cols passed to the Init method the result will be empty. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/Patchwork.\-h\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/Patchwork.\-cpp\end{DoxyCompactItemize}

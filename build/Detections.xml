@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Saves>
-    <File>RaphaelBedekteArmenLogitech.avi</File>
+    <File>RaphaelBloteArmenLogitech.avi</File>
     <Frame>
         <Number>100</Number>
         <UpperBody>
             <Rect>
-                <x>62</x>
-                <y>182</y>
-                <Width>499</Width>
-                <Height>298</Height>
+                <x>0</x>
+                <y>186</y>
+                <Width>632</Width>
+                <Height>294</Height>
             </Rect>
         </UpperBody>
+        <Runtime>0.651838</Runtime>
     </Frame>
 </Saves>

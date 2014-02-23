@@ -1,0 +1,101 @@
+\hypertarget{class_f_f_l_d_1_1_model}{\section{F\-F\-L\-D\-:\-:Model Class Reference}
+\label{class_f_f_l_d_1_1_model}\index{F\-F\-L\-D\-::\-Model@{F\-F\-L\-D\-::\-Model}}
+}
+
+
+{\ttfamily \#include $<$Model.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_f_f_l_d_1_1_model_a81cb0b1b5689c8d28af13eb18811b52a}{typedef \hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid_af17c08ed86557e0a0aecb4814daf87c3}{H\-O\-G\-Pyramid\-::\-Scalar} \hyperlink{class_f_f_l_d_1_1_model_a81cb0b1b5689c8d28af13eb18811b52a}{Scalar}}\label{class_f_f_l_d_1_1_model_a81cb0b1b5689c8d28af13eb18811b52a}
+
+\begin{DoxyCompactList}\small\item\em Type of a scalar value. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_model_a4793a991f92f12cdf3f692e256e49f35}{typedef Eigen\-::\-Vector2i \hyperlink{class_f_f_l_d_1_1_model_a4793a991f92f12cdf3f692e256e49f35}{Position}}\label{class_f_f_l_d_1_1_model_a4793a991f92f12cdf3f692e256e49f35}
+
+\begin{DoxyCompactList}\small\item\em Type of a 2d position (x and y). \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_model_ac0493e10c6cde7f65bd6244fdb679ea3}{typedef Eigen\-::\-Matrix\\*
+$<$ \hyperlink{class_f_f_l_d_1_1_model_a4793a991f92f12cdf3f692e256e49f35}{Position}, Eigen\-::\-Dynamic, \\*
+Eigen\-::\-Dynamic, \\*
+Eigen\-::\-Row\-Major $>$ \hyperlink{class_f_f_l_d_1_1_model_ac0493e10c6cde7f65bd6244fdb679ea3}{Positions}}\label{class_f_f_l_d_1_1_model_ac0493e10c6cde7f65bd6244fdb679ea3}
+
+\begin{DoxyCompactList}\small\item\em Type of a matrix of 2d positions. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_model_a378913e215700f42ec642aa748c352c3}{typedef Eigen\-::\-Matrix$<$ \hyperlink{class_f_f_l_d_1_1_model_a81cb0b1b5689c8d28af13eb18811b52a}{Scalar}, 4, 1 $>$ \hyperlink{class_f_f_l_d_1_1_model_a378913e215700f42ec642aa748c352c3}{Deformation}}\label{class_f_f_l_d_1_1_model_a378913e215700f42ec642aa748c352c3}
+
+\begin{DoxyCompactList}\small\item\em Type of a 2d quadratic deformation ({\ttfamily ax$^\wedge$2 + bx + cy$^\wedge$2 + dy}). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_f_f_l_d_1_1_model_ae3b375de5f6df4faf74a95d64748e048}{\hyperlink{class_f_f_l_d_1_1_model_ae3b375de5f6df4faf74a95d64748e048}{Model} ()}\label{class_f_f_l_d_1_1_model_ae3b375de5f6df4faf74a95d64748e048}
+
+\begin{DoxyCompactList}\small\item\em Constructs an empty model. An empty model has an empty root and no part. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_model_a10abfb84338378da2152bae25d0ab0c2}{bool \hyperlink{class_f_f_l_d_1_1_model_a10abfb84338378da2152bae25d0ab0c2}{empty} () const }\label{class_f_f_l_d_1_1_model_a10abfb84338378da2152bae25d0ab0c2}
+
+\begin{DoxyCompactList}\small\item\em Returns whether the model is empty. An empty model has an empty root and no part. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_model_a35ed01e517a3beb1c6acb98b3b33db53}{std\-::pair$<$ int, int $>$ \hyperlink{class_f_f_l_d_1_1_model_a35ed01e517a3beb1c6acb98b3b33db53}{root\-Size} () const }\label{class_f_f_l_d_1_1_model_a35ed01e517a3beb1c6acb98b3b33db53}
+
+\begin{DoxyCompactList}\small\item\em Returns the size of the root ({\ttfamily rows x cols}). \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_model_a9a64087a29e741402a35c730cf36a52e}{int \hyperlink{class_f_f_l_d_1_1_model_a9a64087a29e741402a35c730cf36a52e}{nb\-Parts} () const }\label{class_f_f_l_d_1_1_model_a9a64087a29e741402a35c730cf36a52e}
+
+\begin{DoxyCompactList}\small\item\em Returns the number of parts. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_model_a37f7d8396c5a841209cf0cb4e69d0157}{std\-::pair$<$ int, int $>$ \hyperlink{class_f_f_l_d_1_1_model_a37f7d8396c5a841209cf0cb4e69d0157}{part\-Size} () const }\label{class_f_f_l_d_1_1_model_a37f7d8396c5a841209cf0cb4e69d0157}
+
+\begin{DoxyCompactList}\small\item\em Returns the size of the parts ({\ttfamily rows x cols}). \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_model_a2f391b6981fa65a2eaa6a379a47c0519}{\hyperlink{class_f_f_l_d_1_1_model_a81cb0b1b5689c8d28af13eb18811b52a}{Scalar} \hyperlink{class_f_f_l_d_1_1_model_a2f391b6981fa65a2eaa6a379a47c0519}{bias} () const }\label{class_f_f_l_d_1_1_model_a2f391b6981fa65a2eaa6a379a47c0519}
+
+\begin{DoxyCompactList}\small\item\em Returns the model bias. \end{DoxyCompactList}\item 
+void \hyperlink{class_f_f_l_d_1_1_model_a9a70229e2e34132acf97de0de1e6ee81}{convolve} (const \hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid}{H\-O\-G\-Pyramid} \&pyramid, std\-::vector$<$ \hyperlink{class_f_f_l_d_1_1_h_o_g_pyramid_a2618b4bd5d17f05cdc108189ed5abe3a}{H\-O\-G\-Pyramid\-::\-Matrix} $>$ \&scores, std\-::vector$<$ std\-::vector$<$ \hyperlink{class_f_f_l_d_1_1_model_ac0493e10c6cde7f65bd6244fdb679ea3}{Positions} $>$ $>$ $\ast$positions=0) const 
+\item 
+\hypertarget{class_f_f_l_d_1_1_model_a65ee168347bf626fbf3ad90823a2159c}{\hyperlink{class_f_f_l_d_1_1_model}{Model} \hyperlink{class_f_f_l_d_1_1_model_a65ee168347bf626fbf3ad90823a2159c}{flip} () const }\label{class_f_f_l_d_1_1_model_a65ee168347bf626fbf3ad90823a2159c}
+
+\begin{DoxyCompactList}\small\item\em Returns the flipped version (horizontally) of a model or a fixed sample. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_f_f_l_d_1_1_model_a1686bded4573f97d73fc11dba1000018}{Mixture}
+\item 
+\hypertarget{class_f_f_l_d_1_1_model_a39cd698b774d73886d303cebe56c31fe}{std\-::ostream \& \hyperlink{class_f_f_l_d_1_1_model_a39cd698b774d73886d303cebe56c31fe}{operator$<$$<$} (std\-::ostream \&os, const \hyperlink{class_f_f_l_d_1_1_model}{Model} \&model)}\label{class_f_f_l_d_1_1_model_a39cd698b774d73886d303cebe56c31fe}
+
+\begin{DoxyCompactList}\small\item\em Serializes a model to a stream. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_model_ae500bc06913d52a6b65b3813704ca103}{std\-::istream \& \hyperlink{class_f_f_l_d_1_1_model_ae500bc06913d52a6b65b3813704ca103}{operator$>$$>$} (std\-::istream \&is, \hyperlink{class_f_f_l_d_1_1_model}{Model} \&model)}\label{class_f_f_l_d_1_1_model_ae500bc06913d52a6b65b3813704ca103}
+
+\begin{DoxyCompactList}\small\item\em Unserializes a model from a stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_f_f_l_d_1_1_model}{Model} class can represent both a deformable part-\/based model or a training sample with fixed latent variables (parts' positions). In both cases the members are the same\-: a list of parts and a bias. If it is a sample, for each part the filter is set to the corresponding features, the offset is set to the part position relative to the root, and the deformation is set to the deformation gradients ({\ttfamily dx$^\wedge$2 dx dy$^\wedge$2 dy}), where dx, dy are the differences between the part position and the reference part location. The dot product between the deformation gradient and the model deformation then computes the deformation cost. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_f_f_l_d_1_1_model_a9a70229e2e34132acf97de0de1e6ee81}{\index{F\-F\-L\-D\-::\-Model@{F\-F\-L\-D\-::\-Model}!convolve@{convolve}}
+\index{convolve@{convolve}!FFLD::Model@{F\-F\-L\-D\-::\-Model}}
+\subsubsection[{convolve}]{\setlength{\rightskip}{0pt plus 5cm}void F\-F\-L\-D\-::\-Model\-::convolve (
+\begin{DoxyParamCaption}
+\item[{const {\bf H\-O\-G\-Pyramid} \&}]{pyramid, }
+\item[{std\-::vector$<$ {\bf H\-O\-G\-Pyramid\-::\-Matrix} $>$ \&}]{scores, }
+\item[{std\-::vector$<$ std\-::vector$<$ {\bf Positions} $>$ $>$ $\ast$}]{positions = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const}}\label{class_f_f_l_d_1_1_model_a9a70229e2e34132acf97de0de1e6ee81}
+Returns the scores of the convolutions + distance transforms of the parts with a pyramid of features (useful to compute the S\-V\-M margins). 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pyramid} & Pyramid of features. \\
+\hline
+\mbox{\tt out}  & {\em scores} & Scores for each pyramid level. \\
+\hline
+\mbox{\tt out}  & {\em positions} & Positions of each part of the model for each pyramid level ({\ttfamily parts x levels}). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Unefficient, use the convolve method of the \hyperlink{class_f_f_l_d_1_1_mixture}{Mixture} class for the Fourier accelerated version. 
+\end{DoxyNote}
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{class_f_f_l_d_1_1_model_a1686bded4573f97d73fc11dba1000018}{\index{F\-F\-L\-D\-::\-Model@{F\-F\-L\-D\-::\-Model}!Mixture@{Mixture}}
+\index{Mixture@{Mixture}!FFLD::Model@{F\-F\-L\-D\-::\-Model}}
+\subsubsection[{Mixture}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf Mixture}\hspace{0.3cm}{\ttfamily [friend]}}}\label{class_f_f_l_d_1_1_model_a1686bded4573f97d73fc11dba1000018}
+Make the \hyperlink{class_f_f_l_d_1_1_mixture}{Mixture} class a friend so that it can access private members (necessary to implement Fourier accelerated convolutions). 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/Model.\-h\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/Model.\-cpp\end{DoxyCompactItemize}

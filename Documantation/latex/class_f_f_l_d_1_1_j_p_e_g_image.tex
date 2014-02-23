@@ -1,0 +1,128 @@
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image}{\section{F\-F\-L\-D\-:\-:J\-P\-E\-G\-Image Class Reference}
+\label{class_f_f_l_d_1_1_j_p_e_g_image}\index{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}}
+}
+
+
+{\ttfamily \#include $<$J\-P\-E\-G\-Image.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a7604bd4e0f7cf0eaa4c1f8ddd412077d}{\hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a7604bd4e0f7cf0eaa4c1f8ddd412077d}{J\-P\-E\-G\-Image} ()}\label{class_f_f_l_d_1_1_j_p_e_g_image_a7604bd4e0f7cf0eaa4c1f8ddd412077d}
+
+\begin{DoxyCompactList}\small\item\em Constructs an empty image. An empty image has zero size. \end{DoxyCompactList}\item 
+\hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a0c944c19a3c7c9deaae5027f7a29e850}{J\-P\-E\-G\-Image} (int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a6876061ad7198120040466d332a46bdc}{width}, int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_aa8a99643896fd76976cb6b1629d69746}{height}, int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_aed01a09f279c86cc1022d10f8a49204c}{depth}, const uint8\-\_\-t $\ast$\hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a428a467149c63eac24859ab257667be0}{bits}=0)
+\item 
+\hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a734f2d3f4870d696e68aa60d8ec12fc0}{J\-P\-E\-G\-Image} (Mat img)
+\item 
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a6876061ad7198120040466d332a46bdc}{int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a6876061ad7198120040466d332a46bdc}{width} () const }\label{class_f_f_l_d_1_1_j_p_e_g_image_a6876061ad7198120040466d332a46bdc}
+
+\begin{DoxyCompactList}\small\item\em Returns the width of the image. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_aa8a99643896fd76976cb6b1629d69746}{int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_aa8a99643896fd76976cb6b1629d69746}{height} () const }\label{class_f_f_l_d_1_1_j_p_e_g_image_aa8a99643896fd76976cb6b1629d69746}
+
+\begin{DoxyCompactList}\small\item\em Returns the height of the image. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_aed01a09f279c86cc1022d10f8a49204c}{int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_aed01a09f279c86cc1022d10f8a49204c}{depth} () const }\label{class_f_f_l_d_1_1_j_p_e_g_image_aed01a09f279c86cc1022d10f8a49204c}
+
+\begin{DoxyCompactList}\small\item\em Returns the depth of the image. The image depth is the number of color channels. \end{DoxyCompactList}\item 
+const uint8\-\_\-t $\ast$ \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a428a467149c63eac24859ab257667be0}{bits} () const 
+\item 
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a06eab6917896ba5467e1e55974a2b52d}{uint8\-\_\-t $\ast$ \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a06eab6917896ba5467e1e55974a2b52d}{bits} ()}\label{class_f_f_l_d_1_1_j_p_e_g_image_a06eab6917896ba5467e1e55974a2b52d}
+
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the pixel data. Returns a null pointer if the image is empty. \end{DoxyCompactList}\item 
+const uint8\-\_\-t $\ast$ \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a2c6033407c9724c25b9dd3ba8052d4e6}{scan\-Line} (int y) const 
+\item 
+uint8\-\_\-t $\ast$ \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a6451758eb67c634c41d9a2a99eefc8c9}{scan\-Line} (int y)
+\item 
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a05e9c73c5a6721ad9410b696cad718b5}{bool \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a05e9c73c5a6721ad9410b696cad718b5}{empty} () const }\label{class_f_f_l_d_1_1_j_p_e_g_image_a05e9c73c5a6721ad9410b696cad718b5}
+
+\begin{DoxyCompactList}\small\item\em Returns whether the image is empty. An empty image has zero size. \end{DoxyCompactList}\item 
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a2104c2a7ced8d3267712034cd4bb8556}{void \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a2104c2a7ced8d3267712034cd4bb8556}{save} (const std\-::string \&filename, int quality=100) const }\label{class_f_f_l_d_1_1_j_p_e_g_image_a2104c2a7ced8d3267712034cd4bb8556}
+
+\begin{DoxyCompactList}\small\item\em Saves the image to a jpeg file with the given {\ttfamily filename} and {\ttfamily quality}. \end{DoxyCompactList}\item 
+\hyperlink{class_f_f_l_d_1_1_j_p_e_g_image}{J\-P\-E\-G\-Image} \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a8e43979c7fff922528c689500ee49c5a}{resize} (int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a6876061ad7198120040466d332a46bdc}{width}, int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_aa8a99643896fd76976cb6b1629d69746}{height}) const 
+\item 
+\hyperlink{class_f_f_l_d_1_1_j_p_e_g_image}{J\-P\-E\-G\-Image} \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_ad2e71e56f959b824e2e6a47a60bd2a17}{crop} (int x, int y, int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_a6876061ad7198120040466d332a46bdc}{width}, int \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image_aa8a99643896fd76976cb6b1629d69746}{height}) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_f_f_l_d_1_1_j_p_e_g_image}{J\-P\-E\-G\-Image} class allows to load/save an image from/to a jpeg file, and to apply basic operations such as resizing or cropping to it. The pixels are stored contiguously in row-\/major order (scanline 0\-: R\-G\-B R\-G\-B R\-G\-B, scanline 1\-: R\-G\-B R\-G\-B R\-G\-B...) 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a0c944c19a3c7c9deaae5027f7a29e850}{\index{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}!J\-P\-E\-G\-Image@{J\-P\-E\-G\-Image}}
+\index{J\-P\-E\-G\-Image@{J\-P\-E\-G\-Image}!FFLD::JPEGImage@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}}
+\subsubsection[{J\-P\-E\-G\-Image}]{\setlength{\rightskip}{0pt plus 5cm}J\-P\-E\-G\-Image\-::\-J\-P\-E\-G\-Image (
+\begin{DoxyParamCaption}
+\item[{int}]{width, }
+\item[{int}]{height, }
+\item[{int}]{depth, }
+\item[{const uint8\-\_\-t $\ast$}]{bits = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_f_f_l_d_1_1_j_p_e_g_image_a0c944c19a3c7c9deaae5027f7a29e850}
+Constructs an image with the given {\ttfamily width}, {\ttfamily height} and {\ttfamily depth}, and initializes it from the given {\ttfamily bits}. \begin{DoxyNote}{Note}
+The returned image might be empty if any of the parameters is incorrect. 
+\end{DoxyNote}
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a734f2d3f4870d696e68aa60d8ec12fc0}{\index{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}!J\-P\-E\-G\-Image@{J\-P\-E\-G\-Image}}
+\index{J\-P\-E\-G\-Image@{J\-P\-E\-G\-Image}!FFLD::JPEGImage@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}}
+\subsubsection[{J\-P\-E\-G\-Image}]{\setlength{\rightskip}{0pt plus 5cm}J\-P\-E\-G\-Image\-::\-J\-P\-E\-G\-Image (
+\begin{DoxyParamCaption}
+\item[{Mat}]{img}
+\end{DoxyParamCaption}
+)}}\label{class_f_f_l_d_1_1_j_p_e_g_image_a734f2d3f4870d696e68aa60d8ec12fc0}
+Constructs an image and tries to load the image from the jpeg file with the given {\ttfamily filename}. \begin{DoxyNote}{Note}
+The returned image might be empty if the image could not be loaded. 
+\end{DoxyNote}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a428a467149c63eac24859ab257667be0}{\index{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}!bits@{bits}}
+\index{bits@{bits}!FFLD::JPEGImage@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}}
+\subsubsection[{bits}]{\setlength{\rightskip}{0pt plus 5cm}const uint8\-\_\-t $\ast$ J\-P\-E\-G\-Image\-::bits (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_f_f_l_d_1_1_j_p_e_g_image_a428a467149c63eac24859ab257667be0}
+Returns a pointer to the pixel data. \begin{DoxyNote}{Note}
+Returns a null pointer if the image is empty. 
+\end{DoxyNote}
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_ad2e71e56f959b824e2e6a47a60bd2a17}{\index{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}!crop@{crop}}
+\index{crop@{crop}!FFLD::JPEGImage@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}}
+\subsubsection[{crop}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\-P\-E\-G\-Image} J\-P\-E\-G\-Image\-::crop (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{width, }
+\item[{int}]{height}
+\end{DoxyParamCaption}
+) const}}\label{class_f_f_l_d_1_1_j_p_e_g_image_ad2e71e56f959b824e2e6a47a60bd2a17}
+Returns a copy of a region of the image located at {\ttfamily x} and {\ttfamily y}, and of dimensions {\ttfamily width} and {\ttfamily height}. \begin{DoxyNote}{Note}
+The returned image might be smaller if some of the coordinates are outside the image. 
+\end{DoxyNote}
+\hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a8e43979c7fff922528c689500ee49c5a}{\index{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}!resize@{resize}}
+\index{resize@{resize}!FFLD::JPEGImage@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}}
+\subsubsection[{resize}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\-P\-E\-G\-Image} J\-P\-E\-G\-Image\-::resize (
+\begin{DoxyParamCaption}
+\item[{int}]{width, }
+\item[{int}]{height}
+\end{DoxyParamCaption}
+) const}}\label{class_f_f_l_d_1_1_j_p_e_g_image_a8e43979c7fff922528c689500ee49c5a}
+Returns a copy of the image scaled to the given {\ttfamily width} and {\ttfamily height}. If either the width or the height is zero or negative, the method returns an empty image. \hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a2c6033407c9724c25b9dd3ba8052d4e6}{\index{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}!scan\-Line@{scan\-Line}}
+\index{scan\-Line@{scan\-Line}!FFLD::JPEGImage@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}}
+\subsubsection[{scan\-Line}]{\setlength{\rightskip}{0pt plus 5cm}const uint8\-\_\-t $\ast$ J\-P\-E\-G\-Image\-::scan\-Line (
+\begin{DoxyParamCaption}
+\item[{int}]{y}
+\end{DoxyParamCaption}
+) const}}\label{class_f_f_l_d_1_1_j_p_e_g_image_a2c6033407c9724c25b9dd3ba8052d4e6}
+Returns a pointer to the pixel data at the scanline with index y. The first scanline is at index 0. Returns a null pointer if the image is empty or if y is out of bounds. \hypertarget{class_f_f_l_d_1_1_j_p_e_g_image_a6451758eb67c634c41d9a2a99eefc8c9}{\index{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}!scan\-Line@{scan\-Line}}
+\index{scan\-Line@{scan\-Line}!FFLD::JPEGImage@{F\-F\-L\-D\-::\-J\-P\-E\-G\-Image}}
+\subsubsection[{scan\-Line}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t $\ast$ J\-P\-E\-G\-Image\-::scan\-Line (
+\begin{DoxyParamCaption}
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{class_f_f_l_d_1_1_j_p_e_g_image_a6451758eb67c634c41d9a2a99eefc8c9}
+Returns a pointer to the pixel data at the scanline with index y. The first scanline is at index 0. Returns a null pointer if the image is empty or if y is out of bounds. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/J\-P\-E\-G\-Image.\-h\item 
+/\-Users/raphaeldendooven/\-Documents/school/2013-\/2014\-\_\-\-Thesis\-\_\-\-Master/\-Programs/\-Hand\-Detection/J\-P\-E\-G\-Image.\-cpp\end{DoxyCompactItemize}

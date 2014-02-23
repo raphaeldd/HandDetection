@@ -28,6 +28,7 @@
 #include "DetBody.h"
 #include "DetHand.h"
 #include "SaveDetections.h"
+#include "HighestLikelihood.h"
 
 
 using namespace std;
@@ -94,9 +95,8 @@ int main(int argc, char *argv[])
     // Detections
     cout << "---> Initalisation upper body detection." << endl;
     DetBody body("torso3comp.txt", -0.5);
-    cout << "\a";
     cout << "---> Initalisation hand detection." << endl;
-    DetHand hand("hand.txt", -0.3);cout << "\a";
+    DetHand hand("hand.txt", -0.3);cout;
 
     // Program loop
     cout << "---> Start program loop." << endl;
@@ -116,6 +116,7 @@ int main(int argc, char *argv[])
         body.runDetection(cameraImage, cap.get( CV_CAP_PROP_POS_FRAMES ));
 
         cout << body.getSize() << " detections found" << endl;
+        // Do hand detection per body detection
         for ( int n = 0; n < body.getSize(); n++ ) {
             clock_t T1, T2;
             T1 = clock();
@@ -123,13 +124,18 @@ int main(int argc, char *argv[])
             ss.str("");
             ss << "Body detection: " << n+1;
             imshow( ss.str(), body.getCutouts()[n]);
-            hand.runDetection(body.getCutouts()[n], cap.get( CV_CAP_PROP_POS_FRAMES ));
-            for ( int i = 0; i < hand.getSize(); i++ ) {
-                save->newHand(hand.getRect()[i].first, hand.getRect()[i].second);
 
-                body.getCutouts()[n].copyTo( cameraImage );
-                hand.drawResult(cameraImage, hand.getRect()[i].first, hand.getRect()[i].second, Scalar(255, 0, 255));
+            // Run hand detection
+            // hand.runDetection(body.getCutouts()[n], cap.get( CV_CAP_PROP_POS_FRAMES )); // !!! TEMPERARY
+            body.getCutouts()[n].copyTo( cameraImage );
+            for ( int i = 0; i < hand.getSize(); i++ ) {
+                save->newHand(hand.getRect()[i]);   // Save hand detections to XML file
+                hand.drawResult(cameraImage, hand.getRect()[i], Scalar(255, 0, 255)); // View hand detections on body detections
             }
+
+            HighestLikelihood likeli;
+            likeli.armConnectDetection(cameraImage, hand.getRect());
+
             T2 = clock();
             float diff = ( (float)T2 - (float)T1 ) / CLOCKS_PER_SEC;
             save->runtime(diff);
@@ -143,7 +149,6 @@ int main(int argc, char *argv[])
 
         // Skip frames
         cap.set( CV_CAP_PROP_POS_FRAMES, cap.get(CV_CAP_PROP_POS_FRAMES) + skipFrames - 1 );
-        cout << "\a";
     }
     save->~SaveDetections();
 
