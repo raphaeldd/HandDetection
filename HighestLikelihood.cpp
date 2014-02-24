@@ -7,13 +7,27 @@ HighestLikelihood::HighestLikelihood()
 void HighestLikelihood::armConnectDetection(Mat img, vector<RotatedRect> hand) {
     // Skin segmentation
     Mat skin = this->skinSegmentation(img);
-    imwrite("Skin.png", skin);
-    imwrite("Original.png", img);
 
+    // Find 4 biggest blobs
+    Mat blobs = skin.clone();
+    vector<vector<Point> > contours;
+    findContours(blobs, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
+
+    vector<pair<double, int> > sizeContours;
+    Mat bigSkin(skin.rows, skin.cols, skin.type(), Scalar(0, 0, 0));
+    for (unsigned int i = 0; i < contours.size(); i++) {
+        sizeContours.push_back(make_pair(contourArea(contours[i]), i) );
+    }
+    sort(sizeContours.begin(), sizeContours.end());
+
+    for (unsigned  int i = sizeContours.size() - 1; i > sizeContours.size() - 5; i--) {
+        drawContours(bigSkin, contours, sizeContours[i].second, Scalar(255, 255, 255), CV_FILLED);
+    }
+    imshow("4 bigest skin areas", bigSkin);
 
     // Skeletonize
-    cv::threshold(skin, skin, 127, 255, cv::THRESH_BINARY);
-    cv::Mat skel(skin.size(), CV_8UC1, cv::Scalar(0));
+    cv::threshold(bigSkin, bigSkin, 127, 255, cv::THRESH_BINARY);
+    cv::Mat skel(bigSkin.size(), CV_8UC1, cv::Scalar(0));
     cv::Mat temp;
     cv::Mat eroded;
 
@@ -22,31 +36,28 @@ void HighestLikelihood::armConnectDetection(Mat img, vector<RotatedRect> hand) {
     bool done;
     do
     {
-        cv::erode(skin, eroded, element);
+        cv::erode(bigSkin, eroded, element);
         cv::dilate(eroded, temp, element); // temp = open(img)
-        cv::subtract(skin, temp, temp);
+        cv::subtract(bigSkin, temp, temp);
         cv::bitwise_or(skel, temp, skel);
-        eroded.copyTo(skin);
+        eroded.copyTo(bigSkin);
 
-        done = (cv::countNonZero(skin) == 0);
+        done = (cv::countNonZero(bigSkin) == 0);
     } while (!done);
 
     imshow("Skin seg. + Skeleton", skel);
-    imwrite("SkeletonizedSkin.png", skel);
-
 
 
     // Line detection
     vector<Vec4i> lines;
     HoughLinesP(skel, lines, 1, CV_PI/180, 5, 20, 15);
-    Mat dst = img.clone();
+    Mat arms = img.clone();
     for (int i = 0; i < lines.size(); i++ ) {
         Vec4i l = lines[i];
-        line(dst, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 0, 255), 1, CV_AA);
+        line(arms, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(255, 128, 0), 1, CV_AA);
     }
+    imshow("Arms", arms);
 
-    imshow("Arms", dst);
-    imwrite("Arms.png", dst);
 }
 
 Mat HighestLikelihood::skinSegmentation(Mat In) {
@@ -78,10 +89,12 @@ Mat HighestLikelihood::skinSegmentation(Mat In) {
         }
 
         // Segmentation of the skin in Input image
-        inRange(skin, Scalar(0, 48, 80), Scalar(centerH+2, 255, 255), skin);
-        int sizeMask = 2;
-        Mat element = getStructuringElement( MORPH_ERODE, Size( 2*sizeMask+1, 2*sizeMask+1 ), Point( sizeMask, sizeMask ) );
+        inRange(skin, Scalar(0, 70, 60), Scalar(centerH*1.2, 255, 255), skin);
+
+        Mat element = getStructuringElement( MORPH_ERODE, Size( 7, 7 ), Point( 3, 3 ) );
         morphologyEx( skin, skin, 2, element);
+        element = getStructuringElement( MORPH_DILATE, Size( 7, 7 ), Point( 3, 3 ) );
+        dilate(skin, skin, element);
     }
     return skin;
 }

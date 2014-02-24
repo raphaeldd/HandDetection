@@ -1,8 +1,10 @@
 .DS_Store
-build/
+build/*
 *.user
 Documantation/Doxyfile
 
 Documantation/doxygen_log.txt
 
 Documantation/latex
+
+build/Arms.png
