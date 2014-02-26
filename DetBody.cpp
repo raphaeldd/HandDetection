@@ -46,9 +46,9 @@ void DetBody::runDetection( Mat image , int frameNumber) {
     cout << "       detections: " << this->pos.size() << endl;
     for ( unsigned int n = 0; n < this->pos.size(); n++) {
         // Stretching bounding box
-        this->pos[n].x = this->pos[n].x - this->pos[n].width * 1.2;
-        this->pos[n].width = ( this->pos[n].width * 1.2 * 2 ) + this->pos[n].width;
-        this->pos[n].height = this->pos[n].height * 1.25;
+        this->pos[n].x = this->pos[n].x - this->pos[n].width * 0.8;
+        this->pos[n].width = ( this->pos[n].width * 0.8 * 2 ) + this->pos[n].width;
+        this->pos[n].height = this->pos[n].height * 1.2;
 
         // Secure an in image coutout
         if ( this->pos[n].x < 0 ) {

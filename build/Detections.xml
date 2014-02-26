@@ -3,18 +3,15 @@
 <Saves>
     <File>RaphaelBloteArmenLogitech.avi</File>
     <Frame>
-        <Number>100</Number>
+        <Number>120</Number>
         <UpperBody>
             <Rect>
-                <x>0</x>
-                <y>186</y>
-                <Width>632</Width>
-                <Height>294</Height>
+                <x>110</x>
+                <y>180</y>
+                <Width>530</Width>
+                <Height>300</Height>
             </Rect>
         </UpperBody>
-        <Runtime>0.582619</Runtime>
-    </Frame>
-    <Frame>
-        <Number>110</Number>
+        <Runtime>226.244</Runtime>
     </Frame>
 </Saves>

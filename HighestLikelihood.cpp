@@ -52,13 +52,39 @@ void HighestLikelihood::armConnectDetection(Mat img, vector<RotatedRect> hand) {
     vector<Vec4i> lines;
     HoughLinesP(skel, lines, 1, CV_PI/180, 5, 20, 15);
     Mat arms = img.clone();
-    for (int i = 0; i < lines.size(); i++ ) {
+    for (unsigned int i = 0; i < lines.size(); i++ ) {
         Vec4i l = lines[i];
         line(arms, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(255, 128, 0), 1, CV_AA);
     }
+
+    // Check if endpoints of detected lines are in founded hand detection areas
+    this->score.assign(hand.size(), 0);
+    //      Loop for each line point
+    for ( unsigned int l = 0; l < lines.size(); l++) {
+        Vec4i line = lines[l];
+        //      Loop for each detected hand
+        for ( unsigned int h = 0; h < hand.size(); h++) {
+            Rect bb = hand[h].boundingRect();
+            if (line[0] >= bb.tl().x && line[0] <= bb.br().x && line[1] >= bb.tl().y && line[1] <= bb.br().y) {
+                this->score.at(h)++;
+            }
+            if (line[2] >= bb.tl().x && line[2] <= bb.br().x && line[3] >= bb.tl().y && line[3] <= bb.br().y) {
+                this->score.at(h)++;
+            }
+        }
+    }
+
     imshow("Arms", arms);
 
 }
+
+vector<int> HighestLikelihood::getScore() {
+    return this->score;
+}
+
+
+
+
 
 Mat HighestLikelihood::skinSegmentation(Mat In) {
     // Face detection

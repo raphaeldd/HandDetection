@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     cout << "---> Initalisation upper body detection." << endl;
     DetBody body("torso3comp.txt", -0.5);
     cout << "---> Initalisation hand detection." << endl;
-    DetHand hand("hand.txt", -0.3);cout;
+    DetHand hand("hand.txt", "context-hand.txt", -0.3);
 
     // Program loop
     cout << "---> Start program loop." << endl;
@@ -126,24 +126,32 @@ int main(int argc, char *argv[])
             imshow( ss.str(), body.getCutouts()[n]);
 
             // Run hand detection
-            // hand.runDetection(body.getCutouts()[n], cap.get( CV_CAP_PROP_POS_FRAMES )); // !!! TEMPERARY
+            hand.runDetection(body.getCutouts()[n], cap.get( CV_CAP_PROP_POS_FRAMES )); // !!! TEMPERARY
             body.getCutouts()[n].copyTo( cameraImage );
-            for ( int i = 0; i < hand.getSize(); i++ ) {
-                save->newHand(hand.getRect()[i]);   // Save hand detections to XML file
-                hand.drawResult(cameraImage, hand.getRect()[i], Scalar(255, 0, 255)); // View hand detections on body detections
-            }
 
+            // Run Highest Likelihood eliminator
             HighestLikelihood likeli;
             likeli.armConnectDetection(cameraImage, hand.getRect());
+
+
+            Mat handResults = cameraImage.clone();
+            for ( int i = 0; i < hand.getSize(); i++ ) {
+                save->newHand(hand.getRect()[i]);   // Save hand detections to XML file
+                if ( likeli.getScore()[i] > 0 ) {
+                    hand.drawResult(handResults, hand.getRect()[i], Scalar(0, 255, 0)); // View hand detections on body detections with score
+                } else {
+                    hand.drawResult(handResults, hand.getRect()[i], Scalar(0, 0, 255)); // View hand detections on body detections without score
+                }
+            }
+            imshow( "Hands", handResults );
 
             T2 = clock();
             float diff = ( (float)T2 - (float)T1 ) / CLOCKS_PER_SEC;
             save->runtime(diff);
 
-            imshow( "Hands", cameraImage );
+
             waitKey(-1);
         }
-        waitKey(20);
         destroyAllWindows();
 
 

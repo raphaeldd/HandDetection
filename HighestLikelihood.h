@@ -21,7 +21,11 @@ class HighestLikelihood
 
         void armConnectDetection(Mat img, vector<RotatedRect> hand);
 
+        vector<int> getScore();
+
     private:
+        vector<int> score;
+
         Mat skinSegmentation(Mat In);
 };
 

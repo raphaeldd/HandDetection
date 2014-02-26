@@ -52,7 +52,7 @@ class DetHand
         /// Preps the detector with the right hand model.
         /// @param ModelHand Filename of model
         /// @param threshold Threshold value of detector
-        DetHand(String modelHand, double threshold);
+        DetHand(String modelHand, String contextModel, double threshold);
 
         /// @brief Apply the detector on a image
         /// @param image The image for the detector
@@ -84,7 +84,7 @@ class DetHand
         vector<UniqueDetections> FinalUpperHandDetections;
         vector<UniqueDetections> FinalHandDetections;
         vector<UniqueDetections> FinalDetections;
-        Mixture mixtureHand;
+        Mixture mixtureHand, mixtureHandContext;
         String modelHand;
 
         vector<Mat> detections;
@@ -94,7 +94,7 @@ class DetHand
 
         void rotate(cv::Mat& src, double angle, cv::Mat& dst);
         RotatedRect correction(Rect box, int angle, int correction, Point center);
-        //int similarRotRects();
+        void similarRects( vector<RotatedRect>& rects );
 };
 
 #endif // DETHAND_H
