@@ -28,28 +28,28 @@ class SaveDetections
         /// @brief Constructor of class SaveDetections
         /// Opens the xml file Detections.xml in local directory
         /// @param filenameAvi gives new entery for specific AVI file
-        SaveDetections(QString filenameAvi );
+        SaveDetections(QString filenameAvi);
 
         /// @brief Adds new element frame to XML
         /// @param framNr Puts the frame number in the XML file
-        void newFrame (int frameNr);
+        void newFrame(int frameNr);
 
         /// @brief adds new element for a upper body detection
         /// @param box Position information of the detection
-        void newUpperBody (Rect box);
+        void newUpperBody(Rect box);
 
         /// @brief adds new element for a hand detection
         /// @param box Position information of the detection
         /// @param angle rotaion of the detection
-        void newHand (RotatedRect box);
+        void newHand(RotatedRect box);
 
         /// @brief adds a runtime element to the XML
         /// @param time Runtime
-        void runtime (float time);
+        void runtime(float time);
 
         /// @brief Destructor of the class
         /// Closes the file and write the data to the XML file
-        ~SaveDetections ();
+        ~SaveDetections();
 
     private:
         QFile* file;

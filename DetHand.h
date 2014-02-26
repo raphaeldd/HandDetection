@@ -94,7 +94,7 @@ class DetHand
 
         void rotate(cv::Mat& src, double angle, cv::Mat& dst);
         RotatedRect correction(Rect box, int angle, int correction, Point center);
-        void similarRects( vector<RotatedRect>& rects );
+        void similarRects(vector<RotatedRect>& rects);
 };
 
 #endif // DETHAND_H

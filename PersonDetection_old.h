@@ -28,15 +28,13 @@ using namespace std;
 //----------------------------------------------------------------//
 // Structures
 //----------------------------------------------------------------//
-struct UniqueDetections
-{
+struct UniqueDetections {
     Point Center;
     cv::Rect detect;
     double BestScore;
 };
 
-struct CenterPoint
-{
+struct CenterPoint {
     Point Center;
     Point P1;
     Point P2;
@@ -50,24 +48,20 @@ struct CenterPoint
 };
 
 
-struct Detection : public FFLD::Rectangle
-{
+struct Detection : public FFLD::Rectangle {
     HOGPyramid::Scalar score;
     int l;
     int x;
     int y;
 
-    Detection() : score(0), l(0), x(0), y(0)
-    {
+    Detection() : score(0), l(0), x(0), y(0) {
     }
 
     Detection(HOGPyramid::Scalar score, int l, int x, int y, FFLD::Rectangle bndbox) :
-    FFLD::Rectangle(bndbox), score(score), l(l), x(x), y(y)
-    {
+        FFLD::Rectangle(bndbox), score(score), l(l), x(x), y(y) {
     }
 
-    bool operator<(const Detection & detection) const
-    {
+    bool operator<(const Detection & detection) const {
         return score > detection.score;
     }
 };
@@ -81,7 +75,7 @@ void detect(const Mixture & mixture, int width, int height, const HOGPyramid & p
             const string & images, vector<Detection> &detections, vector<Detection> &Facedetections, vector<Detection> &Bodydetections);
 
 
-int PersonDetection(int framenr,Mixture &mixture, vector<UniqueDetections> &FinalFaceDetections, vector<UniqueDetections> &FinalBodyDetections, Mat CVimage);
+int PersonDetection(int framenr, Mixture &mixture, vector<UniqueDetections> &FinalFaceDetections, vector<UniqueDetections> &FinalBodyDetections, Mat CVimage);
 
 int Init(Mixture &mixture, string model);
 

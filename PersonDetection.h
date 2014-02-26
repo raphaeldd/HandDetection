@@ -28,15 +28,13 @@ using namespace std;
 //----------------------------------------------------------------//
 // Structures
 //----------------------------------------------------------------//
-struct UniqueDetections
-{
+struct UniqueDetections {
     Point Center;
     cv::Rect detect;
     double BestScore;
 };
 
-struct TSDetection
-{
+struct TSDetection {
     Point Center;
     cv::Rect Rectangle;
     int weight;
@@ -49,24 +47,20 @@ struct TSDetection
 };
 
 
-struct Detection : public FFLD::Rectangle
-{
+struct Detection : public FFLD::Rectangle {
     HOGPyramid::Scalar score;
     int l;
     int x;
     int y;
 
-    Detection() : score(0), l(0), x(0), y(0)
-    {
+    Detection() : score(0), l(0), x(0), y(0) {
     }
 
     Detection(HOGPyramid::Scalar score, int l, int x, int y, FFLD::Rectangle bndbox) :
-    FFLD::Rectangle(bndbox), score(score), l(l), x(x), y(y)
-    {
+        FFLD::Rectangle(bndbox), score(score), l(l), x(x), y(y) {
     }
 
-    bool operator<(const Detection & detection) const
-    {
+    bool operator<(const Detection & detection) const {
         return score > detection.score;
     }
 };
@@ -79,11 +73,11 @@ void detect(const Mixture & mixture, int width, int height, const HOGPyramid & p
             double threshold, double overlap, const string image,
             const string & images, vector<Detection> &detections, vector<Detection> &Facedetections, vector<Detection> &Bodydetections, Mat CVimage);
 
-int PersonDetection(int framenr,Mixture & mixture,vector<UniqueDetections> & FinalDetections, vector<UniqueDetections> & FinalUpperBodyDetections,vector<UniqueDetections> & FinalTorsoDetections, Mat CVimage, double TH);
+int PersonDetection(int framenr, Mixture & mixture, vector<UniqueDetections> & FinalDetections, vector<UniqueDetections> & FinalUpperBodyDetections, vector<UniqueDetections> & FinalTorsoDetections, Mat CVimage, double TH);
 
 int Init(Mixture &mixture, string model);
 
-void NonMaxSuppr(vector<Detection> input,vector<UniqueDetections> & output, int nmsFactor );
+void NonMaxSuppr(vector<Detection> input, vector<UniqueDetections> & output, int nmsFactor);
 
 
 #endif // PERSONDETECTION_H

@@ -36,9 +36,9 @@ using namespace cv;
 
 SaveDetections* save;
 
-void signal_callback_handler (int signum) {
+void signal_callback_handler(int signum)
+{
     cout << endl << endl << "Signal caught" << endl;
-
     save->~SaveDetections();
     exit(signum);
 }
@@ -50,27 +50,32 @@ int main(int argc, char *argv[])
     int skipFrames = 1;
     String inputFile;
 
-    while ( ( c = getopt(argc, argv, "hb:s:") ) != -1 ) {
-        switch (c) {
-        case 'h':
-            cout << "Help" << endl;
-            return 0;
-            break;
-        case 'b':
-            startFrame = atoi(optarg);
-            break;
-        case 's':
-            skipFrames = atoi(optarg);
-            break;
-        case '?':
-            return 1;
-        default:
-            abort();
+    while((c = getopt(argc, argv, "hb:s:")) != -1) {
+        switch(c) {
+            case 'h':
+                cout << "Help" << endl;
+                return 0;
+                break;
+
+            case 'b':
+                startFrame = atoi(optarg);
+                break;
+
+            case 's':
+                skipFrames = atoi(optarg);
+                break;
+
+            case '?':
+                return 1;
+
+            default:
+                abort();
         }
     }
 
-    inputFile = argv[argc-1];
-    if ( inputFile.substr(inputFile.length()-4) != ".avi" ) {
+    inputFile = argv[argc - 1];
+
+    if(inputFile.substr(inputFile.length() - 4) != ".avi") {
         cout << "No valid input file is found" << endl;
         return 1;
     }
@@ -78,88 +83,77 @@ int main(int argc, char *argv[])
     cout << "start frame: " << startFrame << endl;
     cout << "skip frames: " << skipFrames << endl;
     cout << "input file: " << inputFile << endl;
-
-
     // START OFFICIAL PROGRAM
     // ----------------------------------------
-
     // Opening image file
     VideoCapture cap(inputFile);
-    if (!cap.isOpened())
-    {
+
+    if(!cap.isOpened()) {
         cout << "Invalid input data" << endl;
         return -1;
     }
-    cap.set(CV_CAP_PROP_POS_FRAMES, startFrame - 1 );
 
+    cap.set(CV_CAP_PROP_POS_FRAMES, startFrame - 1);
     // Detections
     cout << "---> Initalisation upper body detection." << endl;
     DetBody body("torso3comp.txt", -0.5);
     cout << "---> Initalisation hand detection." << endl;
     DetHand hand("hand.txt", "context-hand.txt", -0.3);
-
     // Program loop
     cout << "---> Start program loop." << endl;
     save = new SaveDetections(inputFile.c_str());
     signal(SIGINT, signal_callback_handler);
-    while ( cap.get( CV_CAP_PROP_POS_AVI_RATIO )  != -1 ) {
-        Mat cameraImage, textImage;
 
+    while(cap.get(CV_CAP_PROP_POS_AVI_RATIO)  != -1) {
+        Mat cameraImage, textImage;
         cap >> cameraImage;
         cameraImage.copyTo(textImage);
         stringstream ss;
-        ss << cap.get( CV_CAP_PROP_POS_FRAMES ) << "/" << cap.get( CV_CAP_PROP_FRAME_COUNT );
-        putText(textImage, ss.str(), Point(20, 20), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 0, 0) );
-
+        ss << cap.get(CV_CAP_PROP_POS_FRAMES) << "/" << cap.get(CV_CAP_PROP_FRAME_COUNT);
+        putText(textImage, ss.str(), Point(20, 20), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 0, 0));
         // Run body detection
-        save->newFrame(cap.get( CV_CAP_PROP_POS_FRAMES ));
-        body.runDetection(cameraImage, cap.get( CV_CAP_PROP_POS_FRAMES ));
-
+        save->newFrame(cap.get(CV_CAP_PROP_POS_FRAMES));
+        body.runDetection(cameraImage, cap.get(CV_CAP_PROP_POS_FRAMES));
         cout << body.getSize() << " detections found" << endl;
+
         // Do hand detection per body detection
-        for ( int n = 0; n < body.getSize(); n++ ) {
+        for(int n = 0; n < body.getSize(); n++) {
             clock_t T1, T2;
             T1 = clock();
             save->newUpperBody(body.getRect()[n]);
             ss.str("");
-            ss << "Body detection: " << n+1;
-            imshow( ss.str(), body.getCutouts()[n]);
-
+            ss << "Body detection: " << n + 1;
+            imshow(ss.str(), body.getCutouts()[n]);
             // Run hand detection
-            hand.runDetection(body.getCutouts()[n], cap.get( CV_CAP_PROP_POS_FRAMES )); // !!! TEMPERARY
-            body.getCutouts()[n].copyTo( cameraImage );
-
+            hand.runDetection(body.getCutouts()[n], cap.get(CV_CAP_PROP_POS_FRAMES));   // !!! TEMPERARY
+            body.getCutouts()[n].copyTo(cameraImage);
             // Run Highest Likelihood eliminator
             HighestLikelihood likeli;
             likeli.armConnectDetection(cameraImage, hand.getRect());
-
-
             Mat handResults = cameraImage.clone();
-            for ( int i = 0; i < hand.getSize(); i++ ) {
+
+            for(int i = 0; i < hand.getSize(); i++) {
                 save->newHand(hand.getRect()[i]);   // Save hand detections to XML file
-                if ( likeli.getScore()[i] > 0 ) {
+
+                if(likeli.getScore()[i] > 0) {
                     hand.drawResult(handResults, hand.getRect()[i], Scalar(0, 255, 0)); // View hand detections on body detections with score
                 } else {
                     hand.drawResult(handResults, hand.getRect()[i], Scalar(0, 0, 255)); // View hand detections on body detections without score
                 }
             }
-            imshow( "Hands", handResults );
 
+            imshow("Hands", handResults);
             T2 = clock();
-            float diff = ( (float)T2 - (float)T1 ) / CLOCKS_PER_SEC;
+            float diff = ((float)T2 - (float)T1) / CLOCKS_PER_SEC;
             save->runtime(diff);
-
-
             waitKey(-1);
         }
+
         destroyAllWindows();
-
-
         // Skip frames
-        cap.set( CV_CAP_PROP_POS_FRAMES, cap.get(CV_CAP_PROP_POS_FRAMES) + skipFrames - 1 );
+        cap.set(CV_CAP_PROP_POS_FRAMES, cap.get(CV_CAP_PROP_POS_FRAMES) + skipFrames - 1);
     }
-    save->~SaveDetections();
 
-    
+    save->~SaveDetections();
     return EXIT_SUCCESS;
 }

@@ -29,63 +29,63 @@ namespace FFLD
 /// The Mixture class represents a mixture of deformable part-based models.
 class Mixture
 {
-public:
-	/// Type of a matrix of indices.
-	typedef Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> Indices;
-	
-	/// Constructs an empty mixture. An empty mixture has no model.
-	Mixture();
-	
-	/// Constructs a mixture from parameters.
-	/// @param[in] models A list of models (mixture components).
-	Mixture(const std::vector<Model> & models);
-	
-	/// Returns whether the mixture is empty. An empty mixture has no model.
-	bool empty() const;
-	
-	/// Returns the list of models (mixture components).
-	const std::vector<Model> & models() const;
-	
-	/// Returns the minimum root filter size (<tt>rows x cols</tt>).
-	std::pair<int, int> minSize() const;
-	
-	/// Returns the maximum root filter size (<tt>rows x cols</tt>).
-	std::pair<int, int> maxSize() const;
-	
-	/// Returns the scores of the convolutions + distance transforms of the models with a
-	/// pyramid of features (useful to compute the SVM margins).
-	/// @param[in] pyramid Pyramid of features.
-	/// @param[out] scores Scores for each pyramid level.
-	/// @param[out] argmaxes Indices of the best model (mixture component) for each pyramid
-	/// level.
-	/// @param[out] positions Positions of each part of each model for each pyramid level
-	/// (<tt>models x parts x levels</tt>).
-	void convolve(const HOGPyramid & pyramid, std::vector<HOGPyramid::Matrix> & scores,
-				  std::vector<Indices> & argmaxes,
-				  std::vector<std::vector<std::vector<Model::Positions> > > * positions = 0)
-				 const;
-	
-	/// Cache the transformed version of the models' filters.
-	void cacheFilters() const;
-	
-private:
-	/// Returns the scores of the convolutions + distance transforms of the models with a
-	/// pyramid of features (useful to compute the SVM margins).
-	/// @param[in] pyramid Pyramid of features.
-	/// @param[out] scores Scores of each model for each pyramid level
-	/// (<tt>models x levels</tt>).
-	/// @param[out] positions Positions of each part of each model for each pyramid level
-	/// (<tt>models x parts x levels</tt>).
-	void convolve(const HOGPyramid & pyramid,
-				  std::vector<std::vector<HOGPyramid::Matrix> > & scores,
-				  std::vector<std::vector<std::vector<Model::Positions> > > * positions = 0)
-				 const;
-	
-	std::vector<Model> models_; ///< The mixture components.
-	
-	// Used to speed up the convolutions
-	mutable std::vector<Patchwork::Filter> filterCache_; // Cache of transformed filters
-	volatile mutable bool cached_;
+    public:
+        /// Type of a matrix of indices.
+        typedef Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> Indices;
+
+        /// Constructs an empty mixture. An empty mixture has no model.
+        Mixture();
+
+        /// Constructs a mixture from parameters.
+        /// @param[in] models A list of models (mixture components).
+        Mixture(const std::vector<Model> & models);
+
+        /// Returns whether the mixture is empty. An empty mixture has no model.
+        bool empty() const;
+
+        /// Returns the list of models (mixture components).
+        const std::vector<Model> & models() const;
+
+        /// Returns the minimum root filter size (<tt>rows x cols</tt>).
+        std::pair<int, int> minSize() const;
+
+        /// Returns the maximum root filter size (<tt>rows x cols</tt>).
+        std::pair<int, int> maxSize() const;
+
+        /// Returns the scores of the convolutions + distance transforms of the models with a
+        /// pyramid of features (useful to compute the SVM margins).
+        /// @param[in] pyramid Pyramid of features.
+        /// @param[out] scores Scores for each pyramid level.
+        /// @param[out] argmaxes Indices of the best model (mixture component) for each pyramid
+        /// level.
+        /// @param[out] positions Positions of each part of each model for each pyramid level
+        /// (<tt>models x parts x levels</tt>).
+        void convolve(const HOGPyramid & pyramid, std::vector<HOGPyramid::Matrix> & scores,
+                      std::vector<Indices> & argmaxes,
+                      std::vector<std::vector<std::vector<Model::Positions> > > * positions = 0)
+        const;
+
+        /// Cache the transformed version of the models' filters.
+        void cacheFilters() const;
+
+    private:
+        /// Returns the scores of the convolutions + distance transforms of the models with a
+        /// pyramid of features (useful to compute the SVM margins).
+        /// @param[in] pyramid Pyramid of features.
+        /// @param[out] scores Scores of each model for each pyramid level
+        /// (<tt>models x levels</tt>).
+        /// @param[out] positions Positions of each part of each model for each pyramid level
+        /// (<tt>models x parts x levels</tt>).
+        void convolve(const HOGPyramid & pyramid,
+                      std::vector<std::vector<HOGPyramid::Matrix> > & scores,
+                      std::vector<std::vector<std::vector<Model::Positions> > > * positions = 0)
+        const;
+
+        std::vector<Model> models_; ///< The mixture components.
+
+        // Used to speed up the convolutions
+        mutable std::vector<Patchwork::Filter> filterCache_; // Cache of transformed filters
+        volatile mutable bool cached_;
 };
 
 /// Serializes a mixture to a stream.

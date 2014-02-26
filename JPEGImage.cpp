@@ -52,9 +52,9 @@ JPEGImage::JPEGImage() : width_(0), height_(0), depth_(0)
 JPEG image constructor
 ************************************************************************/
 JPEGImage::JPEGImage(int width, int height, int depth, const uint8_t * bits) : width_(0),
-height_(0), depth_(0)
+    height_(0), depth_(0)
 {
-    if ((width <= 0) || (height <= 0) || (depth <= 0))
+    if((width <= 0) || (height <= 0) || (depth <= 0))
         return;
 
     width_ = width;
@@ -62,8 +62,7 @@ height_(0), depth_(0)
     depth_ = depth;
     bits_.resize(width * height * depth);
 
-
-    if (bits)
+    if(bits)
         copy(bits, bits + bits_.size(), bits_.begin());
 }
 
@@ -75,22 +74,21 @@ Return value image in JPEGImage format
 ************************************************************************/
 JPEGImage::JPEGImage(Mat img) : width_(0), height_(0), depth_(0)
 {
-    if(img.empty())
-    {
+    if(img.empty()) {
         return;
     }
 
     cvtColor(img, img, CV_RGB2BGR);
     unsigned char *input = (unsigned char*)(img.data);
     vector<uint8_t> bitsOPENCV(img.cols * img.rows * img.channels());
-
     int b;
-    for(int i = 0;i < img.cols;i++){
-        for(int j = 0;j < img.rows;j++){
-            for(int c=0;c<img.channels();c++){
-            int index = j*img.step+i*img.channels()+c;
-            b = input[index];
-            bitsOPENCV[index] = b;
+
+    for(int i = 0; i < img.cols; i++) {
+        for(int j = 0; j < img.rows; j++) {
+            for(int c = 0; c < img.channels(); c++) {
+                int index = j * img.step + i * img.channels() + c;
+                b = input[index];
+                bitsOPENCV[index] = b;
             }
         }
     }
@@ -144,80 +142,70 @@ bool JPEGImage::empty() const
 
 void JPEGImage::save(const string & filename, int quality) const
 {
-    if (empty())
+    if(empty())
         return;
 
     FILE * file = fopen(filename.c_str(), "wb");
 
-    if (!file)
+    if(!file)
         return;
 
     jpeg_compress_struct cinfo;
     jpeg_error_mgr jerr;
-
     cinfo.err = jpeg_std_error(&jerr);
     jpeg_create_compress(&cinfo);
     jpeg_stdio_dest(&cinfo, file);
-
     cinfo.image_width = width_;
     cinfo.image_height = height_;
     cinfo.input_components = depth_;
     cinfo.in_color_space = (depth_ == 1) ? JCS_GRAYSCALE : JCS_RGB;
-
     jpeg_set_defaults(&cinfo);
     jpeg_set_quality(&cinfo, quality, TRUE);
     jpeg_start_compress(&cinfo, TRUE);
 
-    for (int y = 0; y < height_; ++y) {
+    for(int y = 0; y < height_; ++y) {
         const JSAMPLE * row = static_cast<const JSAMPLE *>(&bits_[y * width_ * depth_]);
         jpeg_write_scanlines(&cinfo, const_cast<JSAMPARRAY>(&row), 1);
     }
 
     jpeg_finish_compress(&cinfo);
-
     fclose(file);
 }
 
 JPEGImage JPEGImage::resize(int width, int height) const
 {
     // Empty image
-    if ((width <= 0) || (height <= 0))
+    if((width <= 0) || (height <= 0))
         return JPEGImage();
 
     // Same dimensions
-    if ((width == width_) && (height == height_))
+    if((width == width_) && (height == height_))
         return *this;
 
     JPEGImage result;
-
     result.width_ = width;
     result.height_ = height;
     result.depth_ = depth_;
     result.bits_.resize(width * height * depth_);
-
     // Resize the image at each octave
     int srcWidth = width_;
     int srcHeight = height_;
-
     vector<uint8_t> tmpSrc;
     vector<uint8_t> tmpDst;
-
     float scale = 0.5f;
     int halfWidth = width_ * scale + 0.5f;
     int halfHeight = height_ * scale + 0.5f;
 
-    while ((width <= halfWidth) && (height <= halfHeight)) {
-        if (tmpDst.empty())
+    while((width <= halfWidth) && (height <= halfHeight)) {
+        if(tmpDst.empty())
             tmpDst.resize(halfWidth * halfHeight * depth_);
 
         Resize(tmpSrc.empty() ? &bits_[0] : &tmpSrc[0], srcWidth, srcHeight, &tmpDst[0], halfWidth,
                halfHeight, depth_);
-
         // Dst becomes src
         tmpSrc.swap(tmpDst);
         srcWidth = halfWidth;
         srcHeight = halfHeight;
-
         // Next octave
         scale *= 0.5f;
         halfWidth = width_ * scale + 0.5f;
@@ -226,15 +214,14 @@ JPEGImage JPEGImage::resize(int width, int height) const
 
     Resize(tmpSrc.empty() ? &bits_[0] : &tmpSrc[0], srcWidth, srcHeight, &result.bits_[0], width,
            height, depth_);
-
     return result;
 }
 
 JPEGImage JPEGImage::crop(int x, int y, int width, int height) const
 {
     // Empty image
-    if ((width <= 0) || (height <= 0) || (x + width <= 0) || (y + height <= 0) || (x >= width_) ||
-        (y >= height_))
+    if((width <= 0) || (height <= 0) || (x + width <= 0) || (y + height <= 0) || (x >= width_) ||
+            (y >= height_))
         return JPEGImage();
 
     // Crop the coordinates to the image
@@ -242,17 +229,15 @@ JPEGImage JPEGImage::crop(int x, int y, int width, int height) const
     height = min(y + height - 1, height_ - 1) - max(y, 0) + 1;
     x = max(x, 0);
     y = max(y, 0);
-
     JPEGImage result;
-
     result.width_ = width;
     result.height_ = height;
     result.depth_ = depth_;
     result.bits_.resize(width * height * depth_);
 
-    for (int y2 = 0; y2 < height; ++y2)
-        for (int x2 = 0; x2 < width; ++x2)
-            for (int i = 0; i < depth_; ++i)
+    for(int y2 = 0; y2 < height; ++y2)
+        for(int x2 = 0; x2 < width; ++x2)
+            for(int i = 0; i < depth_; ++i)
                 result.bits_[(y2 * width + x2) * depth_ + i] =
                     bits_[((y + y2) * width_ + x + x2) * depth_ + i];
 
@@ -264,8 +249,7 @@ namespace FFLD
 {
 namespace detail
 {
-struct Bilinear
-{
+struct Bilinear {
     int x0;
     int x1;
     float a;
@@ -277,18 +261,17 @@ struct Bilinear
 void JPEGImage::Resize(const uint8_t * src, int srcWidth, int srcHeight, uint8_t * dst,
                        int dstWidth, int dstHeight, int depth)
 {
-    if ((srcWidth == dstWidth) && (srcHeight == dstHeight)) {
+    if((srcWidth == dstWidth) && (srcHeight == dstHeight)) {
         copy(src, src + srcWidth * srcHeight * depth, dst);
         return;
     }
 
     const float xScale = static_cast<float>(srcWidth) / dstWidth;
     const float yScale = static_cast<float>(srcHeight) / dstHeight;
-
     // Bilinear interpolation coefficients
     vector<detail::Bilinear> cols(dstWidth);
 
-    for (int j = 0; j < dstWidth; ++j) {
+    for(int j = 0; j < dstWidth; ++j) {
         const float x = min(max((j + 0.5f) * xScale - 0.5f, 0.0f), srcWidth - 1.0f);
         cols[j].x0 = x;
         cols[j].x1 = min(cols[j].x0 + 1, srcWidth - 1);
@@ -296,15 +279,15 @@ void JPEGImage::Resize(const uint8_t * src, int srcWidth, int srcHeight, uint8_t
         cols[j].b = 1.0f - cols[j].a;
     }
 
-    for (int i = 0; i < dstHeight; ++i) {
+    for(int i = 0; i < dstHeight; ++i) {
         const float y = min(max((i + 0.5f) * yScale - 0.5f, 0.0f), srcHeight - 1.0f);
         const int y0 = y;
         const int y1 = min(y0 + 1, srcHeight - 1);
         const float c = y - y0;
         const float d = 1.0f - c;
 
-        for (int j = 0; j < dstWidth; ++j)
-            for (int k = 0; k < depth; ++k)
+        for(int j = 0; j < dstWidth; ++j)
+            for(int k = 0; k < depth; ++k)
                 dst[(i * dstWidth + j) * depth + k] =
                     (src[(y0 * srcWidth + cols[j].x0) * depth + k] * cols[j].b +
                      src[(y0 * srcWidth + cols[j].x1) * depth + k] * cols[j].a) * d +
