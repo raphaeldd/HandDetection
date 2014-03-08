@@ -40,8 +40,11 @@ class SaveDetections
 
         /// @brief adds new element for a hand detection
         /// @param box Position information of the detection
-        /// @param angle rotaion of the detection
         void newHand(RotatedRect box);
+
+        /// @brief adds new element for a face detection
+        /// @param box Position information of the detecti
+        void newFace(Rect box);
 
         /// @brief adds a runtime element to the XML
         /// @param time Runtime

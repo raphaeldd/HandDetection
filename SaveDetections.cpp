@@ -60,6 +60,22 @@ void SaveDetections::newHand(RotatedRect box)
     xmlWriter->writeTextElement("Rotation", QString::number(box.angle));
 }
 
+void SaveDetections::newFace(Rect box) {
+    // Dept = 3
+    for(int i = this->debtCounter; i >= 3; i--) {
+        xmlWriter->writeEndElement();
+    }
+
+    this->debtCounter = 3;
+    xmlWriter->writeStartElement("Face");
+    xmlWriter->writeStartElement("Rect");
+    xmlWriter->writeTextElement("x", QString::number(box.x));
+    xmlWriter->writeTextElement("y", QString::number(box.y));
+    xmlWriter->writeTextElement("Width", QString::number(box.width));
+    xmlWriter->writeTextElement("Height", QString::number(box.height));
+    xmlWriter->writeEndElement();
+}
+
 void SaveDetections::runtime(float time)
 {
     this->debtCounter--;

@@ -98,57 +98,67 @@ int main(int argc, char *argv[])
     cout << "---> Initalisation upper body detection." << endl;
     DetBody body("torso3comp.txt", -0.5);
     cout << "---> Initalisation hand detection." << endl;
-    DetHand hand("hand.txt", "context-hand.txt", -0.3);
+    DetHand hand("hand.txt", "hand-context.txt", -0.3);
+
+
+
     // Program loop
     cout << "---> Start program loop." << endl;
     save = new SaveDetections(inputFile.c_str());
     signal(SIGINT, signal_callback_handler);
 
     while(cap.get(CV_CAP_PROP_POS_AVI_RATIO)  != -1) {
+
+        cout << "-----> Frame " << cap.get(CV_CAP_PROP_POS_FRAMES) << "/" << cap.get(CV_CAP_PROP_FRAME_COUNT) << "." << endl;
         Mat cameraImage, textImage;
         cap >> cameraImage;
         cameraImage.copyTo(textImage);
         stringstream ss;
-        ss << cap.get(CV_CAP_PROP_POS_FRAMES) << "/" << cap.get(CV_CAP_PROP_FRAME_COUNT);
-        putText(textImage, ss.str(), Point(20, 20), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 0, 0));
+
         // Run body detection
+        cout << "-----> Run upper body detection." << endl;
         save->newFrame(cap.get(CV_CAP_PROP_POS_FRAMES));
         body.runDetection(cameraImage, cap.get(CV_CAP_PROP_POS_FRAMES));
         cout << body.getSize() << " detections found" << endl;
 
         // Do hand detection per body detection
         for(int n = 0; n < body.getSize(); n++) {
-            clock_t T1, T2;
-            T1 = clock();
+            clock_t T = clock();
             save->newUpperBody(body.getRect()[n]);
             ss.str("");
             ss << "Body detection: " << n + 1;
             imshow(ss.str(), body.getCutouts()[n]);
+
             // Run hand detection
-            hand.runDetection(body.getCutouts()[n], cap.get(CV_CAP_PROP_POS_FRAMES));   // !!! TEMPERARY
+            cout << "-----> Run Hand detection." << endl;
+            hand.runDetection(body.getCutouts()[n], cap.get(CV_CAP_PROP_POS_FRAMES));
             body.getCutouts()[n].copyTo(cameraImage);
+
+
+
             // Run Highest Likelihood eliminator
+            cout << "------> Run higest likelihood eliminator." << endl;
             HighestLikelihood likeli;
-            likeli.armConnectDetection(cameraImage, hand.getRect());
-            Mat handResults = cameraImage.clone();
+            Mat tmp = cameraImage.clone();
+            likeli.run(tmp, hand.getRect(), hand.getScore(), 5);
 
-            for(int i = 0; i < hand.getSize(); i++) {
-                save->newHand(hand.getRect()[i]);   // Save hand detections to XML file
 
-                if(likeli.getScore()[i] > 0) {
-                    hand.drawResult(handResults, hand.getRect()[i], Scalar(0, 255, 0)); // View hand detections on body detections with score
-                } else {
-                    hand.drawResult(handResults, hand.getRect()[i], Scalar(0, 0, 255)); // View hand detections on body detections without score
-                }
+            cout << "------> View results." << endl;
+            Mat result = cameraImage.clone();
+            for ( int r = 0; r < likeli.getResults().size(); r++ ) {
+                hand.drawResult(result, likeli.getResults()[r], Scalar(255, 30, 30));
+                save->newHand(likeli.getResults()[r]);
             }
+            imshow("Result", result);
 
-            imshow("Hands", handResults);
-            T2 = clock();
-            float diff = ((float)T2 - (float)T1) / CLOCKS_PER_SEC;
-            save->runtime(diff);
-            waitKey(-1);
+
+            T = clock() - T;
+            save->newFace(likeli.getFace());
+            save->runtime((float)T / CLOCKS_PER_SEC);
+
         }
-
+        waitKey(100);
+        //waitKey(-1);
         destroyAllWindows();
         // Skip frames
         cap.set(CV_CAP_PROP_POS_FRAMES, cap.get(CV_CAP_PROP_POS_FRAMES) + skipFrames - 1);

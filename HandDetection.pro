@@ -41,7 +41,8 @@ SOURCES += \
     DetBody.cpp \
     DetHand.cpp \
     SaveDetections.cpp \
-    HighestLikelihood.cpp
+    HighestLikelihood.cpp \
+    Tracking.cpp
 
 
 HEADERS += \
@@ -60,5 +61,6 @@ HEADERS += \
     DetBody.h \
     DetHand.h \
     SaveDetections.h \
-    HighestLikelihood.h
+    HighestLikelihood.h \
+    Tracking.h
 

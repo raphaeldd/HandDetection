@@ -75,6 +75,10 @@ class DetHand
         /// @return All regions of type Rect and rotation put in a vector
         vector<RotatedRect> getRect();
 
+        /// @brief Get score of detections found
+        /// @return Score of detections found
+        vector<double> getScore();
+
         /// @brief Get number of detections found
         /// @return Number of detections found of type integer
         int getSize();
@@ -84,6 +88,7 @@ class DetHand
         vector<UniqueDetections> FinalUpperHandDetections;
         vector<UniqueDetections> FinalHandDetections;
         vector<UniqueDetections> FinalDetections;
+        vector<double> score;
         Mixture mixtureHand, mixtureHandContext;
         String modelHand;
 
