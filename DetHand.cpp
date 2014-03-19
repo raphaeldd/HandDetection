@@ -77,7 +77,6 @@ void DetHand::runDetection(Mat image , int frameNumber)
         PersonDetection((frameNumber * 1000) + iteration, mixtureHandContext, FinalDetections, FinalUpperHandDetections, FinalHandDetections, detImage, TH);
 
         // Put detections in detection vectors
-
         for(unsigned int k = this->pos.size(); k < FinalHandDetections.size(); k++) {
             int rot = floor((double)FinalHandDetections[k].detect.x / (double)blackImage.cols) * 10 + iteration;
             Rect tmpRect(FinalHandDetections[k].detect.x % blackImage.cols, FinalHandDetections[k].detect.y, FinalHandDetections[k].detect.width, FinalHandDetections[k].detect.height);
