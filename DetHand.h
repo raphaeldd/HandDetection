@@ -98,7 +98,7 @@ class DetHand
         double TH;
 
         void rotate(cv::Mat& src, double angle, cv::Mat& dst);
-        RotatedRect correction(Rect box, int angle, int correction, Point center);
+        RotatedRect correction(Rect box, int angle, int correction, Point center, int orientCorr = 0);
         void similarRects(vector<RotatedRect>& rects);
 };
 

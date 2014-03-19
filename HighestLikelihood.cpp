@@ -24,21 +24,25 @@ void HighestLikelihood::run(Mat img, vector<RotatedRect> hands, vector<double> h
         ScoreArms.assign(hands.size(), 0);
     }
     double max = TH, secMax = TH;
-    this->results.assign(2, RotatedRect());
+    //this->results.assign(2, RotatedRect());
     for ( unsigned int i = 0; i < hands.size(); i++ ) {
 
         // find 2 best scores
         double score = (double)ScoreSkin[i] + (double)ScoreArms[i] + handScores[i];
 
-        if ( score >= max) {
-            max = score;
-            this->results[1] = this->results[0];
-            this->results[0] = hands[i];
+        if ( score >= TH ) {
+            this->results.push_back(hands[i]);
         }
-        if ( score >= secMax && score < max) {
-            secMax = score;
-            this->results[1] = hands[i];
-        }
+
+//        if ( score >= max) {
+//            max = score;
+//            this->results[1] = this->results[0];
+//            this->results[0] = hands[i];
+//        }
+//        if ( score >= secMax && score < max) {
+//            secMax = score;
+//            this->results[1] = hands[i];
+//        }
 
     }
 
@@ -179,7 +183,6 @@ Rect HighestLikelihood::faceDetection(Mat In) {
 
     if(!face_cascade.load("haarcascade_frontalface_alt.xml")) {
         cout << "Error loading haarcascade xml file." << endl;
-
         return Rect();
     }
 

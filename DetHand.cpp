@@ -34,63 +34,26 @@ DetHand::DetHand(String modelHand, String contextModel, double threshold)
 
 void DetHand::runDetection(Mat image , int frameNumber)
 {
-    int correction = (image.cols - image.rows) / 2;
-    Mat blackImage(image.cols, image.cols, image.type(), double(0));
-    Rect roi(Point(0, (image.cols - image.rows) / 2), Size(image.cols, image.rows));
+    int correction, orientCor;
+    Mat blackImage;
+    Rect roi;
+
+    if ( image.cols >= image.rows ) {
+        orientCor = 0;
+        correction = (image.cols - image.rows) / 2;
+        blackImage.create(image.cols, image.cols, image.type());
+        roi = Rect(Point(0, (image.cols - image.rows) / 2), Size(image.cols, image.rows));
+    } else {
+        orientCor = 1;
+        correction = (image.rows - image.cols) / 2;
+        blackImage.create(image.rows, image.rows, image.type());
+        roi = Rect(Point((image.rows - image.cols) / 2, 0), Size(image.cols, image.rows));
+    }
+
     image.copyTo(blackImage(roi));
     this->detections.clear();
     this->pos.clear();
-#if  ( DET_TYPE == 0 )
 
-    for(int r = 0; r < 360; r = r + 10) {
-        Mat detImage;
-        rotate(blackImage, r, detImage);
-        this->FinalDetections.clear();
-        this->FinalHandDetections.clear();
-        this->FinalUpperHandDetections.clear();
-        PersonDetection((frameNumber * 1000) + r, mixtureHand, FinalDetections, FinalUpperHandDetections, FinalHandDetections, detImage, TH);
-        // Put detections in detection vectors
-        rotate(blackImage, r, detImage);
-
-        for(unsigned int k = 0; k < FinalHandDetections.size(); k++) {
-            // TODO: Pas posities voor Absloute coordinaten tov origineel upper body cutout
-            this->pos.push_back(make_pair(FinalHandDetections[k].detect , r));
-            this->detections.push_back(detImage(this->pos.back().first).clone());
-        }
-    }
-
-#elif ( DET_TYPE == 1 )
-    int rows = 6, cols = 6;
-    Mat detImage(blackImage.rows * rows, blackImage.cols * cols, blackImage.type());
-    Mat cutImage;
-
-    for(int r = 0; r < 360; r = r + 10) {
-        Mat tmpImage;
-        int y = floor((double)r / (10 * cols)) ;
-        int x = (r - y * (10 * rows)) / 10 ;
-        Rect roi(Point(x * blackImage.cols, y * blackImage.rows), Size(blackImage.rows, blackImage.cols));
-        rotate(blackImage, r, tmpImage);
-        tmpImage.copyTo(detImage(roi));
-    }
-
-    detImage.copyTo(cutImage);
-    // Write result away
-    imwrite("Patchwork.png", cutImage);
-    this->FinalDetections.clear();
-    this->FinalHandDetections.clear();
-    this->FinalUpperHandDetections.clear();
-    PersonDetection((frameNumber * 1000), mixtureHand, FinalDetections, FinalUpperHandDetections, FinalHandDetections, detImage, TH);
-
-    // Put detections in detection vectors
-
-    for(unsigned int k = 0; k < FinalHandDetections.size(); k++) {
-        // TODO: Pas posities voor Absloute coordinaten tov origineel upper body cutout
-        int rot = floor((double)FinalHandDetections[k].detect.x / (double)blackImage.cols) * 10;
-        this->pos.push_back(make_pair(Rect(FinalHandDetections[k].detect.x % blackImage.cols, FinalHandDetections[k].detect.y, FinalHandDetections[k].detect.width, FinalHandDetections[k].detect.height), rot));
-        this->detections.push_back(cutImage(FinalHandDetections[k].detect).clone());
-    }
-
-#else
     int rows = 1, cols = 2, iteration = 0;
     this->FinalDetections.clear();
     this->FinalHandDetections.clear();
@@ -118,26 +81,26 @@ void DetHand::runDetection(Mat image , int frameNumber)
         for(unsigned int k = this->pos.size(); k < FinalHandDetections.size(); k++) {
             int rot = floor((double)FinalHandDetections[k].detect.x / (double)blackImage.cols) * 10 + iteration;
             Rect tmpRect(FinalHandDetections[k].detect.x % blackImage.cols, FinalHandDetections[k].detect.y, FinalHandDetections[k].detect.width, FinalHandDetections[k].detect.height);
-            this->pos.push_back(this->correction(tmpRect, rot, correction, Point(blackImage.cols / 2, blackImage.rows / 2)));
+            this->pos.push_back(this->correction(tmpRect, rot, correction, Point(blackImage.cols / 2, blackImage.rows / 2), orientCor));
             this->score.push_back(FinalHandDetections.at(k).BestScore);
         }
 
         iteration = (rows * cols * 10) + iteration;
     }
 
-#endif
     // Merge overlapping detections
     Mat tmpRes = image.clone();
 
-//    for(unsigned int i = 0; i < this->pos.size(); i++)
-//        drawResult(tmpRes, this->pos[i], Scalar(0, 0, 255));
+//        for(unsigned int i = 0; i < this->pos.size(); i++)
+//            drawResult(tmpRes, this->pos[i], Scalar(0, 0, 255));
 
     similarRects(this->pos);
 
-//    for(unsigned int i = 0; i < this->pos.size(); i++)
-//        drawResult(tmpRes, this->pos[i], Scalar(0, 255, 0));
+    //    for(unsigned int i = 0; i < this->pos.size(); i++)
+    //        drawResult(tmpRes, this->pos[i], Scalar(0, 255, 0));
 
-//    imshow("Before and after", tmpRes);
+    //    imshow("Before and after", tmpRes);
+    //    waitKey(-1);
     // TODO: redo cutouts with merged bounding boxes
     //          watch out they are rotated
     cout << "       Found detections:           " << this->pos.size() << endl;
@@ -183,13 +146,19 @@ void DetHand::drawResult(Mat& img, RotatedRect &box, const Scalar& color)
     circle(img, box.center, 3, color);
 }
 
-RotatedRect DetHand::correction(Rect box, int angle, int correction, Point center)
+RotatedRect DetHand::correction(Rect box, int angle, int correction, Point center, int orientCorr)
 {
     float rat = angle * CV_PI / 180;
     float cx = box.x + box.width / 2;
     float cy = box.y + box.height / 2;
-    float x = cos(rat) * (cx - center.x) - sin(rat) * (cy - center.x) + center.x;
-    float y = sin(rat) * (cx - center.y) + cos(rat) * (cy - center.y) + center.y  - correction;
+    float x, y;
+    if (orientCorr == 0 ) {
+        x = cos(rat) * (cx - center.x) - sin(rat) * (cy - center.x) + center.x;
+        y = sin(rat) * (cx - center.y) + cos(rat) * (cy - center.y) + center.y - correction;
+    } else {
+        x = cos(rat) * (cx - center.x) - sin(rat) * (cy - center.x) + center.x - correction;
+        y = sin(rat) * (cx - center.y) + cos(rat) * (cy - center.y) + center.y;
+    }
     RotatedRect rot(Point2f(x, y), box.size(), angle);
     return rot;
 }
@@ -209,13 +178,13 @@ void DetHand::similarRects(vector<RotatedRect>& rects)
 
     for(unsigned int i = 0; i < rects.size(); i++) {
         int n = label[i];
-            angle[n].first += cos(rects[i].angle * CV_PI / 180);
-            angle[n].second += sin(rects[i].angle * CV_PI / 180);
-            newRects[n].center.x += rects[i].center.x;
-            newRects[n].center.y += rects[i].center.y;
-            newRects[n].size.height += rects[i].size.height;
-            newRects[n].size.width += rects[i].size.width;
-            Sum[n]++;
+        angle[n].first += cos(rects[i].angle * CV_PI / 180);
+        angle[n].second += sin(rects[i].angle * CV_PI / 180);
+        newRects[n].center.x += rects[i].center.x;
+        newRects[n].center.y += rects[i].center.y;
+        newRects[n].size.height += rects[i].size.height;
+        newRects[n].size.width += rects[i].size.width;
+        Sum[n]++;
     }
 
     for(int n = 0; n < labelSize; n++) {
