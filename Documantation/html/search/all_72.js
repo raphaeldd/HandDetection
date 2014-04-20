@@ -5,6 +5,7 @@ var searchData=
   ['resize',['resize',['../class_f_f_l_d_1_1_j_p_e_g_image.html#a8e43979c7fff922528c689500ee49c5a',1,'FFLD::JPEGImage']]],
   ['right',['right',['../class_f_f_l_d_1_1_rectangle.html#a8e76ee84d39c8c063cb2ef0e1cb7f5df',1,'FFLD::Rectangle']]],
   ['rootsize',['rootSize',['../class_f_f_l_d_1_1_model.html#a35ed01e517a3beb1c6acb98b3b33db53',1,'FFLD::Model']]],
-  ['rundetection',['runDetection',['../class_det_body.html#a7ff893a2f420152562f384d470c2f584',1,'DetBody::runDetection()'],['../class_det_hand.html#a1cde0e2c001c37b3f74bcb38af5dddbd',1,'DetHand::runDetection()']]],
+  ['run',['run',['../class_highest_likelihood.html#a93e95359dc85bb316dd069f1a6965a7e',1,'HighestLikelihood']]],
+  ['rundetection',['runDetection',['../class_det_body.html#a7ff893a2f420152562f384d470c2f584',1,'DetBody::runDetection()'],['../class_det_hand.html#a2ff6d2defe5cb9fb6d478a113dd07800',1,'DetHand::runDetection()']]],
   ['runtime',['runtime',['../class_save_detections.html#a6bc172c27da2231a4677c73efb967946',1,'SaveDetections']]]
 ];

@@ -117,39 +117,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;{</div>
 <div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_f_f_l_d_1_1_mixture.html">   30</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_f_f_l_d_1_1_mixture.html">Mixture</a></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_f_f_l_d_1_1_mixture.html#a31d98d583481cbd0d8c302dae0ab3421">   34</a></span>&#160;    <span class="keyword">typedef</span> Eigen::Matrix&lt;int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor&gt; <a class="code" href="class_f_f_l_d_1_1_mixture.html#a31d98d583481cbd0d8c302dae0ab3421">Indices</a>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="class_f_f_l_d_1_1_mixture.html#a2f643bf662e2ff5ce3499ced719d86c4">Mixture</a>();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="class_f_f_l_d_1_1_mixture.html#a2f643bf662e2ff5ce3499ced719d86c4">Mixture</a>(<span class="keyword">const</span> std::vector&lt;Model&gt; &amp; <a class="code" href="class_f_f_l_d_1_1_mixture.html#aa35341d4e3ad879bf8fe29eca6685531">models</a>);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_f_f_l_d_1_1_mixture.html#a32edabbb5a2a517bbaea597fea88dde1">empty</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">const</span> std::vector&lt;Model&gt; &amp; <a class="code" href="class_f_f_l_d_1_1_mixture.html#aa35341d4e3ad879bf8fe29eca6685531">models</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    std::pair&lt;int, int&gt; <a class="code" href="class_f_f_l_d_1_1_mixture.html#ae3718178c80187b05019b7f8332d1ada">minSize</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    std::pair&lt;int, int&gt; <a class="code" href="class_f_f_l_d_1_1_mixture.html#aa77b2466124a3faf4331491f8da0647e">maxSize</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_f_f_l_d_1_1_mixture.html#a912fa512d1a234a51d2738640f902a4e">convolve</a>(<span class="keyword">const</span> <a class="code" href="class_f_f_l_d_1_1_h_o_g_pyramid.html">HOGPyramid</a> &amp; pyramid, std::vector&lt;HOGPyramid::Matrix&gt; &amp; scores,</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                  std::vector&lt;Indices&gt; &amp; argmaxes,</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                  std::vector&lt;std::vector&lt;std::vector&lt;Model::Positions&gt; &gt; &gt; * positions = 0)</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                 <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_f_f_l_d_1_1_mixture.html#aafa8e98dfd20254bbe41ade348e4e635">cacheFilters</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_f_f_l_d_1_1_mixture.html#a912fa512d1a234a51d2738640f902a4e">convolve</a>(<span class="keyword">const</span> <a class="code" href="class_f_f_l_d_1_1_h_o_g_pyramid.html">HOGPyramid</a> &amp; pyramid,</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                  std::vector&lt;std::vector&lt;HOGPyramid::Matrix&gt; &gt; &amp; scores,</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                  std::vector&lt;std::vector&lt;std::vector&lt;Model::Positions&gt; &gt; &gt; * positions = 0)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                 <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    std::vector&lt;Model&gt; models_; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">// Used to speed up the convolutions</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">mutable</span> std::vector&lt;Patchwork::Filter&gt; filterCache_; <span class="comment">// Cache of transformed filters</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">volatile</span> <span class="keyword">mutable</span> <span class="keywordtype">bool</span> cached_;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_f_f_l_d_1_1_mixture.html#a31d98d583481cbd0d8c302dae0ab3421">   34</a></span>&#160;        <span class="keyword">typedef</span> Eigen::Matrix&lt;int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor&gt; <a class="code" href="class_f_f_l_d_1_1_mixture.html#a31d98d583481cbd0d8c302dae0ab3421">Indices</a>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <a class="code" href="class_f_f_l_d_1_1_mixture.html#a2f643bf662e2ff5ce3499ced719d86c4">Mixture</a>();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="class_f_f_l_d_1_1_mixture.html#a2f643bf662e2ff5ce3499ced719d86c4">Mixture</a>(<span class="keyword">const</span> std::vector&lt;Model&gt; &amp; <a class="code" href="class_f_f_l_d_1_1_mixture.html#aa35341d4e3ad879bf8fe29eca6685531">models</a>);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="class_f_f_l_d_1_1_mixture.html#a32edabbb5a2a517bbaea597fea88dde1">empty</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">const</span> std::vector&lt;Model&gt; &amp; <a class="code" href="class_f_f_l_d_1_1_mixture.html#aa35341d4e3ad879bf8fe29eca6685531">models</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::pair&lt;int, int&gt; <a class="code" href="class_f_f_l_d_1_1_mixture.html#ae3718178c80187b05019b7f8332d1ada">minSize</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        std::pair&lt;int, int&gt; <a class="code" href="class_f_f_l_d_1_1_mixture.html#aa77b2466124a3faf4331491f8da0647e">maxSize</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_f_f_l_d_1_1_mixture.html#a912fa512d1a234a51d2738640f902a4e">convolve</a>(<span class="keyword">const</span> <a class="code" href="class_f_f_l_d_1_1_h_o_g_pyramid.html">HOGPyramid</a> &amp; pyramid, std::vector&lt;HOGPyramid::Matrix&gt; &amp; scores,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                      std::vector&lt;Indices&gt; &amp; argmaxes,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                      std::vector&lt;std::vector&lt;std::vector&lt;Model::Positions&gt; &gt; &gt; * positions = 0)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_f_f_l_d_1_1_mixture.html#aafa8e98dfd20254bbe41ade348e4e635">cacheFilters</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_f_f_l_d_1_1_mixture.html#a912fa512d1a234a51d2738640f902a4e">convolve</a>(<span class="keyword">const</span> <a class="code" href="class_f_f_l_d_1_1_h_o_g_pyramid.html">HOGPyramid</a> &amp; pyramid,</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                      std::vector&lt;std::vector&lt;HOGPyramid::Matrix&gt; &gt; &amp; scores,</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                      std::vector&lt;std::vector&lt;std::vector&lt;Model::Positions&gt; &gt; &gt; * positions = 0)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        std::vector&lt;Model&gt; models_; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="comment">// Used to speed up the convolutions</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keyword">mutable</span> std::vector&lt;Patchwork::Filter&gt; filterCache_; <span class="comment">// Cache of transformed filters</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keyword">volatile</span> <span class="keyword">mutable</span> <span class="keywordtype">bool</span> cached_;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;};</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, <span class="keyword">const</span> <a class="code" href="class_f_f_l_d_1_1_mixture.html">Mixture</a> &amp; mixture);</div>
@@ -161,7 +161,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_f_f_l_d_1_1_mixture_html_a32edabbb5a2a517bbaea597fea88dde1"><div class="ttname"><a href="class_f_f_l_d_1_1_mixture.html#a32edabbb5a2a517bbaea597fea88dde1">FFLD::Mixture::empty</a></div><div class="ttdeci">bool empty() const </div><div class="ttdoc">Returns whether the mixture is empty. An empty mixture has no model. </div><div class="ttdef"><b>Definition:</b> Mixture.cpp:39</div></div>
 <div class="ttc" id="class_f_f_l_d_1_1_mixture_html_a2f643bf662e2ff5ce3499ced719d86c4"><div class="ttname"><a href="class_f_f_l_d_1_1_mixture.html#a2f643bf662e2ff5ce3499ced719d86c4">FFLD::Mixture::Mixture</a></div><div class="ttdeci">Mixture()</div><div class="ttdoc">Constructs an empty mixture. An empty mixture has no model. </div><div class="ttdef"><b>Definition:</b> Mixture.cpp:31</div></div>
 <div class="ttc" id="class_f_f_l_d_1_1_mixture_html_a912fa512d1a234a51d2738640f902a4e"><div class="ttname"><a href="class_f_f_l_d_1_1_mixture.html#a912fa512d1a234a51d2738640f902a4e">FFLD::Mixture::convolve</a></div><div class="ttdeci">void convolve(const HOGPyramid &amp;pyramid, std::vector&lt; HOGPyramid::Matrix &gt; &amp;scores, std::vector&lt; Indices &gt; &amp;argmaxes, std::vector&lt; std::vector&lt; std::vector&lt; Model::Positions &gt; &gt; &gt; *positions=0) const </div></div>
-<div class="ttc" id="class_f_f_l_d_1_1_mixture_html_aafa8e98dfd20254bbe41ade348e4e635"><div class="ttname"><a href="class_f_f_l_d_1_1_mixture.html#aafa8e98dfd20254bbe41ade348e4e635">FFLD::Mixture::cacheFilters</a></div><div class="ttdeci">void cacheFilters() const </div><div class="ttdoc">Cache the transformed version of the models&amp;#39; filters. </div><div class="ttdef"><b>Definition:</b> Mixture.cpp:203</div></div>
+<div class="ttc" id="class_f_f_l_d_1_1_mixture_html_aafa8e98dfd20254bbe41ade348e4e635"><div class="ttname"><a href="class_f_f_l_d_1_1_mixture.html#aafa8e98dfd20254bbe41ade348e4e635">FFLD::Mixture::cacheFilters</a></div><div class="ttdeci">void cacheFilters() const </div><div class="ttdoc">Cache the transformed version of the models&amp;#39; filters. </div><div class="ttdef"><b>Definition:</b> Mixture.cpp:201</div></div>
 <div class="ttc" id="class_f_f_l_d_1_1_mixture_html"><div class="ttname"><a href="class_f_f_l_d_1_1_mixture.html">FFLD::Mixture</a></div><div class="ttdoc">The Mixture class represents a mixture of deformable part-based models. </div><div class="ttdef"><b>Definition:</b> Mixture.h:30</div></div>
 <div class="ttc" id="class_f_f_l_d_1_1_mixture_html_aa35341d4e3ad879bf8fe29eca6685531"><div class="ttname"><a href="class_f_f_l_d_1_1_mixture.html#aa35341d4e3ad879bf8fe29eca6685531">FFLD::Mixture::models</a></div><div class="ttdeci">const std::vector&lt; Model &gt; &amp; models() const </div><div class="ttdoc">Returns the list of models (mixture components). </div><div class="ttdef"><b>Definition:</b> Mixture.cpp:44</div></div>
 <div class="ttc" id="class_f_f_l_d_1_1_mixture_html_aa77b2466124a3faf4331491f8da0647e"><div class="ttname"><a href="class_f_f_l_d_1_1_mixture.html#aa77b2466124a3faf4331491f8da0647e">FFLD::Mixture::maxSize</a></div><div class="ttdeci">std::pair&lt; int, int &gt; maxSize() const </div><div class="ttdoc">Returns the maximum root filter size (rows x cols). </div><div class="ttdef"><b>Definition:</b> Mixture.cpp:65</div></div>
@@ -171,7 +171,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2014 14:23:31 for HandDetection by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 17 2014 17:33:31 for HandDetection by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

@@ -104,9 +104,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acb1e8a18ffa4410a638a47c32314839e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_save_detections.html#acb1e8a18ffa4410a638a47c32314839e">newUpperBody</a> (Rect box)</td></tr>
 <tr class="memdesc:acb1e8a18ffa4410a638a47c32314839e"><td class="mdescLeft">&#160;</td><td class="mdescRight">adds new element for a upper body detection  <a href="#acb1e8a18ffa4410a638a47c32314839e">More...</a><br/></td></tr>
 <tr class="separator:acb1e8a18ffa4410a638a47c32314839e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1e14c331963242bb037abe2cb14bb84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_save_detections.html#ae1e14c331963242bb037abe2cb14bb84">newHand</a> (Rect box, int angle)</td></tr>
-<tr class="memdesc:ae1e14c331963242bb037abe2cb14bb84"><td class="mdescLeft">&#160;</td><td class="mdescRight">adds new element for a hand detection  <a href="#ae1e14c331963242bb037abe2cb14bb84">More...</a><br/></td></tr>
-<tr class="separator:ae1e14c331963242bb037abe2cb14bb84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b88edb6590edbef9afced3d94c05bf8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_save_detections.html#a7b88edb6590edbef9afced3d94c05bf8">newHand</a> (RotatedRect box)</td></tr>
+<tr class="memdesc:a7b88edb6590edbef9afced3d94c05bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">adds new element for a hand detection  <a href="#a7b88edb6590edbef9afced3d94c05bf8">More...</a><br/></td></tr>
+<tr class="separator:a7b88edb6590edbef9afced3d94c05bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0326a59a4ce799b4be3016a65946dfcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_save_detections.html#a0326a59a4ce799b4be3016a65946dfcd">newFace</a> (Rect box)</td></tr>
+<tr class="memdesc:a0326a59a4ce799b4be3016a65946dfcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">adds new element for a face detection  <a href="#a0326a59a4ce799b4be3016a65946dfcd">More...</a><br/></td></tr>
+<tr class="separator:a0326a59a4ce799b4be3016a65946dfcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bc172c27da2231a4677c73efb967946"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_save_detections.html#a6bc172c27da2231a4677c73efb967946">runtime</a> (float time)</td></tr>
 <tr class="memdesc:a6bc172c27da2231a4677c73efb967946"><td class="mdescLeft">&#160;</td><td class="mdescRight">adds a runtime element to the XML  <a href="#a6bc172c27da2231a4677c73efb967946">More...</a><br/></td></tr>
 <tr class="separator:a6bc172c27da2231a4677c73efb967946"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,6 +147,30 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a0326a59a4ce799b4be3016a65946dfcd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SaveDetections::newFace </td>
+          <td>(</td>
+          <td class="paramtype">Rect&#160;</td>
+          <td class="paramname"><em>box</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>adds new element for a face detection </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">box</td><td>Position information of the detecti </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a5a0112af80a6f2c7e5e0c12c757e3da9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -168,26 +195,16 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae1e14c331963242bb037abe2cb14bb84"></a>
+<a class="anchor" id="a7b88edb6590edbef9afced3d94c05bf8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void SaveDetections::newHand </td>
           <td>(</td>
-          <td class="paramtype">Rect&#160;</td>
-          <td class="paramname"><em>box</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">RotatedRect&#160;</td>
+          <td class="paramname"><em>box</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>angle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -196,7 +213,6 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">box</td><td>Position information of the detection </td></tr>
-    <tr><td class="paramname">angle</td><td>rotaion of the detection </td></tr>
   </table>
   </dd>
 </dl>
@@ -258,7 +274,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2014 14:23:31 for HandDetection by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 17 2014 17:33:32 for HandDetection by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

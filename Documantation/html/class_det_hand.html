@@ -97,30 +97,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a55a4b93f15511748a5f645d6e02b7b19"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a55a4b93f15511748a5f645d6e02b7b19">DetHand</a> (String modelHand, double threshold)</td></tr>
-<tr class="memdesc:a55a4b93f15511748a5f645d6e02b7b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from classe <a class="el" href="class_det_hand.html">DetHand</a>. Preps the detector with the right hand model.  <a href="#a55a4b93f15511748a5f645d6e02b7b19">More...</a><br/></td></tr>
-<tr class="separator:a55a4b93f15511748a5f645d6e02b7b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cde0e2c001c37b3f74bcb38af5dddbd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a1cde0e2c001c37b3f74bcb38af5dddbd">runDetection</a> (Mat image, int frameNumber)</td></tr>
-<tr class="memdesc:a1cde0e2c001c37b3f74bcb38af5dddbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply the detector on a image.  <a href="#a1cde0e2c001c37b3f74bcb38af5dddbd">More...</a><br/></td></tr>
-<tr class="separator:a1cde0e2c001c37b3f74bcb38af5dddbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad38224099448661c9442005db103ae8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#ad38224099448661c9442005db103ae8d">drawResult</a> (Mat &amp;img, Rect &amp;box, float angle, const Scalar &amp;color)</td></tr>
-<tr class="memdesc:ad38224099448661c9442005db103ae8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the found regions on a image Draws a rotated rectangle with rescpect to the center.  <a href="#ad38224099448661c9442005db103ae8d">More...</a><br/></td></tr>
-<tr class="separator:ad38224099448661c9442005db103ae8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a230b128800e15d6b5f87af363b4a72bc"><td class="memItemLeft" align="right" valign="top">vector&lt; Mat &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a230b128800e15d6b5f87af363b4a72bc">getCutouts</a> ()</td></tr>
-<tr class="memdesc:a230b128800e15d6b5f87af363b4a72bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all the detection cutouts of the last detection.  <a href="#a230b128800e15d6b5f87af363b4a72bc">More...</a><br/></td></tr>
-<tr class="separator:a230b128800e15d6b5f87af363b4a72bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a424b986edf4a17f48619cb89cd4c2e8e"><td class="memItemLeft" align="right" valign="top">vector&lt; pair&lt; Rect, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a424b986edf4a17f48619cb89cd4c2e8e">getRect</a> ()</td></tr>
-<tr class="memdesc:a424b986edf4a17f48619cb89cd4c2e8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all the detection regions of the last detection with the respected rotation.  <a href="#a424b986edf4a17f48619cb89cd4c2e8e">More...</a><br/></td></tr>
-<tr class="separator:a424b986edf4a17f48619cb89cd4c2e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af90663feb7d98c57373a2ee7b686fdb2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#af90663feb7d98c57373a2ee7b686fdb2">getSize</a> ()</td></tr>
-<tr class="memdesc:af90663feb7d98c57373a2ee7b686fdb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of detections found.  <a href="#af90663feb7d98c57373a2ee7b686fdb2">More...</a><br/></td></tr>
-<tr class="separator:af90663feb7d98c57373a2ee7b686fdb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2db0bd3a42211dd7f85aa484163fb51"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#ae2db0bd3a42211dd7f85aa484163fb51">DetHand</a> (String modelHand, String contextModel, double threshold)</td></tr>
+<tr class="memdesc:ae2db0bd3a42211dd7f85aa484163fb51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from classe <a class="el" href="class_det_hand.html">DetHand</a>. Preps the detector with the right hand model.  <a href="#ae2db0bd3a42211dd7f85aa484163fb51">More...</a><br/></td></tr>
+<tr class="separator:ae2db0bd3a42211dd7f85aa484163fb51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ff6d2defe5cb9fb6d478a113dd07800"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a2ff6d2defe5cb9fb6d478a113dd07800">runDetection</a> (Mat image, int frameNumber, Rect face)</td></tr>
+<tr class="memdesc:a2ff6d2defe5cb9fb6d478a113dd07800"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply the detector on a image.  <a href="#a2ff6d2defe5cb9fb6d478a113dd07800">More...</a><br/></td></tr>
+<tr class="separator:a2ff6d2defe5cb9fb6d478a113dd07800"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04ca17b97c142aaeb4e687a3bcc23cd4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a04ca17b97c142aaeb4e687a3bcc23cd4">drawResult</a> (Mat &amp;img, RotatedRect &amp;box, const Scalar &amp;color)</td></tr>
+<tr class="memdesc:a04ca17b97c142aaeb4e687a3bcc23cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the found regions on a image Draws a rotated rectangle with rescpect to the center.  <a href="#a04ca17b97c142aaeb4e687a3bcc23cd4">More...</a><br/></td></tr>
+<tr class="separator:a04ca17b97c142aaeb4e687a3bcc23cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcb69946411c9c656f3203b6bbc4e13a"><td class="memItemLeft" align="right" valign="top">vector&lt; Mat &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#afcb69946411c9c656f3203b6bbc4e13a">getCutouts</a> ()</td></tr>
+<tr class="memdesc:afcb69946411c9c656f3203b6bbc4e13a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all the detection cutouts of the last detection.  <a href="#afcb69946411c9c656f3203b6bbc4e13a">More...</a><br/></td></tr>
+<tr class="separator:afcb69946411c9c656f3203b6bbc4e13a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d30403a8d530c2169b2ddbe5d5bdac6"><td class="memItemLeft" align="right" valign="top">vector&lt; RotatedRect &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a6d30403a8d530c2169b2ddbe5d5bdac6">getLocationHand</a> ()</td></tr>
+<tr class="memdesc:a6d30403a8d530c2169b2ddbe5d5bdac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the detection regions of the last detection with the respected rotation of the hand detector.  <a href="#a6d30403a8d530c2169b2ddbe5d5bdac6">More...</a><br/></td></tr>
+<tr class="separator:a6d30403a8d530c2169b2ddbe5d5bdac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb8015c29b1e4c6bf78ebe8bf87f49cd"><td class="memItemLeft" align="right" valign="top">vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#abb8015c29b1e4c6bf78ebe8bf87f49cd">getScoreHand</a> ()</td></tr>
+<tr class="memdesc:abb8015c29b1e4c6bf78ebe8bf87f49cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get score of hand detections found.  <a href="#abb8015c29b1e4c6bf78ebe8bf87f49cd">More...</a><br/></td></tr>
+<tr class="separator:abb8015c29b1e4c6bf78ebe8bf87f49cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22212d11ca6da3294e65a69d3438516c"><td class="memItemLeft" align="right" valign="top">vector&lt; RotatedRect &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a22212d11ca6da3294e65a69d3438516c">getLocationContext</a> ()</td></tr>
+<tr class="memdesc:a22212d11ca6da3294e65a69d3438516c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the detection regions of the last detection with the respected rotation of the context detector.  <a href="#a22212d11ca6da3294e65a69d3438516c">More...</a><br/></td></tr>
+<tr class="separator:a22212d11ca6da3294e65a69d3438516c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66591d156dcb9ae702ec5bff58aff404"><td class="memItemLeft" align="right" valign="top">vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a66591d156dcb9ae702ec5bff58aff404">getScoreContext</a> ()</td></tr>
+<tr class="memdesc:a66591d156dcb9ae702ec5bff58aff404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get score of context detections found.  <a href="#a66591d156dcb9ae702ec5bff58aff404">More...</a><br/></td></tr>
+<tr class="separator:a66591d156dcb9ae702ec5bff58aff404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a968add655757ec16229a217e6981ed1d"><td class="memItemLeft" align="right" valign="top">vector&lt; RotatedRect &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a968add655757ec16229a217e6981ed1d">getLocationArm</a> ()</td></tr>
+<tr class="memdesc:a968add655757ec16229a217e6981ed1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the detection regions of the last detection with the respected rotation of the arm hand detector.  <a href="#a968add655757ec16229a217e6981ed1d">More...</a><br/></td></tr>
+<tr class="separator:a968add655757ec16229a217e6981ed1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecc3b2a3541650dbbfeac38887ac1a61"><td class="memItemLeft" align="right" valign="top">vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#aecc3b2a3541650dbbfeac38887ac1a61">getScoreArm</a> ()</td></tr>
+<tr class="memdesc:aecc3b2a3541650dbbfeac38887ac1a61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get score of arm detections found.  <a href="#aecc3b2a3541650dbbfeac38887ac1a61">More...</a><br/></td></tr>
+<tr class="separator:aecc3b2a3541650dbbfeac38887ac1a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f824a1a3414cc612cbd475f901fd0b5"><td class="memItemLeft" align="right" valign="top">Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_det_hand.html#a0f824a1a3414cc612cbd475f901fd0b5">getSkin</a> ()</td></tr>
+<tr class="memdesc:a0f824a1a3414cc612cbd475f901fd0b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Skin segmentation.  <a href="#a0f824a1a3414cc612cbd475f901fd0b5">More...</a><br/></td></tr>
+<tr class="separator:a0f824a1a3414cc612cbd475f901fd0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Hand detection class. Detects hand on images.</p>
 <dl class="section author"><dt>Author</dt><dd>Den Dooven Raphael </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a55a4b93f15511748a5f645d6e02b7b19"></a>
+<a class="anchor" id="ae2db0bd3a42211dd7f85aa484163fb51"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -129,6 +144,12 @@ Public Member Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">String&#160;</td>
           <td class="paramname"><em>modelHand</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>contextModel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -156,7 +177,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ad38224099448661c9442005db103ae8d"></a>
+<a class="anchor" id="a04ca17b97c142aaeb4e687a3bcc23cd4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -169,14 +190,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Rect &amp;&#160;</td>
+          <td class="paramtype">RotatedRect &amp;&#160;</td>
           <td class="paramname"><em>box</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>angle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -205,12 +220,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a230b128800e15d6b5f87af363b4a72bc"></a>
+<a class="anchor" id="afcb69946411c9c656f3203b6bbc4e13a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">vector&lt; Mat &gt; DetHand::getCutouts </td>
+          <td class="memname">vector&lt;Mat&gt; DetHand::getCutouts </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -223,12 +238,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a424b986edf4a17f48619cb89cd4c2e8e"></a>
+<a class="anchor" id="a968add655757ec16229a217e6981ed1d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">vector&lt; pair&lt; Rect, int &gt; &gt; DetHand::getRect </td>
+          <td class="memname">vector&lt; RotatedRect &gt; DetHand::getLocationArm </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -236,17 +251,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get all the detection regions of the last detection with the respected rotation. </p>
+<p>Get the detection regions of the last detection with the respected rotation of the arm hand detector. </p>
 <dl class="section return"><dt>Returns</dt><dd>All regions of type Rect and rotation put in a vector </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="af90663feb7d98c57373a2ee7b686fdb2"></a>
+<a class="anchor" id="a22212d11ca6da3294e65a69d3438516c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int DetHand::getSize </td>
+          <td class="memname">vector&lt; RotatedRect &gt; DetHand::getLocationContext </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -254,12 +269,102 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get number of detections found. </p>
-<dl class="section return"><dt>Returns</dt><dd>Number of detections found of type integer </dd></dl>
+<p>Get the detection regions of the last detection with the respected rotation of the context detector. </p>
+<dl class="section return"><dt>Returns</dt><dd>All regions of type Rect and rotation put in a vector </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a1cde0e2c001c37b3f74bcb38af5dddbd"></a>
+<a class="anchor" id="a6d30403a8d530c2169b2ddbe5d5bdac6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; RotatedRect &gt; DetHand::getLocationHand </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the detection regions of the last detection with the respected rotation of the hand detector. </p>
+<dl class="section return"><dt>Returns</dt><dd>All regions of type Rect and rotation put in a vector </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aecc3b2a3541650dbbfeac38887ac1a61"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; double &gt; DetHand::getScoreArm </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get score of arm detections found. </p>
+<dl class="section return"><dt>Returns</dt><dd>Score of detections found </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a66591d156dcb9ae702ec5bff58aff404"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; double &gt; DetHand::getScoreContext </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get score of context detections found. </p>
+<dl class="section return"><dt>Returns</dt><dd>Score of detections found </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abb8015c29b1e4c6bf78ebe8bf87f49cd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; double &gt; DetHand::getScoreHand </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get score of hand detections found. </p>
+<dl class="section return"><dt>Returns</dt><dd>Score of detections found </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0f824a1a3414cc612cbd475f901fd0b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Mat DetHand::getSkin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get Skin segmentation. </p>
+<dl class="section return"><dt>Returns</dt><dd>skin </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2ff6d2defe5cb9fb6d478a113dd07800"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -273,7 +378,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>frameNumber</em>&#160;</td>
+          <td class="paramname"><em>frameNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Rect&#160;</td>
+          <td class="paramname"><em>face</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -288,6 +399,7 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">image</td><td>The image for the detector </td></tr>
     <tr><td class="paramname">framenumber</td><td>Frame number of the video (not really importend) </td></tr>
+    <tr><td class="paramname">face</td><td>Give location face for skin segmentation </td></tr>
   </table>
   </dd>
 </dl>
@@ -301,7 +413,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2014 14:23:31 for HandDetection by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 17 2014 17:33:32 for HandDetection by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

@@ -193,65 +193,65 @@ Enumerations</h2></td></tr>
 <pre class="fragment">@version 3.5
 </pre><h1><a class="anchor" id="features"></a>
 FEATURES</h1>
-<pre class="fragment">-   MIT Licence allows free use in all software (including GPL 
+<pre class="fragment">-   MIT Licence allows free use in all software (including GPL
     and commercial)
 -   multi-platform (Windows 95/98/ME/NT/2K/XP, Linux, Unix)
 -   supports all lengths of option names:
     &lt;table width="60%"&gt;
-        &lt;tr&gt;&lt;td width="30%"&gt; - 
+        &lt;tr&gt;&lt;td width="30%"&gt; -
             &lt;td&gt;switch character only (e.g. use stdin for input)
-        &lt;tr&gt;&lt;td&gt; -o          
+        &lt;tr&gt;&lt;td&gt; -o
             &lt;td&gt;short (single character)
-        &lt;tr&gt;&lt;td&gt; -long       
+        &lt;tr&gt;&lt;td&gt; -long
             &lt;td&gt;long (multiple character, single switch character)
-        &lt;tr&gt;&lt;td&gt; --longer    
+        &lt;tr&gt;&lt;td&gt; --longer
             &lt;td&gt;long (multiple character, multiple switch characters)
     &lt;/table&gt;
 -   supports all types of arguments for options:
     &lt;table width="60%"&gt;
-        &lt;tr&gt;&lt;td width="30%"&gt; --option        
+        &lt;tr&gt;&lt;td width="30%"&gt; --option
             &lt;td&gt;short/long option flag (no argument)
-        &lt;tr&gt;&lt;td&gt; --option ARG    
+        &lt;tr&gt;&lt;td&gt; --option ARG
             &lt;td&gt;short/long option with separate required argument
-        &lt;tr&gt;&lt;td&gt; --option=ARG    
+        &lt;tr&gt;&lt;td&gt; --option=ARG
             &lt;td&gt;short/long option with combined required argument
-        &lt;tr&gt;&lt;td&gt; --option[=ARG]  
+        &lt;tr&gt;&lt;td&gt; --option[=ARG]
             &lt;td&gt;short/long option with combined optional argument
-        &lt;tr&gt;&lt;td&gt; -oARG           
+        &lt;tr&gt;&lt;td&gt; -oARG
             &lt;td&gt;short option with combined required argument
-        &lt;tr&gt;&lt;td&gt; -o[ARG]         
+        &lt;tr&gt;&lt;td&gt; -o[ARG]
             &lt;td&gt;short option with combined optional argument
     &lt;/table&gt;
 -   supports options with multiple or variable numbers of arguments:
     &lt;table width="60%"&gt;
-        &lt;tr&gt;&lt;td width="30%"&gt; --multi ARG1 ARG2      
+        &lt;tr&gt;&lt;td width="30%"&gt; --multi ARG1 ARG2
             &lt;td&gt;Multiple arguments
-        &lt;tr&gt;&lt;td&gt; --multi N ARG-1 ARG-2 ... ARG-N    
+        &lt;tr&gt;&lt;td&gt; --multi N ARG-1 ARG-2 ... ARG-N
             &lt;td&gt;Variable number of arguments
     &lt;/table&gt;
--   supports case-insensitive option matching on short, long and/or 
+-   supports case-insensitive option matching on short, long and/or
     word arguments.
--   supports options which do not use a switch character. i.e. a special 
-    word which is construed as an option. 
-    e.g. "foo.exe open /directory/file.txt" 
--   supports clumping of multiple short options (no arguments) in a string 
+-   supports options which do not use a switch character. i.e. a special
+    word which is construed as an option.
+    e.g. "foo.exe open /directory/file.txt"
+-   supports clumping of multiple short options (no arguments) in a string
     e.g. "foo.exe -abcdef file1" &lt;==&gt; "foo.exe -a -b -c -d -e -f file1"
--   automatic recognition of a single slash as equivalent to a single 
+-   automatic recognition of a single slash as equivalent to a single
     hyphen on Windows, e.g. "/f FILE" is equivalent to "-f FILE".
 -   file arguments can appear anywhere in the argument list:
     "foo.exe file1.txt -a ARG file2.txt --flag file3.txt file4.txt"
-    files will be returned to the application in the same order they were 
+    files will be returned to the application in the same order they were
     supplied on the command line
 -   short-circuit option matching: "--man" will match "--mandate"
-    invalid options can be handled while continuing to parse the command 
+    invalid options can be handled while continuing to parse the command
     line valid options list can be changed dynamically during command line
-    processing, i.e. accept different options depending on an option 
+    processing, i.e. accept different options depending on an option
     supplied earlier in the command line.
 -   implemented with only a single C++ header file
 -   optionally use no C runtime or OS functions
 -   char, wchar_t and Windows TCHAR in the same program
 -   complete working examples included
--   compiles cleanly at warning level 4 (Windows/VC.NET 2003), warning 
+-   compiles cleanly at warning level 4 (Windows/VC.NET 2003), warning
     level 3 (Windows/VC6) and -Wall (Linux/gcc)
 </pre><h1><a class="anchor" id="usage"></a>
 USAGE</h1>
@@ -276,8 +276,8 @@ USAGE</h1>
 };
 </pre> <pre class="fragment">    Note that all options must start with a hyphen even if the slash will
     be accepted. This is because the slash character is automatically
-    converted into a hyphen to test against the list of options. 
-    For example, the following line matches both "-?" and "/?" 
+    converted into a hyphen to test against the list of options.
+    For example, the following line matches both "-?" and "/?"
     (on Windows).
 
     &lt;pre&gt;
@@ -323,12 +323,12 @@ Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included
 in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY 
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</pre></div><h2 class="groupheader">Typedef Documentation</h2>
 <a class="anchor" id="a50e7da6846dce876e059a7ddf17f90c1"></a>
 <div class="memitem">
@@ -463,7 +463,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</pre></div><h2 class="gro
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 15 2014 14:23:31 for HandDetection by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 17 2014 17:33:31 for HandDetection by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

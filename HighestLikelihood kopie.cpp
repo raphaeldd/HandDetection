@@ -9,7 +9,6 @@ void HighestLikelihood::armConnectDetection(Mat img, vector<RotatedRect> hand)
     // Skin segmentation
     Mat skin = this->skinSegmentation(img);
     imshow("skin segmentation", skin);
-
     // Skeletonize
     cv::threshold(skin, skin, 127, 255, cv::THRESH_BINARY);
     cv::Mat skel(skin.size(), CV_8UC1, cv::Scalar(0));
@@ -61,15 +60,14 @@ void HighestLikelihood::armConnectDetection(Mat img, vector<RotatedRect> hand)
     imshow("Arms", arms);
 }
 
-void HighestLikelihood::skinScore(vector<RotatedRect> hand) {
-
-    for (int i = 0; i < hand.size(); i++) {
+void HighestLikelihood::skinScore(vector<RotatedRect> hand)
+{
+    for(int i = 0; i < hand.size(); i++) {
         Mat M, rotated, cropped;
-
         float angle = hand.at(i).angle;
         Size hand_size = hand.at(i).size;
 
-        if ( hand.at(i).angle < -45 ) {
+        if(hand.at(i).angle < -45) {
             angle += 90;
             swap(hand_size.width, hand_size.height);
         }
@@ -77,9 +75,7 @@ void HighestLikelihood::skinScore(vector<RotatedRect> hand) {
         M = getRotationMatrix2D(hand.at(i).center, angle, 1.0);
         warpAffine(this->binairySkin, rotated, M, this->binairySkin.size(), INTER_CUBIC);
         getRectSubPix(rotated, hand_size, hand.at(i).center, cropped);
-
-        this->score.at(i) += (float)countNonZero(cropped)/(float)(cropped.rows * cropped.cols) * 5;
-
+        this->score.at(i) += (float)countNonZero(cropped) / (float)(cropped.rows * cropped.cols) * 5;
     }
 }
 
@@ -88,16 +84,19 @@ vector<int> HighestLikelihood::getScore()
     return this->score;
 }
 
-vector<RotatedRect> HighestLikelihood::removeTobigHandBox(Mat In, vector<RotatedRect> hand, double eps) {
-    if ( face.area() == 0 )
+vector<RotatedRect> HighestLikelihood::removeTobigHandBox(Mat In, vector<RotatedRect> hand, double eps)
+{
+    if(face.area() == 0)
         faceDetection(In);
 
     cout << "   Start elimination process with " << hand.size() << endl;
-    for ( int i = 0; i < hand.size(); i++ ) {
-        if ( ( hand.at(i).size.height * hand.at(i).size.width ) > ( ( this->face.size().height * this->face.size().width ) * ( 1 + eps ) ) ) {
+
+    for(int i = 0; i < hand.size(); i++) {
+        if((hand.at(i).size.height * hand.at(i).size.width) > ((this->face.size().height * this->face.size().width) * (1 + eps))) {
             hand.erase(hand.begin() + i);
         }
     }
+
     cout << "   Ended elimination process with " << hand.size() << endl << endl;
     return hand;
 }
@@ -106,9 +105,9 @@ vector<RotatedRect> HighestLikelihood::removeTobigHandBox(Mat In, vector<Rotated
 Mat HighestLikelihood::skinSegmentation(Mat In)
 {
     Mat skin, faceCut;
-    if ( face.area() == 0 )
-        faceDetection(In);
 
+    if(face.area() == 0)
+        faceDetection(In);
 
     // Image to HSV
     cvtColor(In, skin, CV_BGR2HSV);
@@ -131,14 +130,13 @@ Mat HighestLikelihood::skinSegmentation(Mat In)
     morphologyEx(skin, skin, 2, element);
     element = getStructuringElement(MORPH_DILATE, Size(7, 7), Point(3, 3));
     dilate(skin, skin, element);
-
     Mat blobs = skin.clone();
     vector<vector<Point> > contours;
     findContours(blobs, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
     Mat bigSkin(skin.rows, skin.cols, skin.type(), Scalar(0, 0, 0));
 
     for(unsigned  int i = 0; i < contours.size(); i++) {
-        if ( contourArea( contours[i] ) >= face.area()/4 )
+        if(contourArea(contours[i]) >= face.area() / 4)
             drawContours(bigSkin, contours, i, Scalar(255, 255, 255), CV_FILLED);
     }
 
@@ -146,22 +144,21 @@ Mat HighestLikelihood::skinSegmentation(Mat In)
     return bigSkin;
 }
 
-void HighestLikelihood::faceDetection(Mat In) {
+void HighestLikelihood::faceDetection(Mat In)
+{
     // Face detection
     CascadeClassifier face_cascade;
     vector<Rect> faces;
 
     if(!face_cascade.load("haarcascade_frontalface_alt.xml")) {
         cout << "Error loading haarcascade xml file." << endl;
-
         return;
     }
 
     face_cascade.detectMultiScale(In, faces, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 
-    if ( faces.size() > 0) {
+    if(faces.size() > 0) {
         this->face = faces[0];
-
         Mat faceImg = In.clone();
         rectangle(faceImg, this->face, Scalar(250, 14, 140));
         imshow("Face", faceImg);

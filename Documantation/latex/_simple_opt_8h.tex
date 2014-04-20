@@ -89,65 +89,65 @@ enum \hyperlink{_simple_opt_8h_acb58d7c1b9261cd0a245305a292402d0}{\-\_\-\-E\-S\-
 A cross-\/platform command line library which can parse almost any of the standard command line formats in use today. It is designed explicitly to be portable to any platform and has been tested on Windows and Linux. See \hyperlink{class_c_simple_opt_templ}{C\-Simple\-Opt\-Templ} for the class definition. \begin{DoxyVerb}@version 3.5
 \end{DoxyVerb}
 \hypertarget{_simple_opt_8h_features}{}\subsection{F\-E\-A\-T\-U\-R\-E\-S}\label{_simple_opt_8h_features}
-\begin{DoxyVerb}-   MIT Licence allows free use in all software (including GPL 
+\begin{DoxyVerb}-   MIT Licence allows free use in all software (including GPL
     and commercial)
 -   multi-platform (Windows 95/98/ME/NT/2K/XP, Linux, Unix)
 -   supports all lengths of option names:
     <table width="60%">
-        <tr><td width="30%"> - 
+        <tr><td width="30%"> -
             <td>switch character only (e.g. use stdin for input)
-        <tr><td> -o          
+        <tr><td> -o
             <td>short (single character)
-        <tr><td> -long       
+        <tr><td> -long
             <td>long (multiple character, single switch character)
-        <tr><td> --longer    
+        <tr><td> --longer
             <td>long (multiple character, multiple switch characters)
     </table>
 -   supports all types of arguments for options:
     <table width="60%">
-        <tr><td width="30%"> --option        
+        <tr><td width="30%"> --option
             <td>short/long option flag (no argument)
-        <tr><td> --option ARG    
+        <tr><td> --option ARG
             <td>short/long option with separate required argument
-        <tr><td> --option=ARG    
+        <tr><td> --option=ARG
             <td>short/long option with combined required argument
-        <tr><td> --option[=ARG]  
+        <tr><td> --option[=ARG]
             <td>short/long option with combined optional argument
-        <tr><td> -oARG           
+        <tr><td> -oARG
             <td>short option with combined required argument
-        <tr><td> -o[ARG]         
+        <tr><td> -o[ARG]
             <td>short option with combined optional argument
     </table>
 -   supports options with multiple or variable numbers of arguments:
     <table width="60%">
-        <tr><td width="30%"> --multi ARG1 ARG2      
+        <tr><td width="30%"> --multi ARG1 ARG2
             <td>Multiple arguments
-        <tr><td> --multi N ARG-1 ARG-2 ... ARG-N    
+        <tr><td> --multi N ARG-1 ARG-2 ... ARG-N
             <td>Variable number of arguments
     </table>
--   supports case-insensitive option matching on short, long and/or 
+-   supports case-insensitive option matching on short, long and/or
     word arguments.
--   supports options which do not use a switch character. i.e. a special 
-    word which is construed as an option. 
-    e.g. "foo.exe open /directory/file.txt" 
--   supports clumping of multiple short options (no arguments) in a string 
+-   supports options which do not use a switch character. i.e. a special
+    word which is construed as an option.
+    e.g. "foo.exe open /directory/file.txt"
+-   supports clumping of multiple short options (no arguments) in a string
     e.g. "foo.exe -abcdef file1" <==> "foo.exe -a -b -c -d -e -f file1"
--   automatic recognition of a single slash as equivalent to a single 
+-   automatic recognition of a single slash as equivalent to a single
     hyphen on Windows, e.g. "/f FILE" is equivalent to "-f FILE".
 -   file arguments can appear anywhere in the argument list:
     "foo.exe file1.txt -a ARG file2.txt --flag file3.txt file4.txt"
-    files will be returned to the application in the same order they were 
+    files will be returned to the application in the same order they were
     supplied on the command line
 -   short-circuit option matching: "--man" will match "--mandate"
-    invalid options can be handled while continuing to parse the command 
+    invalid options can be handled while continuing to parse the command
     line valid options list can be changed dynamically during command line
-    processing, i.e. accept different options depending on an option 
+    processing, i.e. accept different options depending on an option
     supplied earlier in the command line.
 -   implemented with only a single C++ header file
 -   optionally use no C runtime or OS functions
 -   char, wchar_t and Windows TCHAR in the same program
 -   complete working examples included
--   compiles cleanly at warning level 4 (Windows/VC.NET 2003), warning 
+-   compiles cleanly at warning level 4 (Windows/VC.NET 2003), warning
     level 3 (Windows/VC6) and -Wall (Linux/gcc)
 \end{DoxyVerb}
 \hypertarget{_simple_opt_8h_usage}{}\subsection{U\-S\-A\-G\-E}\label{_simple_opt_8h_usage}
@@ -177,8 +177,8 @@ A cross-\/platform command line library which can parse almost any of the standa
 \end{DoxyPre}
  \begin{DoxyVerb}    Note that all options must start with a hyphen even if the slash will
     be accepted. This is because the slash character is automatically
-    converted into a hyphen to test against the list of options. 
-    For example, the following line matches both "-?" and "/?" 
+    converted into a hyphen to test against the list of options.
+    For example, the following line matches both "-?" and "/?"
     (on Windows).
 
     <pre>
@@ -240,12 +240,12 @@ Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included
 in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS 
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY 
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\end{DoxyVerb}
 
 

@@ -29,6 +29,7 @@
 #include "DetHand.h"
 #include "SaveDetections.h"
 #include "HighestLikelihood.h"
+#include "FacedDetection.h"
 
 
 using namespace std;
@@ -75,7 +76,7 @@ int main(int argc, char *argv[])
 
     inputFile = argv[argc - 1];
 
-    if(inputFile.substr(inputFile.length() - 4) != ".avi") {
+    if(inputFile.substr(inputFile.length() - 4) != ".avi" && inputFile.substr(inputFile.length() - 4) != ".mp4") {
         cout << "No valid input file is found" << endl;
         return 1;
     }
@@ -83,9 +84,11 @@ int main(int argc, char *argv[])
     cout << "start frame: " << startFrame << endl;
     cout << "skip frames: " << skipFrames << endl;
     cout << "input file: " << inputFile << endl;
+
+
     // START OFFICIAL PROGRAM
     // ----------------------------------------
-    // Opening image file
+    // ---------- Opening image file ----------
     VideoCapture cap(inputFile);
 
     if(!cap.isOpened()) {
@@ -94,34 +97,35 @@ int main(int argc, char *argv[])
     }
 
     cap.set(CV_CAP_PROP_POS_FRAMES, startFrame - 1);
-    // Detections
+
+    //  ---------- Initialize Detectors ----------
+    cout << "---> Initalisation face detector." << endl;
+    FaceDetection faceDetector("haarcascade_frontalface_alt.xml");
     cout << "---> Initalisation upper body detection." << endl;
-    DetBody body("torso3comp.txt", -0.5);
+    DetBody body("torso3comp.txt", -1.5);
     cout << "---> Initalisation hand detection." << endl;
-    DetHand hand("hand.txt", "hand-context.txt", -0.3);
+    DetHand hand("hand.txt", "context-hand.txt", -0.5);
 
-
-
-    // Program loop
+    // ---------- Program loop ----------
     cout << "---> Start program loop." << endl;
     save = new SaveDetections(inputFile.c_str());
     signal(SIGINT, signal_callback_handler);
 
-    while(cap.get(CV_CAP_PROP_POS_AVI_RATIO)  != -1) {
-
-        cout << "-----> Frame " << cap.get(CV_CAP_PROP_POS_FRAMES) << "/" << cap.get(CV_CAP_PROP_FRAME_COUNT) << "." << endl;
+    while(cap.get(CV_CAP_PROP_POS_FRAMES)  < cap.get(CV_CAP_PROP_FRAME_COUNT)) {
+        cout << "-----> Frame " << cap.get(CV_CAP_PROP_POS_FRAMES) + 1 << "/" << cap.get(CV_CAP_PROP_FRAME_COUNT) << "." << endl;
         Mat cameraImage, textImage;
         cap >> cameraImage;
         cameraImage.copyTo(textImage);
         stringstream ss;
 
-        // Run body detection
+        // ---------- Run body detection ----------
         cout << "-----> Run upper body detection." << endl;
         save->newFrame(cap.get(CV_CAP_PROP_POS_FRAMES));
+        imshow("Original frame", cameraImage);
         body.runDetection(cameraImage, cap.get(CV_CAP_PROP_POS_FRAMES));
         cout << body.getSize() << " detections found" << endl;
 
-        // Do hand detection per body detection
+        // ---------- Do hand detection per body detection ----------
         for(int n = 0; n < body.getSize(); n++) {
             clock_t T = clock();
             save->newUpperBody(body.getRect()[n]);
@@ -129,41 +133,77 @@ int main(int argc, char *argv[])
             ss << "Body detection: " << n + 1;
             imshow(ss.str(), body.getCutouts()[n]);
 
-            // Run hand detection
-            cout << "-----> Run Hand detection." << endl;
-            hand.runDetection(body.getCutouts()[n], cap.get(CV_CAP_PROP_POS_FRAMES));
-            body.getCutouts()[n].copyTo(cameraImage);
+            // ---------- Run face detection on upper body cut out ----------
+            cout << "-----> Run Face detection for upper body detection " << n + 1 << "/" << body.getSize() << "." << endl;
+            Rect face = faceDetector.detectFace(body.getCutouts()[n].clone());
+            cout << "               Face found:      " << boolalpha << (face.area() > 0) << endl;
 
 
+            // ---------- Run hand detection ----------
+            cout << "-----> Run Hand detection on upper body detection " << n + 1 << "/" << body.getSize() << "." << endl;
+            hand.runDetection(body.getCutouts()[n], cap.get(CV_CAP_PROP_POS_FRAMES), face);
+            cout << "               Hand detections found:      " << hand.getLocationHand().size() << endl;
+            cout << "               Context detections found:   " << hand.getLocationContext().size() << endl;
+            cout << "               Arm detections found:       " << hand.getLocationArm().size() << endl;
 
-            // Run Highest Likelihood eliminator
+            // ---------- Run Highest Likelihood eliminator ----------
             cout << "------> Run higest likelihood eliminator." << endl;
             HighestLikelihood likeli;
-            Mat tmp = cameraImage.clone();
-            likeli.run(tmp, hand.getRect(), hand.getScore(), 5);
-
-
-            cout << "------> View results." << endl;
-            Mat result = cameraImage.clone();
-            for ( int r = 0; r < likeli.getResults().size(); r++ ) {
-                hand.drawResult(result, likeli.getResults()[r], Scalar(255, 30, 30));
-                save->newHand(likeli.getResults()[r]);
-            }
-            imshow("Result", result);
-
+            Mat tmp = body.getCutouts()[n].clone();
+            //likeli.run(&hand, face, body.getCutouts()[n].clone(), RotatedRect(Point(160, 33), Size(10, 10), 0), RotatedRect(Point(-35.6595, 195.683), Size(10, 10), 0));
+            likeli.run(&hand, face, body.getCutouts()[n].clone(), RotatedRect(Point(160, 33), Size(0, 0), 0), RotatedRect(Point(-35.6595, 195.683), Size(0, 0), 0));
+            cout << "               After elimination:       " << likeli.getResults().size() << endl;
 
             T = clock() - T;
-            save->newFace(likeli.getFace());
+            save->newFace(face);
             save->runtime((float)T / CLOCKS_PER_SEC);
 
+
+
+
+
+
+
+            // ---------- View detections detHand ----------
+            cout << "-----> View result detections for " << n + 1 << "/" << body.getSize() << "." << endl;
+            Mat result = body.getCutouts()[n].clone();
+
+            for(int r = 0; r < hand.getLocationHand().size(); r++) {
+                hand.drawResult(result, hand.getLocationHand()[r], Scalar(255, 30, 30));
+                save->newHand(hand.getLocationHand()[r]);
+            }
+
+
+
+            for(int r = 0; r < hand.getLocationContext().size(); r++) {
+                hand.drawResult(result, hand.getLocationContext()[r], Scalar(30, 255, 30));
+                save->newHand(hand.getLocationContext()[r]);
+            }
+
+
+
+            for(int r = 0; r < hand.getLocationArm().size(); r++) {
+                hand.drawResult(result, hand.getLocationArm()[r], Scalar(30, 30, 255));
+                save->newHand(hand.getLocationArm()[r]);
+            }
+
+
+
+            imshow(ss.str(), result);
+            char key = waitKey(-1);
+
+            if(key == 'q' || key == 'Q') {
+                goto END;
+            }
         }
-        waitKey(100);
-        //waitKey(-1);
+
         destroyAllWindows();
         // Skip frames
         cap.set(CV_CAP_PROP_POS_FRAMES, cap.get(CV_CAP_PROP_POS_FRAMES) + skipFrames - 1);
     }
 
+END:
     save->~SaveDetections();
+    cout << "---> Detection finished." << endl << endl;
     return EXIT_SUCCESS;
 }

@@ -6,10 +6,14 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
+#include <opencv2/flann/flann.hpp>
 #include <opencv2/nonfree/features2d.hpp>
 #include <opencv2/legacy/legacy.hpp>
 #include "opencv2/ml/ml.hpp"
 #include <opencv2/gpu/gpu.hpp>
+
+#include "DetHand.h"
+#include "Cluster.h"
 
 using namespace cv;
 using namespace std;
@@ -26,26 +30,33 @@ class HighestLikelihood
         /// @param handScores Scores from the detector
         /// @param TH threshold hands
         /// @param eps used for elimination to big bounding boxes
-        void run(Mat img, vector<RotatedRect> hands, vector<double> handScores, double TH = 0, double eps = 0.1);
+        void run(DetHand* hand, Rect face, Mat img, RotatedRect lefty, RotatedRect righty);
 
         /// @brief Gives the result after the running the run function
         /// @return higest likely detected hands
         vector<RotatedRect> getResults();
 
-        /// @brief Gives face rectangle
-        /// @return Rect with face location and it's size
-        Rect getFace();
+        RotatedRect getLefty();
+        RotatedRect getRighty();
 
     private:
         vector<RotatedRect> results;
-        Rect face;
+        RotatedRect lefty;
+        double leftyScore;
+        RotatedRect righty;
+        double rightyScore;
 
-        Mat skinSegmentation(Mat In, Rect face);
-        Rect faceDetection(Mat In);
+        void clustering(vector<RotatedRect> &hand, vector<double> &score, double eps);
+        void skinEliminator(vector<RotatedRect> &hand, vector<double> &score, double TH, Mat skin);
+        void removeTobigHandBox(vector<RotatedRect>& hand, vector<double>& score, Rect face, double eps);
+        void lowerScoreFaceHand(vector<RotatedRect>& hand, vector<double>& score, Rect face, double eps, int lower);
+        void closestPoint(vector<RotatedRect>& hand, vector<double>& score, Point predictedPoint);
+        void findRighty(vector<RotatedRect>& resultsRighty, vector<double>& scoreRighty, RotatedRect predictedPoint, double eps);
+        void findLefty(vector<RotatedRect>& resultsLefty, vector<double>& scoreLefty, RotatedRect predictedPoint, double eps);
 
-        vector<int> armConnectDetection(Mat binairy, vector<RotatedRect> hand);
-        vector<int> skinScore(vector<RotatedRect> hand, Mat skin);
-        vector<RotatedRect> removeTobigHandBox(vector<RotatedRect> &hand, vector<double> &score, Rect face, double eps);
+        RotatedRect toRelative(RotatedRect hand, Rect face);
+
+        float dstCalc( Point pt1, Point pt2 );
 };
 
 #endif // HIGHESTLIKELIHOOD_H

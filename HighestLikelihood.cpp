@@ -4,115 +4,151 @@ HighestLikelihood::HighestLikelihood()
 {
 }
 
-void HighestLikelihood::run(Mat img, vector<RotatedRect> hands, vector<double> handScores, double TH, double eps) {
-    vector<int> ScoreSkin;
-    vector<int> ScoreArms;
+void HighestLikelihood::run(DetHand* hand, Rect face, Mat img, RotatedRect lefty, RotatedRect righty)
+{
+    // ---------- Merging scores and convert to relative position ----------
+    vector<RotatedRect> results;
+    vector<double> score;
+    int j = 0;
 
-    // Get skin segmentation based on face color
-    Rect face = this->faceDetection(img);
-    if (face.area() != 0) {
-        Mat binairySkin = this->skinSegmentation(img, face);
-
-        // Crude eliminate wrong hands
-        hands = this->removeTobigHandBox(hands, handScores, face, eps);
-
-        // Calculating score from features
-        ScoreSkin = this->skinScore(hands, binairySkin);
-        ScoreArms = this->armConnectDetection(binairySkin, hands);
-    } else {
-        ScoreSkin.assign(hands.size(), 0);
-        ScoreArms.assign(hands.size(), 0);
+    cout << "                   hand scores: " << endl;
+    for (int i = 0; i < hand->getLocationHand().size(); i++) {
+        results.push_back(hand->getLocationHand()[i]);
+        score.push_back(hand->getScoreHand()[i]);
+        cout << "                           Score: " << score.back() << endl;
+        j++;
     }
-    double max = TH, secMax = TH;
-    //this->results.assign(2, RotatedRect());
-    for ( unsigned int i = 0; i < hands.size(); i++ ) {
 
-        // find 2 best scores
-        double score = (double)ScoreSkin[i] + (double)ScoreArms[i] + handScores[i];
-
-        if ( score >= TH ) {
-            this->results.push_back(hands[i]);
-        }
-
-//        if ( score >= max) {
-//            max = score;
-//            this->results[1] = this->results[0];
-//            this->results[0] = hands[i];
-//        }
-//        if ( score >= secMax && score < max) {
-//            secMax = score;
-//            this->results[1] = hands[i];
-//        }
-
+    cout << "                   Context scores: " << endl;
+    for (int i = 0; i < hand->getLocationContext().size(); i++) {
+        results.push_back(hand->getLocationContext()[i]);
+        score.push_back(hand->getScoreContext()[i]);
+        cout << "                           Score: " << score.back() << endl;
+        j++;
     }
+
+    cout << "                   Arm scores: " << endl;
+    for (int i = 0; i < hand->getLocationArm().size(); i++) {
+        results.push_back(hand->getLocationArm()[i]);
+        score.push_back(hand->getScoreArm()[i]);
+        cout << "                           Score: " << score.back() << endl;
+        j++;
+    }
+    cout << "           Merge size: " << results.size() << "    Hand size: " << hand->getLocationHand().size() << "    Context size: " << hand->getLocationContext().size() << "    Arm size: " << hand->getLocationArm().size() << endl;
+
+
+
+    // ---------- Skin pixel elimination ----------
+    cout << "-------> Skin eliminator." << endl;
+    this->skinEliminator(results, score, .1, hand->getSkin());
+    cout << "               " << results.size() << endl;
+
+    // ---------- Size elimination ----------
+    cout << "-------> Size eliminator" << endl;
+    this->removeTobigHandBox(results, score, face, 0.1);
+    cout << "               " << results.size() << endl;
+
+    // ---------- Clustring ----------
+    cout << "-------> Clustering detections." << endl;
+    this->clustering(results, score, .1);
+    cout << "               " << results.size() << endl;
+
+    // ---------- Lower score face area ----------
+    cout << "-------> Lower face hands." << endl;
+    this->lowerScoreFaceHand(results, score, face, .1, -1);
+    cout << "               " << results.size() << endl;
+
+
+    // ---------- Change score based on prediction location hand ----------
+    cout << "-------> Change score distance tracking prediction." << endl;
+
+    vector<RotatedRect> resultsRighty = hand->absToRel(results, Point( face.x + face.width/2, face.y + face.height/2 ));;
+    vector<double> scoreRighty = score;
+
+    this->findRighty(resultsRighty, scoreRighty, righty, .7);
+    this->righty = resultsRighty.at(0);
+    this->rightyScore = scoreRighty.at(0);
+
+    vector<RotatedRect> resultsLefty = hand->absToRel(results, Point( face.x + face.width/2, face.y + face.height/2 ));;
+    vector<double> scoreLefty = score;
+    this->findLefty(resultsLefty, scoreLefty, lefty, .7);
+    this->lefty = resultsLefty.at(0);
+    this->leftyScore = scoreLefty.at(0);
+
+
+
+    // ---------- TEMPORARY VIEW RESULTS ----------
+    for ( int i = 0; i < results.size(); i++ ) {
+        hand->drawResult(img, results.at(i), Scalar((1 + score.at(i)) * 100, (1 + score.at(i)) * 100, (1 + score.at(i)) * 100));
+        cout << "       hand: " << results.at(i).center.x << ", " << results.at(i).center.y;
+        cout << " \t\trotation: " << results.at(i).angle;
+        cout << " \t\tScore: " << score.at(i) << endl;
+    }
+    hand->drawResult(img, hand->relToAbs(resultsRighty, Point( face.x + face.width/2, face.y + face.height/2 )).at(0), Scalar(255, 10, 10));
+    hand->drawResult(img, hand->relToAbs(resultsLefty, Point( face.x + face.width/2, face.y + face.height/2 )).at(0), Scalar(10, 10, 255));
+
+    imshow("Result", img);
+
+    this->results = results;
 
 }
 
-vector<RotatedRect> HighestLikelihood::getResults() {
+vector<RotatedRect> HighestLikelihood::getResults()
+{
     return this->results;
 }
 
-Rect HighestLikelihood::getFace(){
-    return this->face;
-}
+void HighestLikelihood::clustering(vector<RotatedRect>& hand, vector<double>& score, double eps) {
 
+    vector<RotatedRect> cluster;
+    vector<double> scoreCluster;
+    Cluster rlike(eps, 30);
+    vector<int> label;
+    int labelSize = partition(hand, label , rlike);
 
-vector<int> HighestLikelihood::armConnectDetection(Mat skin, vector<RotatedRect> hand)
-{
-    // Skeletonize
-    cv::threshold(skin, skin, 127, 255, cv::THRESH_BINARY);
-    cv::Mat skel(skin.size(), CV_8UC1, cv::Scalar(0));
-    cv::Mat temp;
-    cv::Mat eroded;
-    cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(3, 3));
-    bool done;
-
-    do {
-        erode(skin, eroded, element);
-        dilate(eroded, temp, element); // temp = open(img)
-        subtract(skin, temp, temp);
-        bitwise_or(skel, temp, skel);
-        eroded.copyTo(skin);
-        done = (countNonZero(skin) == 0);
-    } while(!done);
-
-    // Line detection
-    vector<Vec4i> lines;
-    HoughLinesP(skel, lines, 1, CV_PI / 180, 5, 20, 15);
-
-    // Check if endpoints of detected lines are in founded hand detection areas
-    vector<int> score(hand.size(), 0);
-
-    //      Loop for each line point
-    for(unsigned int l = 0; l < lines.size(); l++) {
-        Vec4i line = lines[l];
-
-        //      Loop for each detected hand
-        for(unsigned int h = 0; h < hand.size(); h++) {
-            Rect bb = hand[h].boundingRect();
-
-            if(line[0] >= bb.tl().x && line[0] <= bb.br().x && line[1] >= bb.tl().y && line[1] <= bb.br().y) {
-                score.at(h)++;
-            }
-
-            if(line[2] >= bb.tl().x && line[2] <= bb.br().x && line[3] >= bb.tl().y && line[3] <= bb.br().y) {
-                score.at(h)++;
-            }
-        }
-    }
-    return score;
-}
-
-vector<int> HighestLikelihood::skinScore(vector<RotatedRect> hand, Mat skin) {
-    vector<int> score(hand.size() , 0);
+    cluster.assign(labelSize, RotatedRect(Point2f(0, 0), Size2f(0, 0), 0));
+    scoreCluster.assign(labelSize, 0);
+    vector<int> Sum(labelSize, 0);
+    vector<pair<double, double> > angle(labelSize, make_pair(0, 0));
 
     for (int i = 0; i < hand.size(); i++) {
-        Mat M, rotated, cropped;
+        int n = label[i];
 
+        // Simple mean caclulation
+        angle[n].first += cos(hand[i].angle * CV_PI / 180) * score[i];
+        angle[n].second += sin(hand[i].angle * CV_PI / 180) * score[i];
+        cluster[n].center.x += hand[i].center.x;
+        cluster[n].center.y += hand[i].center.y;
+        cluster[n].size.height += hand[i].size.height;
+        cluster[n].size.width += hand[i].size.width;
+        scoreCluster[n] += score[n];
+        Sum[n]++;
+
+    }
+
+    for(int n = 0; n < labelSize; n++) {
+        cluster[n].angle = atan2(angle[n].second, angle[n].first) * 180 / CV_PI;
+        cluster[n].center.x = cluster[n].center.x / Sum[n];
+        cluster[n].center.y = cluster[n].center.y / Sum[n];
+        cluster[n].size.height = cluster[n].size.height / Sum[n];
+        cluster[n].size.width = cluster[n].size.width / Sum[n];
+    }
+    hand.clear();
+    score.clear();
+
+    hand = cluster;
+    score = scoreCluster;
+}
+
+void HighestLikelihood::skinEliminator(vector<RotatedRect>& hand, vector<double>& score, double TH, Mat skin)
+{
+    for(int i = 0; i < hand.size(); ) {
+        Mat M, rotated, cropped;
         float angle = hand.at(i).angle;
         Size hand_size = hand.at(i).size;
 
-        if ( hand.at(i).angle < -45 ) {
+        // Make cutout of ratated image (skin)
+        if(hand.at(i).angle < -45) {
             angle += 90;
             swap(hand_size.width, hand_size.height);
         }
@@ -121,79 +157,198 @@ vector<int> HighestLikelihood::skinScore(vector<RotatedRect> hand, Mat skin) {
         warpAffine(skin, rotated, M, skin.size(), INTER_CUBIC);
         getRectSubPix(rotated, hand_size, hand.at(i).center, cropped);
 
-        score[i] += (float)countNonZero(cropped)/(float)(cropped.rows * cropped.cols) * 5;
+        // Remove detection based on non zero pixels vs area detection
+        if ( (double)countNonZero(cropped) / (double)hand.at(i).size.area() < TH) {
+            hand.erase(hand.begin() + i);
+            score.erase(score.begin() + i);
+        } else {
+            i++;
+        }
     }
-
-    return score;
 }
 
-vector<RotatedRect> HighestLikelihood::removeTobigHandBox(vector<RotatedRect>& hand, vector<double>& score, Rect face, double eps) {
-    for ( int i = 0; i < hand.size(); i++ ) {
-        if ( ( hand.at(i).size.height * hand.at(i).size.width ) > ( ( face.size().height * face.size().width ) * ( 1 + eps ) ) ) {
+void HighestLikelihood::removeTobigHandBox(vector<RotatedRect>& hand, vector<double>& score, Rect face, double eps)
+{
+    for(int i = 0; i < hand.size(); i++) {
+        if( hand.at(i).size.area() > (face.size().area() * (1 + eps))) {
             hand.erase(hand.begin() + i);
             score.erase(score.begin() + i);
         }
     }
-    return hand;
 }
 
+void HighestLikelihood::lowerScoreFaceHand(vector<RotatedRect>& hand, vector<double>& score, Rect face, double eps, int lower) {
+    face.x -= face.width * eps;
+    face.y -= face.height * eps;
+    face.width += face.width * eps * 2;
+    face.height += face.height * eps * 2;
 
-Mat HighestLikelihood::skinSegmentation(Mat In, Rect face)
-{
-    Mat skin, faceCut;
-    // Image to HSV
-    cvtColor(In, skin, CV_BGR2HSV);
-    // Get face region
-    GaussianBlur(skin(face), faceCut, Size(7, 7), 1, 1);
-    // Get face color in the Hue color space
-    vector<Mat> channel;
-    split(faceCut, channel);
-    int centerH = 0;
-
-    for(int i = 10; i < channel[0].rows - 10; i++) {
-        for(int j = 10; j < channel[0].cols - 10; j++) {
-            centerH = (centerH + channel[0].at<uchar>(i, j)) / 2;
+    for ( int i = 0; i < hand.size(); i++ ) {
+        if (face.contains(hand[i].center)) {
+            score[i] -= lower;
         }
     }
-
-    // Segmentation of the skin in Input image
-    inRange(skin, Scalar(0, 70, 60), Scalar(centerH * 1.2, 255, 255), skin);
-    Mat element = getStructuringElement(MORPH_ERODE, Size(7, 7), Point(3, 3));
-    morphologyEx(skin, skin, 2, element);
-    element = getStructuringElement(MORPH_DILATE, Size(7, 7), Point(3, 3));
-    dilate(skin, skin, element);
-
-    Mat blobs = skin.clone();
-    vector<vector<Point> > contours;
-    findContours(blobs, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
-    Mat bigSkin(skin.rows, skin.cols, skin.type(), Scalar(0, 0, 0));
-
-    for(unsigned  int i = 0; i < contours.size(); i++) {
-        if ( contourArea( contours[i] ) >= face.area()/4 )
-            drawContours(bigSkin, contours, i, Scalar(255, 255, 255), CV_FILLED);
-    }
-
-    return bigSkin.clone();
 }
 
-Rect HighestLikelihood::faceDetection(Mat In) {
-    // Face detection
-    CascadeClassifier face_cascade;
-    vector<Rect> faces;
 
-    if(!face_cascade.load("haarcascade_frontalface_alt.xml")) {
-        cout << "Error loading haarcascade xml file." << endl;
-        return Rect();
+void HighestLikelihood::closestPoint(vector<RotatedRect>& hand, vector<double>& score, Point predictedPoint) {
+
+    //      calc max min dst
+    float min = numeric_limits<float>::max(), max = numeric_limits<float>::min();
+    for (int i = 0; i < hand.size(); i++) {
+        float tmp = this->dstCalc(hand.at(i).center, predictedPoint);
+        if (tmp > max) max = tmp;
+        if (tmp < min) min = tmp;
     }
 
-    face_cascade.detectMultiScale(In, faces, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
+    //      Normalise for score
+    float diff = max - min;
+    //vector<float> scoreDist;
+    for (int i = 0; i < hand.size(); i++) {
+        //scoreDist.push_back(-((this->dstCalc(hand.at(i).center, predictedPoint)-min)/diff-1));
+        score.at(i) += -((this->dstCalc(hand.at(i).center, predictedPoint)-min)/diff-1) * 10;
+    }
 
-    if ( faces.size() > 0) {
-        this->face = faces[0];
-        return faces[0];
+
+
+}
+
+void HighestLikelihood::findRighty(vector<RotatedRect>& resultsRighty, vector<double>& scoreRighty, RotatedRect predictedPoint, double eps) {
+
+    if ( predictedPoint.size.area() > 0 ) {
+        Mat plot = Mat::zeros( 200, resultsRighty.size() * 10, CV_8UC3);
+
+        // There is a prediction
+        this->closestPoint(resultsRighty, scoreRighty, predictedPoint.center);
+
+        double max = 0, min = numeric_limits<double>::max();
+        for (int i = 0; i < resultsRighty.size(); i++ ){
+            if ( max < scoreRighty.at(i) ) {
+                max = scoreRighty.at(i);
+            }
+            if ( min > scoreRighty.at(i) ) {
+                min = scoreRighty.at(i);
+            }
+            rectangle(plot, Rect(i * 10, 0, 10, scoreRighty.at(i)*10), Scalar(10, 255, 10), CV_FILLED);
+        }
+        // cluster score above eps based on max en minimals
+        line(plot, Point(0, (min + (max * eps)) * 10), Point(plot.cols, (min + (max * eps)) * 10), Scalar(20, 20, 255));
+        for ( int i = 0; i < resultsRighty.size(); i++ ) {
+            if (scoreRighty.at(i) - min < max * eps) {
+                scoreRighty.erase(scoreRighty.begin()+i);
+                resultsRighty.erase(resultsRighty.begin()+i);
+                i--;
+            }
+        }
+
+        // Give prediction more wait in clustering
+        resultsRighty.push_back(predictedPoint);
+        scoreRighty.push_back(0);
+        resultsRighty.push_back(predictedPoint);
+        scoreRighty.push_back(0);
+
+        this->clustering(resultsRighty, scoreRighty, 1);
+        cout << "                               Righty size: " <<  resultsRighty.size() << endl;
+
+        flip(plot, plot, 0);
+        imshow("Righty plot", plot);
+        imwrite("RightyPlot.png", plot);
     } else {
-        cout << "No face found" << endl;
-        return Rect();
+        double max = numeric_limits<double>::min();
+        int adrMax = numeric_limits<int>::max();
+        // if no prediction (first run) give score based on side from face and take higest score hand on that side
+        for ( int i = 0; i < resultsRighty.size(); i++ ) {
+            if (resultsRighty.at(i).center.x < 0 && max < scoreRighty.at(i) ) {
+                max = scoreRighty.at(i);
+                adrMax = i;
+            }
+        }
+        if ( adrMax < resultsRighty.size() ) {
+            resultsRighty.at(0) = resultsRighty.at(adrMax);
+            scoreRighty.at(0) = scoreRighty.at(adrMax);
+            resultsRighty.erase(resultsRighty.begin() + 1, resultsRighty.end());
+            scoreRighty.erase(scoreRighty.begin() + 1, scoreRighty.end());
+        } else {
+            resultsRighty.clear();
+            resultsRighty.push_back(RotatedRect());
+            scoreRighty.clear();
+            scoreRighty.push_back(0);
+        }
     }
 }
+
+void HighestLikelihood::findLefty(vector<RotatedRect>& resultsLefty, vector<double>& scoreLefty, RotatedRect predictedPoint, double eps) {
+
+    if ( predictedPoint.size.area() > 0 ) {
+        Mat plot = Mat::zeros( 200, resultsLefty.size() * 10, CV_8UC3);
+
+        // There is a prediction
+        this->closestPoint(resultsLefty, scoreLefty, predictedPoint.center);
+
+        double max = 0, min = numeric_limits<double>::max();
+        for (int i = 0; i < resultsLefty.size(); i++ ){
+            if ( max < scoreLefty.at(i) ) {
+                max = scoreLefty.at(i);
+            }
+            if ( min > scoreLefty.at(i) ) {
+                min = scoreLefty.at(i);
+            }
+            rectangle(plot, Rect(i * 10, 0, 10, scoreLefty.at(i)*10), Scalar(10, 255, 10), CV_FILLED);
+        }
+        // cluster score above eps based on max en minimals
+        line(plot, Point(0, (min + (max * eps)) * 10), Point(plot.cols, (min + (max * eps)) * 10), Scalar(20, 20, 255));
+        for ( int i = 0; i < resultsLefty.size(); i++ ) {
+            if (scoreLefty.at(i) - min < max * eps) {
+                scoreLefty.erase(scoreLefty.begin()+i);
+                resultsLefty.erase(resultsLefty.begin()+i);
+                i--;
+            }
+        }
+
+        // Give prediction more wait in clustering
+        resultsLefty.push_back(predictedPoint);
+        scoreLefty.push_back(0);
+        resultsLefty.push_back(predictedPoint);
+        scoreLefty.push_back(0);
+
+        this->clustering(resultsLefty, scoreLefty, 1);
+        cout << "                               Righty size: " <<  resultsLefty.size() << endl;
+
+        flip(plot, plot, 0);
+        imshow("Lefty plot", plot);
+        imwrite("LeftyPlot.png", plot);
+
+
+    } else {
+        double max = numeric_limits<double>::min();
+        int adrMax = numeric_limits<int>::max();
+        // if no prediction (first run) give score based on side from face and take higest score hand on that side
+        for ( int i = 0; i < resultsLefty.size(); i++ ) {
+            if (resultsLefty.at(i).center.x > 0 && max < scoreLefty.at(i) ) {
+                max = scoreLefty.at(i);
+                adrMax = i;
+            }
+        }
+        if ( adrMax < scoreLefty.size() ) {
+            resultsLefty.at(0) = resultsLefty.at(adrMax);
+            resultsLefty.erase(resultsLefty.begin() + 1, resultsLefty.end());
+            scoreLefty.at(0) = scoreLefty.at(adrMax);
+            scoreLefty.erase(scoreLefty.begin() + 1, scoreLefty.end());
+        } else {
+            resultsLefty.clear();
+            resultsLefty.push_back(RotatedRect());
+            scoreLefty.clear();
+            scoreLefty.push_back(0);
+        }
+    }
+}
+
+RotatedRect toRelative(RotatedRect hand, Rect face) {
+
+}
+
+float HighestLikelihood::dstCalc( Point pt1, Point pt2 ) {
+    return ( sqrt( pow( float(pt1.x - pt2.x), 2) + pow( float(pt1.y - pt2.y), 2) ) );
+}
+
 

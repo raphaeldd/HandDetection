@@ -9,7 +9,7 @@ QT       += core
 QT       -= gui
 
 TARGET = HandDetection
-CONFIG   += console
+#CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
@@ -22,7 +22,7 @@ LIBS += -lfftw3f -I/opt/local/lib -L/opt/local/lib
 LIBS += -fopenmp
 LIBS += -lopencv_nonfree -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_video -lopencv_contrib -lopencv_objdetect -lopencv_legacy -lopencv_features2d -lopencv_ml -lopencv_flann -lopencv_calib3d -lopencv_gpu -I"/opt/local/include" -L"/opt/local/lib"
 
-DEFINES += USE_FFTW
+# DEFINES += USE_FFTW
 
 INCLUDEPATH = /usr/include/libxml2 \
         /usr/local/include
@@ -42,7 +42,9 @@ SOURCES += \
     DetHand.cpp \
     SaveDetections.cpp \
     HighestLikelihood.cpp \
-    Tracking.cpp
+    Tracking.cpp \
+    FaceDetection.cpp \
+    Cluster.cpp
 
 
 HEADERS += \
@@ -62,5 +64,7 @@ HEADERS += \
     DetHand.h \
     SaveDetections.h \
     HighestLikelihood.h \
-    Tracking.h
+    Tracking.h \
+    FacedDetection.h \
+    Cluster.h
 

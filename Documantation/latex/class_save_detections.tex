@@ -10,8 +10,10 @@ void \hyperlink{class_save_detections_a5a0112af80a6f2c7e5e0c12c757e3da9}{new\-Fr
 \begin{DoxyCompactList}\small\item\em Adds new element frame to X\-M\-L. \end{DoxyCompactList}\item 
 void \hyperlink{class_save_detections_acb1e8a18ffa4410a638a47c32314839e}{new\-Upper\-Body} (Rect box)
 \begin{DoxyCompactList}\small\item\em adds new element for a upper body detection \end{DoxyCompactList}\item 
-void \hyperlink{class_save_detections_ae1e14c331963242bb037abe2cb14bb84}{new\-Hand} (Rect box, int angle)
+void \hyperlink{class_save_detections_a7b88edb6590edbef9afced3d94c05bf8}{new\-Hand} (Rotated\-Rect box)
 \begin{DoxyCompactList}\small\item\em adds new element for a hand detection \end{DoxyCompactList}\item 
+void \hyperlink{class_save_detections_a0326a59a4ce799b4be3016a65946dfcd}{new\-Face} (Rect box)
+\begin{DoxyCompactList}\small\item\em adds new element for a face detection \end{DoxyCompactList}\item 
 void \hyperlink{class_save_detections_a6bc172c27da2231a4677c73efb967946}{runtime} (float time)
 \begin{DoxyCompactList}\small\item\em adds a runtime element to the X\-M\-L \end{DoxyCompactList}\item 
 \hypertarget{class_save_detections_a0dbc57c6c8ea4096bce1e4b640d697eb}{\hyperlink{class_save_detections_a0dbc57c6c8ea4096bce1e4b640d697eb}{$\sim$\-Save\-Detections} ()}\label{class_save_detections_a0dbc57c6c8ea4096bce1e4b640d697eb}
@@ -47,6 +49,22 @@ Constructor of class \hyperlink{class_save_detections}{Save\-Detections} Opens t
 
 
 \subsection{Member Function Documentation}
+\hypertarget{class_save_detections_a0326a59a4ce799b4be3016a65946dfcd}{\index{Save\-Detections@{Save\-Detections}!new\-Face@{new\-Face}}
+\index{new\-Face@{new\-Face}!SaveDetections@{Save\-Detections}}
+\subsubsection[{new\-Face}]{\setlength{\rightskip}{0pt plus 5cm}void Save\-Detections\-::new\-Face (
+\begin{DoxyParamCaption}
+\item[{Rect}]{box}
+\end{DoxyParamCaption}
+)}}\label{class_save_detections_a0326a59a4ce799b4be3016a65946dfcd}
+
+
+adds new element for a face detection 
+
+
+\begin{DoxyParams}{Parameters}
+{\em box} & Position information of the detecti \\
+\hline
+\end{DoxyParams}
 \hypertarget{class_save_detections_a5a0112af80a6f2c7e5e0c12c757e3da9}{\index{Save\-Detections@{Save\-Detections}!new\-Frame@{new\-Frame}}
 \index{new\-Frame@{new\-Frame}!SaveDetections@{Save\-Detections}}
 \subsubsection[{new\-Frame}]{\setlength{\rightskip}{0pt plus 5cm}void Save\-Detections\-::new\-Frame (
@@ -63,14 +81,13 @@ Adds new element frame to X\-M\-L.
 {\em fram\-Nr} & Puts the frame number in the X\-M\-L file \\
 \hline
 \end{DoxyParams}
-\hypertarget{class_save_detections_ae1e14c331963242bb037abe2cb14bb84}{\index{Save\-Detections@{Save\-Detections}!new\-Hand@{new\-Hand}}
+\hypertarget{class_save_detections_a7b88edb6590edbef9afced3d94c05bf8}{\index{Save\-Detections@{Save\-Detections}!new\-Hand@{new\-Hand}}
 \index{new\-Hand@{new\-Hand}!SaveDetections@{Save\-Detections}}
 \subsubsection[{new\-Hand}]{\setlength{\rightskip}{0pt plus 5cm}void Save\-Detections\-::new\-Hand (
 \begin{DoxyParamCaption}
-\item[{Rect}]{box, }
-\item[{int}]{angle}
+\item[{Rotated\-Rect}]{box}
 \end{DoxyParamCaption}
-)}}\label{class_save_detections_ae1e14c331963242bb037abe2cb14bb84}
+)}}\label{class_save_detections_a7b88edb6590edbef9afced3d94c05bf8}
 
 
 adds new element for a hand detection 
@@ -78,8 +95,6 @@ adds new element for a hand detection
 
 \begin{DoxyParams}{Parameters}
 {\em box} & Position information of the detection \\
-\hline
-{\em angle} & rotaion of the detection \\
 \hline
 \end{DoxyParams}
 \hypertarget{class_save_detections_acb1e8a18ffa4410a638a47c32314839e}{\index{Save\-Detections@{Save\-Detections}!new\-Upper\-Body@{new\-Upper\-Body}}

@@ -60,7 +60,8 @@ void SaveDetections::newHand(RotatedRect box)
     xmlWriter->writeTextElement("Rotation", QString::number(box.angle));
 }
 
-void SaveDetections::newFace(Rect box) {
+void SaveDetections::newFace(Rect box)
+{
     // Dept = 3
     for(int i = this->debtCounter; i >= 3; i--) {
         xmlWriter->writeEndElement();

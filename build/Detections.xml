@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Saves>
-    <File>RaphaelBloteArmenLogitech.avi</File>
+    <File>../../../Dataset/2014_03_27/000/world.avi</File>
     <Frame>
-        <Number>166</Number>
+        <Number>170</Number>
         <UpperBody>
             <Rect>
-                <x>117</x>
-                <y>118</y>
-                <Width>304</Width>
-                <Height>362</Height>
+                <x>231</x>
+                <y>192</y>
+                <Width>879</Width>
+                <Height>528</Height>
             </Rect>
         </UpperBody>
     </Frame>

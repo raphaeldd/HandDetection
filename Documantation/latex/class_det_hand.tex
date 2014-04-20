@@ -8,18 +8,28 @@
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{class_det_hand_a55a4b93f15511748a5f645d6e02b7b19}{Det\-Hand} (String model\-Hand, double threshold)
+\hyperlink{class_det_hand_ae2db0bd3a42211dd7f85aa484163fb51}{Det\-Hand} (String model\-Hand, String context\-Model, double threshold)
 \begin{DoxyCompactList}\small\item\em Constructor from classe \hyperlink{class_det_hand}{Det\-Hand}. Preps the detector with the right hand model. \end{DoxyCompactList}\item 
-void \hyperlink{class_det_hand_a1cde0e2c001c37b3f74bcb38af5dddbd}{run\-Detection} (Mat image, int frame\-Number)
+void \hyperlink{class_det_hand_a2ff6d2defe5cb9fb6d478a113dd07800}{run\-Detection} (Mat image, int frame\-Number, Rect face)
 \begin{DoxyCompactList}\small\item\em Apply the detector on a image. \end{DoxyCompactList}\item 
-void \hyperlink{class_det_hand_ad38224099448661c9442005db103ae8d}{draw\-Result} (Mat \&img, Rect \&box, float angle, const Scalar \&color)
+void \hyperlink{class_det_hand_a04ca17b97c142aaeb4e687a3bcc23cd4}{draw\-Result} (Mat \&img, Rotated\-Rect \&box, const Scalar \&color)
 \begin{DoxyCompactList}\small\item\em Draws the found regions on a image Draws a rotated rectangle with rescpect to the center. \end{DoxyCompactList}\item 
-vector$<$ Mat $>$ \hyperlink{class_det_hand_a230b128800e15d6b5f87af363b4a72bc}{get\-Cutouts} ()
+vector$<$ Mat $>$ \hyperlink{class_det_hand_afcb69946411c9c656f3203b6bbc4e13a}{get\-Cutouts} ()
 \begin{DoxyCompactList}\small\item\em Get all the detection cutouts of the last detection. \end{DoxyCompactList}\item 
-vector$<$ pair$<$ Rect, int $>$ $>$ \hyperlink{class_det_hand_a424b986edf4a17f48619cb89cd4c2e8e}{get\-Rect} ()
-\begin{DoxyCompactList}\small\item\em Get all the detection regions of the last detection with the respected rotation. \end{DoxyCompactList}\item 
-int \hyperlink{class_det_hand_af90663feb7d98c57373a2ee7b686fdb2}{get\-Size} ()
-\begin{DoxyCompactList}\small\item\em Get number of detections found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+vector$<$ Rotated\-Rect $>$ \hyperlink{class_det_hand_a6d30403a8d530c2169b2ddbe5d5bdac6}{get\-Location\-Hand} ()
+\begin{DoxyCompactList}\small\item\em Get the detection regions of the last detection with the respected rotation of the hand detector. \end{DoxyCompactList}\item 
+vector$<$ double $>$ \hyperlink{class_det_hand_abb8015c29b1e4c6bf78ebe8bf87f49cd}{get\-Score\-Hand} ()
+\begin{DoxyCompactList}\small\item\em Get score of hand detections found. \end{DoxyCompactList}\item 
+vector$<$ Rotated\-Rect $>$ \hyperlink{class_det_hand_a22212d11ca6da3294e65a69d3438516c}{get\-Location\-Context} ()
+\begin{DoxyCompactList}\small\item\em Get the detection regions of the last detection with the respected rotation of the context detector. \end{DoxyCompactList}\item 
+vector$<$ double $>$ \hyperlink{class_det_hand_a66591d156dcb9ae702ec5bff58aff404}{get\-Score\-Context} ()
+\begin{DoxyCompactList}\small\item\em Get score of context detections found. \end{DoxyCompactList}\item 
+vector$<$ Rotated\-Rect $>$ \hyperlink{class_det_hand_a968add655757ec16229a217e6981ed1d}{get\-Location\-Arm} ()
+\begin{DoxyCompactList}\small\item\em Get the detection regions of the last detection with the respected rotation of the arm hand detector. \end{DoxyCompactList}\item 
+vector$<$ double $>$ \hyperlink{class_det_hand_aecc3b2a3541650dbbfeac38887ac1a61}{get\-Score\-Arm} ()
+\begin{DoxyCompactList}\small\item\em Get score of arm detections found. \end{DoxyCompactList}\item 
+Mat \hyperlink{class_det_hand_a0f824a1a3414cc612cbd475f901fd0b5}{get\-Skin} ()
+\begin{DoxyCompactList}\small\item\em Get Skin segmentation. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -31,14 +41,15 @@ Den Dooven Raphael
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{class_det_hand_a55a4b93f15511748a5f645d6e02b7b19}{\index{Det\-Hand@{Det\-Hand}!Det\-Hand@{Det\-Hand}}
+\hypertarget{class_det_hand_ae2db0bd3a42211dd7f85aa484163fb51}{\index{Det\-Hand@{Det\-Hand}!Det\-Hand@{Det\-Hand}}
 \index{Det\-Hand@{Det\-Hand}!DetHand@{Det\-Hand}}
 \subsubsection[{Det\-Hand}]{\setlength{\rightskip}{0pt plus 5cm}Det\-Hand\-::\-Det\-Hand (
 \begin{DoxyParamCaption}
 \item[{String}]{model\-Hand, }
+\item[{String}]{context\-Model, }
 \item[{double}]{threshold}
 \end{DoxyParamCaption}
-)}}\label{class_det_hand_a55a4b93f15511748a5f645d6e02b7b19}
+)}}\label{class_det_hand_ae2db0bd3a42211dd7f85aa484163fb51}
 
 
 Constructor from classe \hyperlink{class_det_hand}{Det\-Hand}. Preps the detector with the right hand model. 
@@ -53,16 +64,15 @@ Constructor from classe \hyperlink{class_det_hand}{Det\-Hand}. Preps the detecto
 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_det_hand_ad38224099448661c9442005db103ae8d}{\index{Det\-Hand@{Det\-Hand}!draw\-Result@{draw\-Result}}
+\hypertarget{class_det_hand_a04ca17b97c142aaeb4e687a3bcc23cd4}{\index{Det\-Hand@{Det\-Hand}!draw\-Result@{draw\-Result}}
 \index{draw\-Result@{draw\-Result}!DetHand@{Det\-Hand}}
 \subsubsection[{draw\-Result}]{\setlength{\rightskip}{0pt plus 5cm}void Det\-Hand\-::draw\-Result (
 \begin{DoxyParamCaption}
 \item[{Mat \&}]{img, }
-\item[{Rect \&}]{box, }
-\item[{float}]{angle, }
+\item[{Rotated\-Rect \&}]{box, }
 \item[{const Scalar \&}]{color}
 \end{DoxyParamCaption}
-)}}\label{class_det_hand_ad38224099448661c9442005db103ae8d}
+)}}\label{class_det_hand_a04ca17b97c142aaeb4e687a3bcc23cd4}
 
 
 Draws the found regions on a image Draws a rotated rectangle with rescpect to the center. 
@@ -78,13 +88,13 @@ Draws the found regions on a image Draws a rotated rectangle with rescpect to th
 {\em color} & color op the rectangle \\
 \hline
 \end{DoxyParams}
-\hypertarget{class_det_hand_a230b128800e15d6b5f87af363b4a72bc}{\index{Det\-Hand@{Det\-Hand}!get\-Cutouts@{get\-Cutouts}}
+\hypertarget{class_det_hand_afcb69946411c9c656f3203b6bbc4e13a}{\index{Det\-Hand@{Det\-Hand}!get\-Cutouts@{get\-Cutouts}}
 \index{get\-Cutouts@{get\-Cutouts}!DetHand@{Det\-Hand}}
-\subsubsection[{get\-Cutouts}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ Mat $>$ Det\-Hand\-::get\-Cutouts (
+\subsubsection[{get\-Cutouts}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$Mat$>$ Det\-Hand\-::get\-Cutouts (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{class_det_hand_a230b128800e15d6b5f87af363b4a72bc}
+)}}\label{class_det_hand_afcb69946411c9c656f3203b6bbc4e13a}
 
 
 Get all the detection cutouts of the last detection. 
@@ -92,42 +102,113 @@ Get all the detection cutouts of the last detection.
 \begin{DoxyReturn}{Returns}
 All cutouts of type Mat put in a vector 
 \end{DoxyReturn}
-\hypertarget{class_det_hand_a424b986edf4a17f48619cb89cd4c2e8e}{\index{Det\-Hand@{Det\-Hand}!get\-Rect@{get\-Rect}}
-\index{get\-Rect@{get\-Rect}!DetHand@{Det\-Hand}}
-\subsubsection[{get\-Rect}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ pair$<$ Rect, int $>$ $>$ Det\-Hand\-::get\-Rect (
+\hypertarget{class_det_hand_a968add655757ec16229a217e6981ed1d}{\index{Det\-Hand@{Det\-Hand}!get\-Location\-Arm@{get\-Location\-Arm}}
+\index{get\-Location\-Arm@{get\-Location\-Arm}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Location\-Arm}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ Rotated\-Rect $>$ Det\-Hand\-::get\-Location\-Arm (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{class_det_hand_a424b986edf4a17f48619cb89cd4c2e8e}
+)}}\label{class_det_hand_a968add655757ec16229a217e6981ed1d}
 
 
-Get all the detection regions of the last detection with the respected rotation. 
+Get the detection regions of the last detection with the respected rotation of the arm hand detector. 
 
 \begin{DoxyReturn}{Returns}
 All regions of type Rect and rotation put in a vector 
 \end{DoxyReturn}
-\hypertarget{class_det_hand_af90663feb7d98c57373a2ee7b686fdb2}{\index{Det\-Hand@{Det\-Hand}!get\-Size@{get\-Size}}
-\index{get\-Size@{get\-Size}!DetHand@{Det\-Hand}}
-\subsubsection[{get\-Size}]{\setlength{\rightskip}{0pt plus 5cm}int Det\-Hand\-::get\-Size (
+\hypertarget{class_det_hand_a22212d11ca6da3294e65a69d3438516c}{\index{Det\-Hand@{Det\-Hand}!get\-Location\-Context@{get\-Location\-Context}}
+\index{get\-Location\-Context@{get\-Location\-Context}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Location\-Context}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ Rotated\-Rect $>$ Det\-Hand\-::get\-Location\-Context (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{class_det_hand_af90663feb7d98c57373a2ee7b686fdb2}
+)}}\label{class_det_hand_a22212d11ca6da3294e65a69d3438516c}
 
 
-Get number of detections found. 
+Get the detection regions of the last detection with the respected rotation of the context detector. 
 
 \begin{DoxyReturn}{Returns}
-Number of detections found of type integer 
+All regions of type Rect and rotation put in a vector 
 \end{DoxyReturn}
-\hypertarget{class_det_hand_a1cde0e2c001c37b3f74bcb38af5dddbd}{\index{Det\-Hand@{Det\-Hand}!run\-Detection@{run\-Detection}}
+\hypertarget{class_det_hand_a6d30403a8d530c2169b2ddbe5d5bdac6}{\index{Det\-Hand@{Det\-Hand}!get\-Location\-Hand@{get\-Location\-Hand}}
+\index{get\-Location\-Hand@{get\-Location\-Hand}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Location\-Hand}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ Rotated\-Rect $>$ Det\-Hand\-::get\-Location\-Hand (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_a6d30403a8d530c2169b2ddbe5d5bdac6}
+
+
+Get the detection regions of the last detection with the respected rotation of the hand detector. 
+
+\begin{DoxyReturn}{Returns}
+All regions of type Rect and rotation put in a vector 
+\end{DoxyReturn}
+\hypertarget{class_det_hand_aecc3b2a3541650dbbfeac38887ac1a61}{\index{Det\-Hand@{Det\-Hand}!get\-Score\-Arm@{get\-Score\-Arm}}
+\index{get\-Score\-Arm@{get\-Score\-Arm}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Score\-Arm}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ double $>$ Det\-Hand\-::get\-Score\-Arm (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_aecc3b2a3541650dbbfeac38887ac1a61}
+
+
+Get score of arm detections found. 
+
+\begin{DoxyReturn}{Returns}
+Score of detections found 
+\end{DoxyReturn}
+\hypertarget{class_det_hand_a66591d156dcb9ae702ec5bff58aff404}{\index{Det\-Hand@{Det\-Hand}!get\-Score\-Context@{get\-Score\-Context}}
+\index{get\-Score\-Context@{get\-Score\-Context}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Score\-Context}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ double $>$ Det\-Hand\-::get\-Score\-Context (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_a66591d156dcb9ae702ec5bff58aff404}
+
+
+Get score of context detections found. 
+
+\begin{DoxyReturn}{Returns}
+Score of detections found 
+\end{DoxyReturn}
+\hypertarget{class_det_hand_abb8015c29b1e4c6bf78ebe8bf87f49cd}{\index{Det\-Hand@{Det\-Hand}!get\-Score\-Hand@{get\-Score\-Hand}}
+\index{get\-Score\-Hand@{get\-Score\-Hand}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Score\-Hand}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ double $>$ Det\-Hand\-::get\-Score\-Hand (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_abb8015c29b1e4c6bf78ebe8bf87f49cd}
+
+
+Get score of hand detections found. 
+
+\begin{DoxyReturn}{Returns}
+Score of detections found 
+\end{DoxyReturn}
+\hypertarget{class_det_hand_a0f824a1a3414cc612cbd475f901fd0b5}{\index{Det\-Hand@{Det\-Hand}!get\-Skin@{get\-Skin}}
+\index{get\-Skin@{get\-Skin}!DetHand@{Det\-Hand}}
+\subsubsection[{get\-Skin}]{\setlength{\rightskip}{0pt plus 5cm}Mat Det\-Hand\-::get\-Skin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_det_hand_a0f824a1a3414cc612cbd475f901fd0b5}
+
+
+Get Skin segmentation. 
+
+\begin{DoxyReturn}{Returns}
+skin 
+\end{DoxyReturn}
+\hypertarget{class_det_hand_a2ff6d2defe5cb9fb6d478a113dd07800}{\index{Det\-Hand@{Det\-Hand}!run\-Detection@{run\-Detection}}
 \index{run\-Detection@{run\-Detection}!DetHand@{Det\-Hand}}
 \subsubsection[{run\-Detection}]{\setlength{\rightskip}{0pt plus 5cm}void Det\-Hand\-::run\-Detection (
 \begin{DoxyParamCaption}
 \item[{Mat}]{image, }
-\item[{int}]{frame\-Number}
+\item[{int}]{frame\-Number, }
+\item[{Rect}]{face}
 \end{DoxyParamCaption}
-)}}\label{class_det_hand_a1cde0e2c001c37b3f74bcb38af5dddbd}
+)}}\label{class_det_hand_a2ff6d2defe5cb9fb6d478a113dd07800}
 
 
 Apply the detector on a image. 
@@ -137,6 +218,8 @@ Apply the detector on a image.
 {\em image} & The image for the detector \\
 \hline
 {\em framenumber} & Frame number of the video (not really importend) \\
+\hline
+{\em face} & Give location face for skin segmentation \\
 \hline
 \end{DoxyParams}
 
