@@ -5,4 +5,7 @@ debug/*
 *.user
 *.o
 
+*.pro.user*
+*.xcode*
+
 Documantation/*
