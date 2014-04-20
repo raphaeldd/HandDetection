@@ -5,8 +5,4 @@ debug/*
 *.user
 *.o
 
-Documantation/Doxyfile
-
-Documantation/doxygen_log.txt
-
-Documantation/latex
+Documantation/*
