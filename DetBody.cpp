@@ -55,7 +55,7 @@ void DetBody::runDetection(Mat image , int frameNumber)
         this->pos[n].y = (this->pos[n].y * yFactor) - ( this->pos[n].height * yFactor * .2 );
         this->pos[n].x = (this->pos[n].x * xFactor) - ( this->pos[n].width * xFactor * .9);
         this->pos[n].width = (this->pos[n].width * xFactor) * (1 + .9 + .9);
-        this->pos[n].height = (this->pos[n].height * yFactor) * 3;
+        this->pos[n].height = (this->pos[n].height * yFactor) * 4;
 
         // Secure an in image coutout
         if(this->pos[n].x < 0) {

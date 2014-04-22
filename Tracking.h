@@ -21,11 +21,9 @@ class Tracking
         ///     - Lefty hand rotation
         ///     - Right hand (righty) location
         ///     - Right hand rotation
-        /// @param lefty first hand zone for left hand
-        /// @param righty first hand zone for right hand
-        Tracking(RotatedRect lefty, RotatedRect righty);
+        Tracking();
 
-        void track(Rect face, pair<RotatedRect, RotatedRect> hands);
+        void track(Rect face, RotatedRect foundLefty, RotatedRect foundRighty);
 
         Rect getFace();
         RotatedRect getLefty();
@@ -39,6 +37,8 @@ class Tracking
         RotatedRect righty;
         RotatedRect predictedLefty;
         RotatedRect predictedRighty;
+        // Boolean variables for first pase detection
+        bool f, l, r;
 
         KalmanFilter* KFFace;
         KalmanFilter* KFLeftyLoc;
@@ -46,8 +46,15 @@ class Tracking
         KalmanFilter* KFLefyRot;
         KalmanFilter* KFRightyRot;
 
+        // Test
+        KalmanFilter* KFLefty;
+        KalmanFilter* KFRighty;
+
         pair<float, float> convertToVector(float degrees);
         float convertToDegrees(pair<float, float> u);
+        Point rectCenter(Rect box);
+        pair<float, float> polarToCartesian(float d);
+        float cartesianToPolar(float x, float y);
 };
 
 #endif // TRACKING_H

@@ -70,7 +70,7 @@ void DetHand::runDetection(Mat image , int frameNumber, Rect face)
             int rot = floor((double)FinalHandDetections[k].detect.x / (double)blackImage.cols) * ROTDEGREES + iteration;
             Rect tmpRect(FinalHandDetections[k].detect.x % blackImage.cols, FinalHandDetections[k].detect.y, FinalHandDetections[k].detect.width, FinalHandDetections[k].detect.height);
             this->posHand.push_back(this->correction(tmpRect, rot, correction, Point(blackImage.cols / 2, blackImage.rows / 2), orientCor));
-            this->scoreHand.push_back(FinalHandDetections.at(k).BestScore);
+            this->scoreHand.push_back(FinalHandDetections.at(k).BestScore - TH);
         }
 
         // ---------- Context detection ----------
@@ -84,7 +84,7 @@ void DetHand::runDetection(Mat image , int frameNumber, Rect face)
             int rot = floor((double)FinalHandDetections[k].detect.x / (double)blackImage.cols) * ROTDEGREES + iteration;
             Rect tmpRect(FinalHandDetections[k].detect.x % blackImage.cols, FinalHandDetections[k].detect.y, FinalHandDetections[k].detect.width, FinalHandDetections[k].detect.height);
             this->posContext.push_back(this->correction(tmpRect, rot, correction, Point(blackImage.cols / 2, blackImage.rows / 2), orientCor));
-            this->scoreContext.push_back(FinalHandDetections.at(k).BestScore);
+            this->scoreContext.push_back(FinalHandDetections.at(k).BestScore - TH);
         }
 
         iteration = (ROWS * COLS * ROTDEGREES) + iteration;
@@ -187,13 +187,13 @@ void DetHand::rotate(cv::Mat& src, double angle, cv::Mat& dst)
     cv::warpAffine(src, dst, r, cv::Size(src.cols, src.rows));
 }
 
-void DetHand::drawResult(Mat& img, RotatedRect &box, const Scalar& color)
+void DetHand::drawResult(Mat& img, RotatedRect &box, const Scalar& color, int thickness)
 {
     Point2f corners[4];
     box.points(corners);
 
     for(int i = 0; i < 4; i++) {
-        line(img, corners[i], corners[(i + 1) % 4], color);
+        line(img, corners[i], corners[(i + 1) % 4], color, thickness);
     }
 
     Point dirLine(-sin(box.angle * CV_PI / 180) * 10 + box.center.x, cos(box.angle * CV_PI / 180) * 10 + box.center.y);
@@ -290,23 +290,23 @@ Mat DetHand::skeletonisation( Mat src ) {
 }
 
 vector<RotatedRect> DetHand::absToRel(vector<RotatedRect> list, Point refPoint) {
-    cout << " ------ abs to rel ------ " << endl;
+    //cout << " ------ abs to rel ------ " << endl;
     for ( int i = 0; i < list.size(); i++ ) {
-        cout << "   " << i << ": " << list.at(i).center << "   ->  ";
+        //cout << "   " << i << ": " << list.at(i).center << "   ->  ";
         list.at(i).center.x = list.at(i).center.x - refPoint.x;
         list.at(i).center.y = list.at(i).center.y - refPoint.y;
-        cout << list.at(i).center << "   ref:  " << refPoint << endl;
+        //cout << list.at(i).center << "   ref:  " << refPoint << endl;
     }
     return list;
 }
 
 vector<RotatedRect> DetHand::relToAbs(vector<RotatedRect> list, Point refPoint) {
-    cout << " ------ rel to abs ------ " << endl;
+    //cout << " ------ rel to abs ------ " << endl;
     for ( int i = 0; i < list.size(); i++ ) {
-        cout << "   " << i << ": " << list.at(i).center << "   ->  ";
+        //cout << "   " << i << ": " << list.at(i).center << "   ->  ";
         list.at(i).center.x = list.at(i).center.x + refPoint.x;
         list.at(i).center.y = list.at(i).center.y + refPoint.y;
-        cout << list.at(i).center << "   ref:  " << refPoint << endl;
+        //cout << list.at(i).center << "   ref:  " << refPoint << endl;
     }
     return list;
 }

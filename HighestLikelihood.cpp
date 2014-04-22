@@ -40,7 +40,7 @@ void HighestLikelihood::run(DetHand* hand, Rect face, Mat img, RotatedRect lefty
 
     // ---------- Skin pixel elimination ----------
     cout << "-------> Skin eliminator." << endl;
-    this->skinEliminator(results, score, .1, hand->getSkin());
+    this->skinEliminator(results, score, .50, hand->getSkin());
     cout << "               " << results.size() << endl;
 
     // ---------- Size elimination ----------
@@ -50,7 +50,7 @@ void HighestLikelihood::run(DetHand* hand, Rect face, Mat img, RotatedRect lefty
 
     // ---------- Clustring ----------
     cout << "-------> Clustering detections." << endl;
-    this->clustering(results, score, .1);
+    this->clustering(results, score, .05);
     cout << "               " << results.size() << endl;
 
     // ---------- Lower score face area ----------
@@ -84,8 +84,8 @@ void HighestLikelihood::run(DetHand* hand, Rect face, Mat img, RotatedRect lefty
         cout << " \t\trotation: " << results.at(i).angle;
         cout << " \t\tScore: " << score.at(i) << endl;
     }
-    hand->drawResult(img, hand->relToAbs(resultsRighty, Point( face.x + face.width/2, face.y + face.height/2 )).at(0), Scalar(255, 10, 10));
-    hand->drawResult(img, hand->relToAbs(resultsLefty, Point( face.x + face.width/2, face.y + face.height/2 )).at(0), Scalar(10, 10, 255));
+    hand->drawResult(img, hand->relToAbs(resultsRighty, Point( face.x + face.width/2, face.y + face.height/2 )).at(0), Scalar(10, 10, 255));
+    hand->drawResult(img, hand->relToAbs(resultsLefty, Point( face.x + face.width/2, face.y + face.height/2 )).at(0), Scalar(255, 10, 10));
 
     imshow("Result", img);
 
@@ -96,6 +96,14 @@ void HighestLikelihood::run(DetHand* hand, Rect face, Mat img, RotatedRect lefty
 vector<RotatedRect> HighestLikelihood::getResults()
 {
     return this->results;
+}
+
+RotatedRect HighestLikelihood::getLefty() {
+    return this->lefty;
+}
+
+RotatedRect HighestLikelihood::getRighty() {
+    return this->righty;
 }
 
 void HighestLikelihood::clustering(vector<RotatedRect>& hand, vector<double>& score, double eps) {
@@ -251,8 +259,10 @@ void HighestLikelihood::findRighty(vector<RotatedRect>& resultsRighty, vector<do
         cout << "                               Righty size: " <<  resultsRighty.size() << endl;
 
         flip(plot, plot, 0);
-        imshow("Righty plot", plot);
-        imwrite("RightyPlot.png", plot);
+        if ( !plot.empty() ) {
+            imshow("Righty plot", plot);
+            imwrite("RightyPlot.png", plot);
+        }
     } else {
         double max = numeric_limits<double>::min();
         int adrMax = numeric_limits<int>::max();
@@ -312,11 +322,13 @@ void HighestLikelihood::findLefty(vector<RotatedRect>& resultsLefty, vector<doub
         scoreLefty.push_back(0);
 
         this->clustering(resultsLefty, scoreLefty, 1);
-        cout << "                               Righty size: " <<  resultsLefty.size() << endl;
+        cout << "                               lefty size: " <<  resultsLefty.size() << endl;
 
         flip(plot, plot, 0);
-        imshow("Lefty plot", plot);
-        imwrite("LeftyPlot.png", plot);
+        if ( !plot.empty() ) {
+            imshow("Lefty plot", plot);
+            imwrite("LeftyPlot.png", plot);
+        }
 
 
     } else {
@@ -341,10 +353,6 @@ void HighestLikelihood::findLefty(vector<RotatedRect>& resultsLefty, vector<doub
             scoreLefty.push_back(0);
         }
     }
-}
-
-RotatedRect toRelative(RotatedRect hand, Rect face) {
-
 }
 
 float HighestLikelihood::dstCalc( Point pt1, Point pt2 ) {

@@ -60,7 +60,7 @@ class DetHand
         /// @param box Rectangle information
         /// @param angle Rectangles rotation with rescpect to the center
         /// @param color color op the rectangle
-        void drawResult(Mat& img, RotatedRect& box, const Scalar& color);
+        void drawResult(Mat& img, RotatedRect& box, const Scalar& color, int thickness = 1);
 
         /// @brief Get all the detection cutouts of the last detection
         /// @return All cutouts of type Mat put in a vector

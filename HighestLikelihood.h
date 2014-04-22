@@ -54,8 +54,6 @@ class HighestLikelihood
         void findRighty(vector<RotatedRect>& resultsRighty, vector<double>& scoreRighty, RotatedRect predictedPoint, double eps);
         void findLefty(vector<RotatedRect>& resultsLefty, vector<double>& scoreLefty, RotatedRect predictedPoint, double eps);
 
-        RotatedRect toRelative(RotatedRect hand, Rect face);
-
         float dstCalc( Point pt1, Point pt2 );
 };
 

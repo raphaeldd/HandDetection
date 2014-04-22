@@ -30,6 +30,7 @@
 #include "SaveDetections.h"
 #include "HighestLikelihood.h"
 #include "FacedDetection.h"
+#include "Tracking.h"
 
 
 using namespace std;
@@ -105,6 +106,8 @@ int main(int argc, char *argv[])
     DetBody body("torso3comp.txt", -1.5);
     cout << "---> Initalisation hand detection." << endl;
     DetHand hand("hand.txt", "context-hand.txt", -0.5);
+    cout << "---> Initalisation tracking." << endl;
+    Tracking track;
 
     // ---------- Program loop ----------
     cout << "---> Start program loop." << endl;
@@ -137,6 +140,11 @@ int main(int argc, char *argv[])
             cout << "-----> Run Face detection for upper body detection " << n + 1 << "/" << body.getSize() << "." << endl;
             Rect face = faceDetector.detectFace(body.getCutouts()[n].clone());
             cout << "               Face found:      " << boolalpha << (face.area() > 0) << endl;
+            if ( face.area() == 0 ) {
+                face = track.getFace();
+                face.x -= body.getRect()[n].x;
+                face.y -= body.getRect()[n].y;
+            }
 
 
             // ---------- Run hand detection ----------
@@ -146,13 +154,24 @@ int main(int argc, char *argv[])
             cout << "               Context detections found:   " << hand.getLocationContext().size() << endl;
             cout << "               Arm detections found:       " << hand.getLocationArm().size() << endl;
 
+
             // ---------- Run Highest Likelihood eliminator ----------
             cout << "------> Run higest likelihood eliminator." << endl;
             HighestLikelihood likeli;
             Mat tmp = body.getCutouts()[n].clone();
             //likeli.run(&hand, face, body.getCutouts()[n].clone(), RotatedRect(Point(160, 33), Size(10, 10), 0), RotatedRect(Point(-35.6595, 195.683), Size(10, 10), 0));
-            likeli.run(&hand, face, body.getCutouts()[n].clone(), RotatedRect(Point(160, 33), Size(0, 0), 0), RotatedRect(Point(-35.6595, 195.683), Size(0, 0), 0));
-            cout << "               After elimination:       " << likeli.getResults().size() << endl;
+            likeli.run(&hand, face, body.getCutouts()[n].clone(), track.getPredictedLefty(), track.getPredictedRighty());
+            // likeli.run(&hand, face, body.getCutouts()[n].clone(), RotatedRect(Point(160, 33), Size(0, 0), 0), RotatedRect(Point(-35.6595, 195.683), Size(0, 0), 0));
+
+            // ---------- Run Tracking ----------
+            cout << "------> Run Tracking." << endl;
+            //      Set face coordinates to absolute
+            Rect absFace = face;
+            absFace.x += body.getRect()[n].x;
+            absFace.y += body.getRect()[n].y;
+            track.track(absFace, likeli.getLefty(), likeli.getRighty());
+
+
 
             T = clock() - T;
             save->newFace(face);
@@ -187,6 +206,32 @@ int main(int argc, char *argv[])
                 save->newHand(hand.getLocationArm()[r]);
             }
 
+            Rect preFace = track.getFace();
+            preFace.x -= body.getRect()[n].x;
+            preFace.y -= body.getRect()[n].y;
+            rectangle(result, preFace, Scalar(255, 0, 10), 3);
+
+
+            RotatedRect lefty = track.getLefty();
+            lefty.center.x += face.x + face.width/2 +  body.getRect()[n].x;
+            lefty.center.y += face.y + face.height/2 +  body.getRect()[n].y;
+            RotatedRect prelefty = track.getPredictedLefty();
+            prelefty.center.x += face.x + face.width/2 +  body.getRect()[n].x;
+            prelefty.center.y += face.y + face.height/2 +  body.getRect()[n].y;
+            hand.drawResult(cameraImage, lefty, Scalar(255, 40, 40), 3);
+            hand.drawResult(cameraImage, prelefty, Scalar(200, 30, 30), 2);
+
+            RotatedRect Righty = track.getRighty();
+            Righty.center.x += face.x + face.width/2 +  body.getRect()[n].x;
+            Righty.center.y += face.y + face.height/2 +  body.getRect()[n].y;
+            RotatedRect prerighty = track.getPredictedRighty();
+            prerighty.center.x += face.x + face.width/2 +  body.getRect()[n].x;
+            prerighty.center.y += face.y + face.height/2 +  body.getRect()[n].y;
+            hand.drawResult(cameraImage, Righty, Scalar(40, 40, 255), 3);
+            hand.drawResult(cameraImage, prerighty, Scalar(30, 30, 255), 2);
+
+            rectangle(cameraImage, track.getFace(), Scalar(10, 255, 10), 3);
+            imshow("Original frame", cameraImage);
 
 
             imshow(ss.str(), result);
