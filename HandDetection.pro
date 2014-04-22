@@ -68,3 +68,6 @@ HEADERS += \
     FacedDetection.h \
     Cluster.h
 
+RESOURCES += \
+    Resources.qrc
+
