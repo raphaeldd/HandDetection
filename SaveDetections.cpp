@@ -42,7 +42,7 @@ void SaveDetections::newUpperBody(Rect box)
     xmlWriter->writeEndElement();
 }
 
-void SaveDetections::newHand(RotatedRect box)
+void SaveDetections::newHand(RotatedRect box, QString side, double score)
 {
     // Dept = 3
     for(int i = this->debtCounter; i >= 3; i--) {
@@ -51,6 +51,7 @@ void SaveDetections::newHand(RotatedRect box)
 
     this->debtCounter = 3;
     xmlWriter->writeStartElement("Hand");
+    xmlWriter->writeAttribute( QString("Side"), side );
     xmlWriter->writeStartElement("Rect");
     xmlWriter->writeTextElement("x", QString::number(box.center.x));
     xmlWriter->writeTextElement("y", QString::number(box.center.y));
@@ -58,6 +59,7 @@ void SaveDetections::newHand(RotatedRect box)
     xmlWriter->writeTextElement("Height", QString::number(box.size.height));
     xmlWriter->writeEndElement();
     xmlWriter->writeTextElement("Rotation", QString::number(box.angle));
+    xmlWriter->writeTextElement("Score", QString::number(score));
 }
 
 void SaveDetections::newFace(Rect box)

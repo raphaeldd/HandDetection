@@ -40,7 +40,7 @@ class SaveDetections
 
         /// @brief adds new element for a hand detection
         /// @param box Position information of the detection
-        void newHand(RotatedRect box);
+        void newHand(RotatedRect box, QString side, double score);
 
         /// @brief adds new element for a face detection
         /// @param box Position information of the detecti

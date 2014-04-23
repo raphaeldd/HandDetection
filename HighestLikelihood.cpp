@@ -102,8 +102,16 @@ RotatedRect HighestLikelihood::getLefty() {
     return this->lefty;
 }
 
+double HighestLikelihood::getScoreLefty() {
+    return this->leftyScore;
+}
+
 RotatedRect HighestLikelihood::getRighty() {
     return this->righty;
+}
+
+double HighestLikelihood::getScoreRighty() {
+    return this->rightyScore;
 }
 
 void HighestLikelihood::clustering(vector<RotatedRect>& hand, vector<double>& score, double eps) {
@@ -211,10 +219,10 @@ void HighestLikelihood::closestPoint(vector<RotatedRect>& hand, vector<double>& 
 
     //      Normalise for score
     float diff = max - min;
-    //vector<float> scoreDist;
     for (int i = 0; i < hand.size(); i++) {
-        //scoreDist.push_back(-((this->dstCalc(hand.at(i).center, predictedPoint)-min)/diff-1));
-        score.at(i) += -((this->dstCalc(hand.at(i).center, predictedPoint)-min)/diff-1) * 10;
+        //      Normalise for score
+        //score.at(i) += -((this->dstCalc(hand.at(i).center, predictedPoint)-min)/diff-1) * 10;
+        score.at(i) += this->dstCalc(hand.at(i).center, predictedPoint);
     }
 
 
@@ -237,32 +245,45 @@ void HighestLikelihood::findRighty(vector<RotatedRect>& resultsRighty, vector<do
             if ( min > scoreRighty.at(i) ) {
                 min = scoreRighty.at(i);
             }
+            plot.rows = max;
             rectangle(plot, Rect(i * 10, 0, 10, scoreRighty.at(i)*10), Scalar(10, 255, 10), CV_FILLED);
         }
         // cluster score above eps based on max en minimals
         line(plot, Point(0, (min + (max * eps)) * 10), Point(plot.cols, (min + (max * eps)) * 10), Scalar(20, 20, 255));
-        for ( int i = 0; i < resultsRighty.size(); i++ ) {
-            if (scoreRighty.at(i) - min < max * eps) {
-                scoreRighty.erase(scoreRighty.begin()+i);
-                resultsRighty.erase(resultsRighty.begin()+i);
-                i--;
+
+        // Found out if there is a big enough differeance in scores
+        if ( max - min >= max * eps) {
+            for ( int i = 0; i < resultsRighty.size(); i++ ) {
+                if (scoreRighty.at(i) - min < max * eps) {
+                    scoreRighty.erase(scoreRighty.begin()+i);
+                    resultsRighty.erase(resultsRighty.begin()+i);
+                    i--;
+                }
             }
+
+            // Give prediction more weight in clustering
+            resultsRighty.push_back(predictedPoint);
+            scoreRighty.push_back(0);
+            resultsRighty.push_back(predictedPoint);
+            scoreRighty.push_back(0);
+
+            this->clustering(resultsRighty, scoreRighty, 1);
+            cout << "                               Righty size: " <<  resultsRighty.size() << endl;
+
+            flip(plot, plot, 0);
+            if ( !plot.empty() ) {
+                imshow("Righty plot", plot);
+                imwrite("RightyPlot.png", plot);
+            }
+
+        } else {
+            cout << "                   No righty found" <<  endl;
+            resultsRighty.clear();
+            resultsRighty.push_back(RotatedRect());
+            scoreRighty.clear();
+            scoreRighty.push_back(0);
         }
 
-        // Give prediction more wait in clustering
-        resultsRighty.push_back(predictedPoint);
-        scoreRighty.push_back(0);
-        resultsRighty.push_back(predictedPoint);
-        scoreRighty.push_back(0);
-
-        this->clustering(resultsRighty, scoreRighty, 1);
-        cout << "                               Righty size: " <<  resultsRighty.size() << endl;
-
-        flip(plot, plot, 0);
-        if ( !plot.empty() ) {
-            imshow("Righty plot", plot);
-            imwrite("RightyPlot.png", plot);
-        }
     } else {
         double max = numeric_limits<double>::min();
         int adrMax = numeric_limits<int>::max();
@@ -307,28 +328,40 @@ void HighestLikelihood::findLefty(vector<RotatedRect>& resultsLefty, vector<doub
         }
         // cluster score above eps based on max en minimals
         line(plot, Point(0, (min + (max * eps)) * 10), Point(plot.cols, (min + (max * eps)) * 10), Scalar(20, 20, 255));
-        for ( int i = 0; i < resultsLefty.size(); i++ ) {
-            if (scoreLefty.at(i) - min < max * eps) {
-                scoreLefty.erase(scoreLefty.begin()+i);
-                resultsLefty.erase(resultsLefty.begin()+i);
-                i--;
+
+        // Found out if there is a big enough differeance in scores
+        if ( max - min >= max * eps) {
+            for ( int i = 0; i < resultsLefty.size(); i++ ) {
+                if (scoreLefty.at(i) - min < max * eps) {
+                    scoreLefty.erase(scoreLefty.begin()+i);
+                    resultsLefty.erase(resultsLefty.begin()+i);
+                    i--;
+                }
             }
+
+            // Give prediction more weight in clustering
+            resultsLefty.push_back(predictedPoint);
+            scoreLefty.push_back(0);
+            resultsLefty.push_back(predictedPoint);
+            scoreLefty.push_back(0);
+
+            this->clustering(resultsLefty, scoreLefty, 1);
+            cout << "                               lefty size: " <<  resultsLefty.size() << endl;
+
+            flip(plot, plot, 0);
+            if ( !plot.empty() ) {
+                imshow("Lefty plot", plot);
+                imwrite("LeftyPlot.png", plot);
+            }
+
+        } else {
+            cout << "                   No lefty found" <<  endl;
+            resultsLefty.clear();
+            resultsLefty.push_back(RotatedRect());
+            scoreLefty.clear();
+            scoreLefty.push_back(0);
         }
 
-        // Give prediction more wait in clustering
-        resultsLefty.push_back(predictedPoint);
-        scoreLefty.push_back(0);
-        resultsLefty.push_back(predictedPoint);
-        scoreLefty.push_back(0);
-
-        this->clustering(resultsLefty, scoreLefty, 1);
-        cout << "                               lefty size: " <<  resultsLefty.size() << endl;
-
-        flip(plot, plot, 0);
-        if ( !plot.empty() ) {
-            imshow("Lefty plot", plot);
-            imwrite("LeftyPlot.png", plot);
-        }
 
 
     } else {

@@ -174,8 +174,7 @@ int main(int argc, char *argv[])
 
 
             T = clock() - T;
-            save->newFace(face);
-            save->runtime((float)T / CLOCKS_PER_SEC);
+
 
 
 
@@ -189,21 +188,21 @@ int main(int argc, char *argv[])
 
             for(int r = 0; r < hand.getLocationHand().size(); r++) {
                 hand.drawResult(result, hand.getLocationHand()[r], Scalar(255, 30, 30));
-                save->newHand(hand.getLocationHand()[r]);
+                save->newHand(hand.getLocationHand()[r], "NaN", hand.getScoreHand()[r]);
             }
 
 
 
             for(int r = 0; r < hand.getLocationContext().size(); r++) {
                 hand.drawResult(result, hand.getLocationContext()[r], Scalar(30, 255, 30));
-                save->newHand(hand.getLocationContext()[r]);
+                save->newHand(hand.getLocationContext()[r], "NaN", hand.getScoreContext()[r]);
             }
 
 
 
             for(int r = 0; r < hand.getLocationArm().size(); r++) {
                 hand.drawResult(result, hand.getLocationArm()[r], Scalar(30, 30, 255));
-                save->newHand(hand.getLocationArm()[r]);
+                save->newHand(hand.getLocationArm()[r], "NaN", hand.getScoreArm()[r]);
             }
 
             Rect preFace = track.getFace();
@@ -221,17 +220,23 @@ int main(int argc, char *argv[])
             hand.drawResult(cameraImage, lefty, Scalar(255, 40, 40), 3);
             hand.drawResult(cameraImage, prelefty, Scalar(200, 30, 30), 2);
 
-            RotatedRect Righty = track.getRighty();
-            Righty.center.x += face.x + face.width/2 +  body.getRect()[n].x;
-            Righty.center.y += face.y + face.height/2 +  body.getRect()[n].y;
+            RotatedRect righty = track.getRighty();
+            righty.center.x += face.x + face.width/2 +  body.getRect()[n].x;
+            righty.center.y += face.y + face.height/2 +  body.getRect()[n].y;
             RotatedRect prerighty = track.getPredictedRighty();
             prerighty.center.x += face.x + face.width/2 +  body.getRect()[n].x;
             prerighty.center.y += face.y + face.height/2 +  body.getRect()[n].y;
-            hand.drawResult(cameraImage, Righty, Scalar(40, 40, 255), 3);
+            hand.drawResult(cameraImage, righty, Scalar(40, 40, 255), 3);
             hand.drawResult(cameraImage, prerighty, Scalar(30, 30, 255), 2);
 
             rectangle(cameraImage, track.getFace(), Scalar(10, 255, 10), 3);
             imshow("Original frame", cameraImage);
+
+            save->newHand(righty, "Right", likeli.getScoreLefty());
+            save->newHand(lefty, "Left", likeli.getScoreRighty());
+
+            save->newFace(track.getFace());
+            save->runtime((float)T / CLOCKS_PER_SEC);
 
 
             imshow(ss.str(), result);

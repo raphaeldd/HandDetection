@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Resources">
+    <qresource prefix="/">
         <file alias="context-hand.txt">Resources/context-hand.txt</file>
         <file alias="haarcascade_frontalface_alt.xml">Resources/haarcascade_frontalface_alt.xml</file>
         <file alias="hand-context.txt">Resources/hand-context.txt</file>

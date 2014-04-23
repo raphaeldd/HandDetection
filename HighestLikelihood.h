@@ -37,7 +37,10 @@ class HighestLikelihood
         vector<RotatedRect> getResults();
 
         RotatedRect getLefty();
+        double getScoreLefty();
+
         RotatedRect getRighty();
+        double getScoreRighty();
 
     private:
         vector<RotatedRect> results;
